@@ -1,24 +1,21 @@
 import React, { useState, useEffect, useMemo, useCallback } from 'react'
 import {
-  Calendar as CalendarIcon,
-  Tag as TagIcon,
-  RefreshCw,
-  SlidersHorizontal
-} from 'lucide-react'
-import {
   format,
-  addMonths,
-  subMonths,
   addWeeks,
   subWeeks,
-  startOfMonth,
-  endOfMonth,
   startOfWeek,
   endOfWeek
 } from 'date-fns'
 import { it } from 'date-fns/locale'
 
-import { EventWithDetails, CreateEventInput, UpdateEventInput, DbHealthCheckResult } from '@shared/types'
+import {
+  EventWithDetails,
+  CreateEventInput,
+  UpdateEventInput,
+  CreateTagInput,
+  UpdateTagInput,
+  DbHealthCheckResult
+} from '@shared/types'
 import { CalendarGridEngine } from '../../core/calendar/CalendarGridEngine'
 import { EventFilterEngine } from '../../core/filters/EventFilterEngine'
 
@@ -26,15 +23,13 @@ import { useTags } from './hooks/useTags'
 import { useEvents } from './hooks/useEvents'
 
 import { CalendarHeader } from './components/calendar/CalendarHeader'
-import { MonthCalendarView } from './components/calendar/MonthCalendarView'
 import { WeekCalendarView } from './components/calendar/WeekCalendarView'
 import { EventModal } from './components/events/EventModal'
 import { TagManagerModal } from './components/TagManagerModal'
 
 export default function App(): React.ReactElement {
-  // Calendar View State
+  // Calendar View State: Weekly view
   const [currentDate, setCurrentDate] = useState<Date>(new Date())
-  const [viewMode, setViewMode] = useState<'month' | 'week'>('month')
   const [activeTagIds, setActiveTagIds] = useState<string[]>([])
 
   // Modal States
@@ -66,45 +61,26 @@ export default function App(): React.ReactElement {
     deleteEvent
   } = useEvents()
 
-  // Load events for visible interval
+  // Load events for the visible week interval
   const reloadEvents = useCallback(async () => {
-    let start: Date
-    let end: Date
-
-    if (viewMode === 'month') {
-      const monthStart = startOfMonth(currentDate)
-      const monthEnd = endOfMonth(currentDate)
-      start = startOfWeek(monthStart, { weekStartsOn: 1 })
-      end = endOfWeek(monthEnd, { weekStartsOn: 1 })
-    } else {
-      start = startOfWeek(currentDate, { weekStartsOn: 1 })
-      end = endOfWeek(currentDate, { weekStartsOn: 1 })
-    }
-
+    const start = startOfWeek(currentDate, { weekStartsOn: 1 })
+    const end = endOfWeek(currentDate, { weekStartsOn: 1 })
     const startIso = format(start, 'yyyy-MM-dd')
     const endIso = format(end, 'yyyy-MM-dd')
     await fetchEventsByRange(startIso, endIso)
-  }, [currentDate, viewMode, fetchEventsByRange])
+  }, [currentDate, fetchEventsByRange])
 
   useEffect(() => {
     reloadEvents()
   }, [reloadEvents])
 
-  // Navigation handlers
+  // Navigation handlers (Weekly steps)
   const handlePrev = () => {
-    if (viewMode === 'month') {
-      setCurrentDate((prev) => subMonths(prev, 1))
-    } else {
-      setCurrentDate((prev) => subWeeks(prev, 1))
-    }
+    setCurrentDate((prev) => subWeeks(prev, 1))
   }
 
   const handleNext = () => {
-    if (viewMode === 'month') {
-      setCurrentDate((prev) => addMonths(prev, 1))
-    } else {
-      setCurrentDate((prev) => addWeeks(prev, 1))
-    }
+    setCurrentDate((prev) => addWeeks(prev, 1))
   }
 
   const handleToday = () => {
@@ -122,35 +98,55 @@ export default function App(): React.ReactElement {
     setActiveTagIds([])
   }
 
+  // Live Tag Synchronization (Story 04 & Req 4):
+  // Resolve event tags against current reactive tags list by tag.id so any color or name edit
+  // reflects immediately across all event badges in the calendar.
+  const tagsMap = useMemo(() => new Map(tags.map((t) => [t.id, t])), [tags])
+
+  const eventsWithLiveTags = useMemo(() => {
+    return events.map((evt) => ({
+      ...evt,
+      tags: evt.tags
+        .map((t) => tagsMap.get(t.id) ?? t)
+        .filter((t) => tagsMap.has(t.id))
+    }))
+  }, [events, tagsMap])
+
   // Filter events using Headless EventFilterEngine
   const filteredEvents = useMemo(() => {
-    return EventFilterEngine.filter(events, {
+    return EventFilterEngine.filter(eventsWithLiveTags, {
       activeTagIds
     })
-  }, [events, activeTagIds])
+  }, [eventsWithLiveTags, activeTagIds])
 
-  // Build Month and Week Grids using Headless CalendarGridEngine
-  const monthGrid = useMemo(() => {
-    const year = currentDate.getFullYear()
-    const month = currentDate.getMonth() + 1
-    return CalendarGridEngine.buildMonthMatrix(year, month, filteredEvents)
-  }, [currentDate, filteredEvents])
-
+  // Build Week Grid using Headless CalendarGridEngine
   const weekGrid = useMemo(() => {
     return CalendarGridEngine.buildWeekMatrix(currentDate, filteredEvents)
   }, [currentDate, filteredEvents])
 
-  // Header Title
+  // Header Title: First Day - Last Day Month Year (no week number)
   const headerTitle = useMemo(() => {
-    if (viewMode === 'month') {
-      const formatted = format(currentDate, 'MMMM yyyy', { locale: it })
-      return formatted.charAt(0).toUpperCase() + formatted.slice(1)
-    } else {
-      const weekNumber = format(currentDate, 'w')
-      const formatted = format(currentDate, 'MMMM yyyy', { locale: it })
-      return `Settimana ${weekNumber} • ${formatted.charAt(0).toUpperCase() + formatted.slice(1)}`
+    const start = startOfWeek(currentDate, { weekStartsOn: 1 })
+    const end = endOfWeek(currentDate, { weekStartsOn: 1 })
+
+    const startDay = format(start, 'd')
+    const endDay = format(end, 'd')
+    const startMonth = format(start, 'MMMM', { locale: it })
+    const endMonth = format(end, 'MMMM', { locale: it })
+    const startYear = format(start, 'yyyy')
+    const endYear = format(end, 'yyyy')
+
+    const capStartMonth = startMonth.charAt(0).toUpperCase() + startMonth.slice(1)
+    const capEndMonth = endMonth.charAt(0).toUpperCase() + endMonth.slice(1)
+
+    if (startYear !== endYear) {
+      return `${startDay} ${capStartMonth} ${startYear} - ${endDay} ${capEndMonth} ${endYear}`
     }
-  }, [currentDate, viewMode])
+    if (startMonth !== endMonth) {
+      return `${startDay} ${capStartMonth} - ${endDay} ${capEndMonth} ${endYear}`
+    }
+    return `${startDay} - ${endDay} ${capEndMonth} ${endYear}`
+  }, [currentDate])
 
   // Event modal actions
   const handleOpenNewEvent = (targetDate?: Date) => {
@@ -178,6 +174,25 @@ export default function App(): React.ReactElement {
     await reloadEvents()
   }
 
+  // Tag Manager actions with automatic event reload
+  const handleCreateTag = async (input: CreateTagInput) => {
+    const res = await createTag(input)
+    await reloadEvents()
+    return res
+  }
+
+  const handleUpdateTag = async (id: string, input: UpdateTagInput) => {
+    const res = await updateTag(id, input)
+    await reloadEvents()
+    return res
+  }
+
+  const handleDeleteTag = async (id: string) => {
+    const res = await deleteTag(id)
+    await reloadEvents()
+    return res
+  }
+
   // Diagnostics check
   const handleRunDiagnostics = async () => {
     if (window.api) {
@@ -189,41 +204,21 @@ export default function App(): React.ReactElement {
 
   return (
     <div className="flex h-screen flex-col bg-slate-50 text-slate-900 select-none overflow-hidden font-sans">
-      {/* Top Application Bar */}
-      <header className="flex h-13 items-center justify-between border-b border-slate-200 bg-white px-6 shadow-2xs">
-        <div className="flex items-center gap-2.5">
-          <div className="flex h-8 w-8 items-center justify-center rounded-lg bg-blue-600 text-white shadow-2xs">
-            <CalendarIcon className="h-4 w-4" />
-          </div>
-          <div>
-            <h1 className="text-sm font-bold tracking-tight text-slate-900">Content Calendar</h1>
-            <p className="text-[10px] text-slate-400">Desktop Edition (Windows & macOS)</p>
-          </div>
-        </div>
-
-        <div className="flex items-center gap-2">
-          {/* Tag Manager Button */}
-          <button
-            onClick={() => setIsTagModalOpen(true)}
-            className="inline-flex items-center gap-1.5 rounded-lg border border-slate-200 bg-white px-3 py-1.5 text-xs font-semibold text-slate-700 shadow-2xs transition hover:bg-slate-50"
-          >
-            <TagIcon className="h-3.5 w-3.5 text-blue-600" />
-            <span>Tag</span>
-            <span className="ml-1 rounded-full bg-slate-100 px-1.5 py-0.2 text-[10px] font-bold text-slate-600">
-              {tags.length}
-            </span>
-          </button>
-
-          {/* Diagnostics toggle */}
-          <button
-            onClick={handleRunDiagnostics}
-            className="rounded-lg border border-slate-200 bg-white p-1.5 text-slate-500 shadow-2xs hover:bg-slate-50 transition"
-            title="Diagnostica di Sistema"
-          >
-            <SlidersHorizontal className="h-3.5 w-3.5" />
-          </button>
-        </div>
-      </header>
+      {/* Calendar Header with Week Title, Navigation, Actions & Filters */}
+      <CalendarHeader
+        title={headerTitle}
+        onPrev={handlePrev}
+        onNext={handleNext}
+        onToday={handleToday}
+        onNewEvent={() => handleOpenNewEvent()}
+        onOpenTagManager={() => setIsTagModalOpen(true)}
+        tagsCount={tags.length}
+        onRunDiagnostics={handleRunDiagnostics}
+        tags={tags}
+        activeTagIds={activeTagIds}
+        onToggleTagFilter={handleToggleTagFilter}
+        onClearFilters={handleClearFilters}
+      />
 
       {/* Diagnostics Banner if open */}
       {showDiagnostics && (
@@ -236,66 +231,44 @@ export default function App(): React.ReactElement {
           </div>
           <button
             onClick={() => setShowDiagnostics(false)}
-            className="text-blue-700 hover:text-blue-900 text-xs font-bold"
+            className="text-blue-700 hover:text-blue-900 text-xs font-bold cursor-pointer"
           >
             Chiudi
           </button>
         </div>
       )}
 
-      {/* Calendar Navigation & Filters Header */}
-      <CalendarHeader
-        title={headerTitle}
-        currentView={viewMode}
-        onViewChange={setViewMode}
-        onPrev={handlePrev}
-        onNext={handleNext}
-        onToday={handleToday}
-        onNewEvent={() => handleOpenNewEvent()}
-        tags={tags}
-        activeTagIds={activeTagIds}
-        onToggleTagFilter={handleToggleTagFilter}
-        onClearFilters={handleClearFilters}
-      />
-
-      {/* Calendar Grid View (Month or Week) */}
+      {/* Calendar Grid View (Week Only) */}
       <main className="flex flex-1 overflow-hidden">
-        {viewMode === 'month' ? (
-          <MonthCalendarView
-            grid={monthGrid}
-            onDayClick={(date) => handleOpenNewEvent(date)}
-            onEventClick={(evt) => handleOpenEditEvent(evt)}
-          />
-        ) : (
-          <WeekCalendarView
-            grid={weekGrid}
-            onDayClick={(date) => handleOpenNewEvent(date)}
-            onEventClick={(evt) => handleOpenEditEvent(evt)}
-          />
-        )}
+        <WeekCalendarView
+          grid={weekGrid}
+          onDayClick={(date) => handleOpenNewEvent(date)}
+          onEventClick={(evt) => handleOpenEditEvent(evt)}
+        />
       </main>
 
-      {/* Event Create / Edit Modal (Stories 06, 07, 08, 09) */}
+      {/* Event Create / Edit Modal */}
       <EventModal
         isOpen={isEventModalOpen}
         onClose={() => setIsEventModalOpen(false)}
         initialDate={selectedDayDate}
         eventToEdit={eventToEdit}
         availableTags={tags}
+        onCreateTag={handleCreateTag}
         onSave={handleSaveEvent}
         onDelete={handleDeleteEvent}
       />
 
-      {/* Tag Manager Modal (Story 04) */}
+      {/* Tag Manager Modal */}
       <TagManagerModal
         isOpen={isTagModalOpen}
         onClose={() => setIsTagModalOpen(false)}
         tags={tags}
         loading={tagsLoading}
         error={tagsError}
-        onCreateTag={createTag}
-        onUpdateTag={updateTag}
-        onDeleteTag={deleteTag}
+        onCreateTag={handleCreateTag}
+        onUpdateTag={handleUpdateTag}
+        onDeleteTag={handleDeleteTag}
         onClearError={clearTagError}
       />
     </div>

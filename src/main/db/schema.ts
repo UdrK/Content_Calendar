@@ -1,13 +1,11 @@
-import { sqliteTable, text, integer, primaryKey } from 'drizzle-orm/sqlite-core'
+import { sqliteTable, text, primaryKey } from 'drizzle-orm/sqlite-core'
 
 export const events = sqliteTable('events', {
   id: text('id').primaryKey(),
   type: text('type').$type<'simple' | 'attachment'>().notNull(),
   title: text('title').notNull(),
   description: text('description'),
-  startDate: text('start_date').notNull(),
-  endDate: text('end_date'),
-  isAllDay: integer('is_all_day', { mode: 'boolean' }).notNull().default(false),
+  date: text('date').notNull(),
   metadata: text('metadata'),
   createdAt: text('created_at').notNull(),
   updatedAt: text('updated_at').notNull()

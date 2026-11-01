@@ -11,7 +11,7 @@
     "typecheck": "npm run typecheck:node && npm run typecheck:web",
     "dev": "electron-vite dev",
     "build": "npm run typecheck && electron-vite build",
-    "test": "vitest run",
+    "test": "vitest run --cache=false",
     "pack": "npm run build && electron-builder --dir",
     "build:win": "npm run build && electron-builder --win",
     "build:mac": "npm run build && electron-builder --mac"

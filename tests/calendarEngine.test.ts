@@ -45,14 +45,12 @@ describe('Story 05 - CalendarGridEngine (Headless Domain Core)', () => {
     }
   })
 
-  it('should assign single-day events to the exact day cell', () => {
+  it('should assign single-day deadline events to the exact day cell', () => {
     const sampleEvent: EventWithDetails = {
       id: 'e-1',
       type: 'simple',
       title: 'YouTube Launch',
-      startDate: '2026-11-10T14:00:00',
-      endDate: null,
-      isAllDay: false,
+      date: '2026-11-10',
       createdAt: new Date().toISOString(),
       updatedAt: new Date().toISOString(),
       tags: [],
@@ -68,38 +66,24 @@ describe('Story 05 - CalendarGridEngine (Headless Domain Core)', () => {
     expect(otherCell?.events).toHaveLength(0)
   })
 
-  it('should sort all-day events before timed events, and timed events chronologically', () => {
-    const timedLater: EventWithDetails = {
-      id: 'e-timed-late',
+  it('should sort events alphabetically by title within a day', () => {
+    const eventB: EventWithDetails = {
+      id: 'e-b',
       type: 'simple',
-      title: 'Late Meeting',
-      startDate: '2026-11-10T18:00:00',
-      isAllDay: false,
-      createdAt: '',
+      title: 'Beta Release',
+      date: '2026-11-10',
+      createdAt: '2026-11-01T00:00:00',
       updatedAt: '',
       tags: [],
       attachments: []
     }
 
-    const allDayEvent: EventWithDetails = {
-      id: 'e-allday',
+    const eventA: EventWithDetails = {
+      id: 'e-a',
       type: 'simple',
-      title: 'National Holiday',
-      startDate: '2026-11-10T00:00:00',
-      isAllDay: true,
-      createdAt: '',
-      updatedAt: '',
-      tags: [],
-      attachments: []
-    }
-
-    const timedEarlier: EventWithDetails = {
-      id: 'e-timed-early',
-      type: 'simple',
-      title: 'Early Standup',
-      startDate: '2026-11-10T09:00:00',
-      isAllDay: false,
-      createdAt: '',
+      title: 'Alpha Testing',
+      date: '2026-11-10',
+      createdAt: '2026-11-01T00:00:00',
       updatedAt: '',
       tags: [],
       attachments: []
@@ -108,44 +92,39 @@ describe('Story 05 - CalendarGridEngine (Headless Domain Core)', () => {
     const grid = CalendarGridEngine.buildMonthMatrix(
       2026,
       11,
-      [timedLater, allDayEvent, timedEarlier],
+      [eventB, eventA],
       dummyToday
     )
 
     const cell = grid.days.find((d) => d.isoDateString === '2026-11-10')!
-    expect(cell.events).toHaveLength(3)
-    expect(cell.events[0].title).toBe('National Holiday') // all day
-    expect(cell.events[1].title).toBe('Early Standup') // 09:00
-    expect(cell.events[2].title).toBe('Late Meeting') // 18:00
+    expect(cell.events).toHaveLength(2)
+    expect(cell.events[0].title).toBe('Alpha Testing')
+    expect(cell.events[1].title).toBe('Beta Release')
   })
 
-  it('should support multi-day events across all covered days', () => {
-    const multiDayEvent: EventWithDetails = {
-      id: 'e-multi',
+  it('should build a 7-day week matrix starting on Monday', () => {
+    const sampleEvent: EventWithDetails = {
+      id: 'e-week',
       type: 'simple',
-      title: 'Campaign Week',
-      startDate: '2026-11-12T09:00:00',
-      endDate: '2026-11-14T18:00:00',
-      isAllDay: true,
+      title: 'Weekly Standup',
+      date: '2026-11-11',
       createdAt: '',
       updatedAt: '',
       tags: [],
       attachments: []
     }
 
-    const grid = CalendarGridEngine.buildMonthMatrix(2026, 11, [multiDayEvent], dummyToday)
-
-    expect(grid.days.find((d) => d.isoDateString === '2026-11-11')?.events).toHaveLength(0)
-    expect(grid.days.find((d) => d.isoDateString === '2026-11-12')?.events).toHaveLength(1)
-    expect(grid.days.find((d) => d.isoDateString === '2026-11-13')?.events).toHaveLength(1)
-    expect(grid.days.find((d) => d.isoDateString === '2026-11-14')?.events).toHaveLength(1)
-    expect(grid.days.find((d) => d.isoDateString === '2026-11-15')?.events).toHaveLength(0)
-  })
-
-  it('should build a 7-day week matrix starting on Monday', () => {
-    const weekGrid = CalendarGridEngine.buildWeekMatrix(new Date(2026, 10, 11), [], dummyToday)
+    const weekGrid = CalendarGridEngine.buildWeekMatrix(
+      new Date(2026, 10, 11),
+      [sampleEvent],
+      dummyToday
+    )
     expect(weekGrid.days).toHaveLength(7)
     expect(weekGrid.days[0].date.getDay()).toBe(1) // Monday
     expect(weekGrid.days[6].date.getDay()).toBe(0) // Sunday
+
+    const targetDay = weekGrid.days.find((d) => d.isoDateString === '2026-11-11')
+    expect(targetDay?.events).toHaveLength(1)
+    expect(targetDay?.events[0].title).toBe('Weekly Standup')
   })
 })

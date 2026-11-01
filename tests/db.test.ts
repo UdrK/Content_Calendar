@@ -1,37 +1,19 @@
 import { describe, it, expect, beforeEach, afterEach } from 'vitest'
-import { join } from 'path'
-import { unlinkSync, existsSync } from 'fs'
 import { initDatabase, closeDatabase } from '../src/main/db'
 import { tags, events, eventTags, eventAttachments } from '../src/main/db/schema'
 import { eq } from 'drizzle-orm'
 
-const TEST_DB_PATH = join(process.cwd(), 'data', 'test_calendar.sqlite')
-
 describe('Story 02 - SQLite Database & Drizzle ORM', () => {
   beforeEach(async () => {
     closeDatabase()
-    if (existsSync(TEST_DB_PATH)) {
-      try {
-        unlinkSync(TEST_DB_PATH)
-      } catch {
-        // ignore
-      }
-    }
   })
 
   afterEach(() => {
     closeDatabase()
-    if (existsSync(TEST_DB_PATH)) {
-      try {
-        unlinkSync(TEST_DB_PATH)
-      } catch {
-        // ignore
-      }
-    }
   })
 
   it('should initialize database and create all required tables', async () => {
-    const { client } = await initDatabase(TEST_DB_PATH)
+    const { client } = await initDatabase(':memory:')
     const tables = await client.execute(
       "SELECT name FROM sqlite_master WHERE type='table' AND name NOT LIKE 'sqlite_%'"
     )
@@ -44,7 +26,7 @@ describe('Story 02 - SQLite Database & Drizzle ORM', () => {
   })
 
   it('should insert and retrieve tags using Drizzle ORM', async () => {
-    const { db } = await initDatabase(TEST_DB_PATH)
+    const { db } = await initDatabase(':memory:')
 
     await db.insert(tags).values({
       id: 'tag-1',
@@ -59,7 +41,7 @@ describe('Story 02 - SQLite Database & Drizzle ORM', () => {
   })
 
   it('should insert event and cascade delete attachments and tags on event deletion', async () => {
-    const { db } = await initDatabase(TEST_DB_PATH)
+    const { db } = await initDatabase(':memory:')
 
     // Insert Tag
     await db.insert(tags).values({
@@ -74,9 +56,7 @@ describe('Story 02 - SQLite Database & Drizzle ORM', () => {
       type: 'attachment',
       title: 'Video Editing',
       description: 'Edit final draft',
-      startDate: '2026-11-01T10:00:00Z',
-      endDate: '2026-11-01T12:00:00Z',
-      isAllDay: false,
+      date: '2026-11-01',
       createdAt: new Date().toISOString(),
       updatedAt: new Date().toISOString()
     })
@@ -132,5 +112,64 @@ describe('Story 02 - SQLite Database & Drizzle ORM', () => {
     // Verify the tag itself still exists
     const remainingTag = await db.select().from(tags).where(eq(tags.id, 'tag-work'))
     expect(remainingTag).toHaveLength(1)
+  })
+
+  it('should migrate legacy tables with start_date without constraint errors on new inserts', async () => {
+    const { client, db } = await initDatabase(':memory:')
+
+    // Create legacy table structure with start_date NOT NULL
+    await client.executeMultiple(`
+      DROP TABLE IF EXISTS events;
+      CREATE TABLE events (
+        id TEXT PRIMARY KEY,
+        type TEXT NOT NULL,
+        title TEXT NOT NULL,
+        description TEXT,
+        start_date TEXT NOT NULL,
+        end_date TEXT,
+        is_all_day INTEGER NOT NULL DEFAULT 0,
+        metadata TEXT,
+        created_at TEXT NOT NULL,
+        updated_at TEXT NOT NULL
+      );
+      INSERT INTO events VALUES ('old-1', 'simple', 'Old Task', null, '2026-11-05T12:00:00', null, 0, null, '2026', '2026');
+    `)
+
+    // Simulate migration logic
+    const tableInfo = await client.execute("PRAGMA table_info('events');")
+    const columnNames = tableInfo.rows.map((r: any) => String(r.name))
+    if (!columnNames.includes('date')) {
+      await client.execute('ALTER TABLE events ADD COLUMN date TEXT;')
+      await client.execute(
+        "UPDATE events SET date = substr(start_date, 1, 10) WHERE date IS NULL OR date = '';"
+      )
+    }
+    if (columnNames.includes('start_date')) {
+      await client.execute('ALTER TABLE events DROP COLUMN start_date;')
+    }
+    if (columnNames.includes('end_date')) {
+      await client.execute('ALTER TABLE events DROP COLUMN end_date;')
+    }
+    if (columnNames.includes('is_all_day')) {
+      await client.execute('ALTER TABLE events DROP COLUMN is_all_day;')
+    }
+
+    // Check old record converted
+    const existing = await db.select().from(events)
+    expect(existing).toHaveLength(1)
+    expect(existing[0].date).toBe('2026-11-05')
+
+    // Inserting new event with ONLY date must succeed (no NOT NULL constraint on start_date)
+    await db.insert(events).values({
+      id: 'new-2',
+      type: 'simple',
+      title: 'New Task',
+      date: '2026-11-06',
+      createdAt: '2026',
+      updatedAt: '2026'
+    })
+
+    const all = await db.select().from(events)
+    expect(all).toHaveLength(2)
   })
 })

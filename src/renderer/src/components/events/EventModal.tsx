@@ -1,23 +1,23 @@
-import React, { useState, useEffect } from 'react'
+import React, { useState, useEffect, useMemo } from 'react'
 import {
   X,
   Calendar,
   FolderOpen,
   Paperclip,
   Trash2,
-  Clock,
   Tag as TagIcon,
-  AlertCircle,
-  FileText
+  AlertCircle
 } from 'lucide-react'
 import {
   EventWithDetails,
   TagRecord,
   CreateEventInput,
   UpdateEventInput,
+  CreateTagInput,
   FileAttachmentInput
 } from '@shared/types'
 import { format } from 'date-fns'
+import { it } from 'date-fns/locale'
 
 interface EventModalProps {
   isOpen: boolean
@@ -25,9 +25,19 @@ interface EventModalProps {
   initialDate?: Date | null
   eventToEdit?: EventWithDetails | null
   availableTags: TagRecord[]
+  onCreateTag?: (input: CreateTagInput) => Promise<TagRecord>
   onSave: (data: CreateEventInput | UpdateEventInput) => Promise<void>
   onDelete?: (id: string) => Promise<void>
 }
+
+const DEFAULT_TAG_COLORS = [
+  '#3B82F6', // Blue
+  '#10B981', // Emerald
+  '#8B5CF6', // Purple
+  '#F59E0B', // Amber
+  '#EC4899', // Pink
+  '#06B6D4'  // Cyan
+]
 
 export const EventModal: React.FC<EventModalProps> = ({
   isOpen,
@@ -35,6 +45,7 @@ export const EventModal: React.FC<EventModalProps> = ({
   initialDate,
   eventToEdit,
   availableTags,
+  onCreateTag,
   onSave,
   onDelete
 }) => {
@@ -43,10 +54,9 @@ export const EventModal: React.FC<EventModalProps> = ({
   // Form fields
   const [title, setTitle] = useState('')
   const [description, setDescription] = useState('')
-  const [startDate, setStartDate] = useState('')
-  const [endDate, setEndDate] = useState('')
-  const [isAllDay, setIsAllDay] = useState(false)
+  const [date, setDate] = useState('')
   const [selectedTagIds, setSelectedTagIds] = useState<string[]>([])
+  const [tagInput, setTagInput] = useState('')
   const [attachments, setAttachments] = useState<FileAttachmentInput[]>([])
 
   const [submitting, setSubmitting] = useState(false)
@@ -60,17 +70,14 @@ export const EventModal: React.FC<EventModalProps> = ({
       setErrorMessage(null)
       setRevealStatus(null)
       setConfirmDelete(false)
+      setTagInput('')
       return
     }
 
     if (eventToEdit) {
       setTitle(eventToEdit.title)
       setDescription(eventToEdit.description || '')
-      setStartDate(
-        eventToEdit.startDate.slice(0, 16) // format for datetime-local
-      )
-      setEndDate(eventToEdit.endDate ? eventToEdit.endDate.slice(0, 16) : '')
-      setIsAllDay(eventToEdit.isAllDay)
+      setDate(eventToEdit.date.slice(0, 10))
       setSelectedTagIds(eventToEdit.tags.map((t) => t.id))
       setAttachments(
         eventToEdit.attachments.map((a) => ({
@@ -81,12 +88,10 @@ export const EventModal: React.FC<EventModalProps> = ({
       )
     } else {
       const defaultDate = initialDate ? new Date(initialDate) : new Date()
-      const formattedDefault = format(defaultDate, "yyyy-MM-dd'T'10:00")
+      const formattedDefault = format(defaultDate, 'yyyy-MM-dd')
       setTitle('')
       setDescription('')
-      setStartDate(formattedDefault)
-      setEndDate('')
-      setIsAllDay(false)
+      setDate(formattedDefault)
       setSelectedTagIds([])
       setAttachments([])
     }
@@ -101,12 +106,64 @@ export const EventModal: React.FC<EventModalProps> = ({
     return () => window.removeEventListener('keydown', handleKeyDown)
   }, [isOpen, onClose])
 
-  if (!isOpen) return null
+  // Memoized formatted date text
+  const formattedDateText = useMemo(() => {
+    if (!date) return ''
+    try {
+      const parsed = new Date(`${date}T12:00:00`)
+      if (isNaN(parsed.getTime())) return date
+      const formatted = format(parsed, 'EEEE d MMMM yyyy', { locale: it })
+      return formatted.charAt(0).toUpperCase() + formatted.slice(1)
+    } catch {
+      return date
+    }
+  }, [date])
 
-  const handleToggleTag = (tagId: string) => {
-    setSelectedTagIds((prev) =>
-      prev.includes(tagId) ? prev.filter((id) => id !== tagId) : [...prev, tagId]
+  // Tag creation / assignment on the fly
+  const handleAddOrApplyTag = async (tagNameToApply: string) => {
+    const trimmed = tagNameToApply.trim()
+    if (!trimmed) return
+
+    // Check if tag already exists in availableTags (case-insensitive)
+    const existing = availableTags.find(
+      (t) => t.name.toLowerCase() === trimmed.toLowerCase()
     )
+
+    if (existing) {
+      if (!selectedTagIds.includes(existing.id)) {
+        setSelectedTagIds((prev) => [...prev, existing.id])
+      }
+      setTagInput('')
+      return
+    }
+
+    // If tag does not exist, create it with a pleasant default color
+    if (onCreateTag) {
+      try {
+        const randomColor =
+          DEFAULT_TAG_COLORS[Math.floor(Math.random() * DEFAULT_TAG_COLORS.length)]
+        const newTag = await onCreateTag({
+          name: trimmed,
+          colorHex: randomColor
+        })
+        setSelectedTagIds((prev) => [...prev, newTag.id])
+        setTagInput('')
+      } catch (err: unknown) {
+        const msg = err instanceof Error ? err.message : String(err)
+        setErrorMessage(msg)
+      }
+    }
+  }
+
+  const handleTagInputKeyDown = (e: React.KeyboardEvent<HTMLInputElement>) => {
+    if (e.key === 'Enter') {
+      e.preventDefault()
+      handleAddOrApplyTag(tagInput)
+    }
+  }
+
+  const handleRemoveTag = (tagIdToRemove: string) => {
+    setSelectedTagIds((prev) => prev.filter((id) => id !== tagIdToRemove))
   }
 
   const handlePickFiles = async () => {
@@ -155,8 +212,8 @@ export const EventModal: React.FC<EventModalProps> = ({
       return
     }
 
-    if (!startDate) {
-      setErrorMessage("Inserisci una data di inizio valida.")
+    if (!date) {
+      setErrorMessage('Inserisci una data valida.')
       return
     }
 
@@ -165,9 +222,7 @@ export const EventModal: React.FC<EventModalProps> = ({
       const payload: CreateEventInput | UpdateEventInput = {
         title: trimmedTitle,
         description: description.trim() || null,
-        startDate,
-        endDate: endDate ? endDate : null,
-        isAllDay,
+        date,
         tagIds: selectedTagIds,
         attachments,
         type: attachments.length > 0 ? 'attachment' : 'simple'
@@ -197,6 +252,15 @@ export const EventModal: React.FC<EventModalProps> = ({
     }
   }
 
+  if (!isOpen) return null
+
+  // Tags lookup
+  const tagsById = new Map(availableTags.map((t) => [t.id, t]))
+  const selectedTags = selectedTagIds
+    .map((id) => tagsById.get(id))
+    .filter((t): t is TagRecord => !!t)
+  const unselectedTags = availableTags.filter((t) => !selectedTagIds.includes(t.id))
+
   return (
     <div className="fixed inset-0 z-50 flex items-center justify-center bg-slate-900/40 backdrop-blur-xs p-4">
       <div className="w-full max-w-xl rounded-2xl bg-white shadow-xl border border-slate-200 overflow-hidden flex flex-col max-h-[92vh]">
@@ -207,20 +271,27 @@ export const EventModal: React.FC<EventModalProps> = ({
               <Calendar className="h-4 w-4" />
             </div>
             <div>
-              <h2 className="text-base font-semibold text-slate-900">
-                {isEditing ? 'Modifica Evento' : 'Nuovo Evento'}
-              </h2>
-              <p className="text-xs text-slate-500">
+              <div className="flex items-center gap-2">
+                <h2 className="text-base font-semibold text-slate-900">
+                  {isEditing ? 'Modifica Scadenza' : 'Nuova Scadenza'}
+                </h2>
+                {formattedDateText && (
+                  <span className="rounded-md bg-blue-50 px-2 py-0.5 text-[11px] font-semibold text-blue-700 border border-blue-200">
+                    {formattedDateText}
+                  </span>
+                )}
+              </div>
+              <p className="text-xs text-slate-500 mt-0.5">
                 {isEditing
-                  ? "Aggiorna le informazioni dell'evento e gli allegati associati"
-                  : 'Crea un nuovo evento con tag e file locali'}
+                  ? 'Aggiorna i dettagli, tag e allegati della scadenza'
+                  : 'Aggiungi titolo, tag e file associati a questo giorno'}
               </p>
             </div>
           </div>
 
           <button
             onClick={onClose}
-            className="rounded-lg p-1.5 text-slate-400 hover:bg-slate-100 hover:text-slate-600 transition"
+            className="rounded-lg p-1.5 text-slate-400 hover:bg-slate-100 hover:text-slate-600 transition cursor-pointer"
           >
             <X className="h-4 w-4" />
           </button>
@@ -242,7 +313,7 @@ export const EventModal: React.FC<EventModalProps> = ({
             </label>
             <input
               type="text"
-              placeholder="es. Pubblicazione Video YouTube, Articolo Blog..."
+              placeholder="es. Pubblicazione Video YouTube, Invio Newsletter..."
               value={title}
               onChange={(e) => setTitle(e.target.value)}
               maxLength={200}
@@ -251,86 +322,94 @@ export const EventModal: React.FC<EventModalProps> = ({
             />
           </div>
 
-          {/* Date & Time Row */}
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-3">
-            <div>
-              <label className="block text-xs font-semibold text-slate-700 mb-1">
-                Data Inizio <span className="text-rose-500">*</span>
-              </label>
-              <input
-                type={isAllDay ? 'date' : 'datetime-local'}
-                value={isAllDay ? startDate.slice(0, 10) : startDate}
-                onChange={(e) => setStartDate(e.target.value)}
-                required
-                className="w-full rounded-lg border border-slate-300 bg-white px-3 py-1.5 text-xs text-slate-800 focus:border-blue-500 focus:outline-hidden"
-              />
-            </div>
-
-            <div>
-              <label className="block text-xs font-semibold text-slate-700 mb-1">
-                Data Fine (Opzionale)
-              </label>
-              <input
-                type={isAllDay ? 'date' : 'datetime-local'}
-                value={isAllDay ? (endDate ? endDate.slice(0, 10) : '') : endDate}
-                onChange={(e) => setEndDate(e.target.value)}
-                className="w-full rounded-lg border border-slate-300 bg-white px-3 py-1.5 text-xs text-slate-800 focus:border-blue-500 focus:outline-hidden"
-              />
-            </div>
-          </div>
-
-          {/* All Day Checkbox */}
-          <div className="flex items-center gap-2">
-            <input
-              type="checkbox"
-              id="isAllDay"
-              checked={isAllDay}
-              onChange={(e) => setIsAllDay(e.target.checked)}
-              className="h-3.5 w-3.5 rounded border-slate-300 text-blue-600 focus:ring-blue-500"
-            />
-            <label htmlFor="isAllDay" className="text-xs font-medium text-slate-600 cursor-pointer">
-              Evento per tutto il giorno
-            </label>
-          </div>
-
-          {/* Tags Selector */}
-          <div>
-            <label className="block text-xs font-semibold text-slate-700 mb-1.5">
+          {/* Tags Selector & Quick Creation */}
+          <div className="space-y-2">
+            <label className="block text-xs font-semibold text-slate-700">
               Tag Associati
             </label>
-            {availableTags.length === 0 ? (
-              <p className="text-xs text-slate-400 italic">
-                Nessun tag disponibile. Creane uno tramite il pulsante "Gestione Tag".
-              </p>
-            ) : (
-              <div className="flex flex-wrap gap-1.5">
-                {availableTags.map((tag) => {
-                  const isSelected = selectedTagIds.includes(tag.id)
-                  return (
+
+            {/* Selected Tags Display */}
+            {selectedTags.length > 0 && (
+              <div className="flex flex-wrap gap-1.5 mb-1.5">
+                {selectedTags.map((tag) => (
+                  <span
+                    key={tag.id}
+                    className="inline-flex items-center gap-1.5 rounded-full px-2.5 py-1 text-xs font-semibold border shadow-2xs transition"
+                    style={{
+                      backgroundColor: `${tag.colorHex}20`,
+                      color: tag.colorHex,
+                      borderColor: `${tag.colorHex}50`
+                    }}
+                  >
+                    <span
+                      className="h-1.5 w-1.5 rounded-full"
+                      style={{ backgroundColor: tag.colorHex }}
+                    />
+                    <span>{tag.name}</span>
+                    <button
+                      type="button"
+                      onClick={() => handleRemoveTag(tag.id)}
+                      className="ml-0.5 rounded-full p-0.5 hover:bg-black/10 transition cursor-pointer"
+                      title="Rimuovi tag"
+                    >
+                      <X className="h-3 w-3" />
+                    </button>
+                  </span>
+                ))}
+              </div>
+            )}
+
+            {/* Quick Tag Creation / Input */}
+            <div className="flex items-center gap-2">
+              <div className="relative flex-1">
+                <TagIcon className="absolute left-2.5 top-2.5 h-3.5 w-3.5 text-slate-400" />
+                <input
+                  type="text"
+                  placeholder="Scrivi un tag e premi Invio per applicarlo o crearlo..."
+                  value={tagInput}
+                  onChange={(e) => setTagInput(e.target.value)}
+                  onKeyDown={handleTagInputKeyDown}
+                  className="w-full rounded-lg border border-slate-300 bg-white pl-8 pr-3 py-1.5 text-xs text-slate-800 placeholder-slate-400 focus:border-blue-500 focus:outline-hidden"
+                />
+              </div>
+              {tagInput.trim() && (
+                <button
+                  type="button"
+                  onClick={() => handleAddOrApplyTag(tagInput)}
+                  className="rounded-lg bg-blue-50 hover:bg-blue-100 border border-blue-200 px-3 py-1.5 text-xs font-semibold text-blue-700 transition"
+                >
+                  Applica
+                </button>
+              )}
+            </div>
+
+            {/* Suggested / Available Tags list */}
+            {unselectedTags.length > 0 && (
+              <div className="pt-1">
+                <span className="text-[11px] text-slate-400 block mb-1">
+                  Tag disponibili (clicca per associare):
+                </span>
+                <div className="flex flex-wrap gap-1.5 max-h-24 overflow-y-auto">
+                  {unselectedTags.map((tag) => (
                     <button
                       key={tag.id}
                       type="button"
-                      onClick={() => handleToggleTag(tag.id)}
-                      className={`inline-flex items-center gap-1.5 rounded-full px-2.5 py-1 text-xs font-medium transition border ${
-                        isSelected
-                          ? 'ring-2 ring-offset-1 font-semibold'
-                          : 'opacity-60 hover:opacity-100'
-                      }`}
+                      onClick={() => handleAddOrApplyTag(tag.name)}
+                      className="inline-flex items-center gap-1.5 rounded-full px-2 py-0.5 text-xs font-medium transition opacity-70 hover:opacity-100 border cursor-pointer"
                       style={{
-                        backgroundColor: `${tag.colorHex}20`,
+                        backgroundColor: `${tag.colorHex}15`,
                         color: tag.colorHex,
-                        borderColor: `${tag.colorHex}50`,
-                        ...(isSelected ? { ringColor: tag.colorHex } : {})
+                        borderColor: `${tag.colorHex}40`
                       }}
                     >
                       <span
                         className="h-1.5 w-1.5 rounded-full"
                         style={{ backgroundColor: tag.colorHex }}
                       />
-                      <span>{tag.name}</span>
+                      <span>+ {tag.name}</span>
                     </button>
-                  )
-                })}
+                  ))}
+                </div>
               </div>
             )}
           </div>
@@ -349,7 +428,7 @@ export const EventModal: React.FC<EventModalProps> = ({
             />
           </div>
 
-          {/* Allegati Locali Section (Story 08 & 09) */}
+          {/* Allegati Locali Section */}
           <div className="rounded-xl border border-slate-200 bg-slate-50/70 p-4 space-y-3">
             <div className="flex items-center justify-between">
               <div className="flex items-center gap-2">
@@ -391,7 +470,7 @@ export const EventModal: React.FC<EventModalProps> = ({
                     </div>
 
                     <div className="flex items-center gap-1 ml-2 shrink-0">
-                      {/* Action: Reveal in Folder (Story 08 & 09) */}
+                      {/* Action: Reveal in Folder */}
                       <button
                         type="button"
                         onClick={() => handleRevealInFolder(att.filePath)}
@@ -479,7 +558,7 @@ export const EventModal: React.FC<EventModalProps> = ({
               disabled={submitting || !title.trim()}
               className="rounded-lg bg-blue-600 px-4 py-1.5 text-xs font-semibold text-white shadow-xs hover:bg-blue-700 disabled:opacity-50 transition"
             >
-              {submitting ? 'Salvataggio...' : isEditing ? 'Salva Modifiche' : 'Crea Evento'}
+              {submitting ? 'Salvataggio...' : isEditing ? 'Salva Modifiche' : 'Crea Scadenza'}
             </button>
           </div>
         </div>

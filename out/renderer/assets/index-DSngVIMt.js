@@ -7053,60 +7053,37 @@ const createLucideIcon = (iconName, iconNode) => {
  * This source code is licensed under the ISC license.
  * See the LICENSE file in the root directory of this source tree.
  */
-const __iconNode$f = [
+const __iconNode$d = [
   ["path", { d: "M8 2v4", key: "1cmpym" }],
   ["path", { d: "M16 2v4", key: "4m81vk" }],
   ["rect", { width: "18", height: "18", x: "3", y: "4", rx: "2", key: "1hopcy" }],
   ["path", { d: "M3 10h18", key: "8toen8" }]
 ];
-const Calendar = createLucideIcon("Calendar", __iconNode$f);
+const Calendar = createLucideIcon("Calendar", __iconNode$d);
 /**
  * @license lucide-react v0.475.0 - ISC
  *
  * This source code is licensed under the ISC license.
  * See the LICENSE file in the root directory of this source tree.
  */
-const __iconNode$e = [["path", { d: "M20 6 9 17l-5-5", key: "1gmf2c" }]];
-const Check = createLucideIcon("Check", __iconNode$e);
+const __iconNode$c = [["path", { d: "M20 6 9 17l-5-5", key: "1gmf2c" }]];
+const Check = createLucideIcon("Check", __iconNode$c);
 /**
  * @license lucide-react v0.475.0 - ISC
  *
  * This source code is licensed under the ISC license.
  * See the LICENSE file in the root directory of this source tree.
  */
-const __iconNode$d = [["path", { d: "m15 18-6-6 6-6", key: "1wnfg3" }]];
-const ChevronLeft = createLucideIcon("ChevronLeft", __iconNode$d);
+const __iconNode$b = [["path", { d: "m15 18-6-6 6-6", key: "1wnfg3" }]];
+const ChevronLeft = createLucideIcon("ChevronLeft", __iconNode$b);
 /**
  * @license lucide-react v0.475.0 - ISC
  *
  * This source code is licensed under the ISC license.
  * See the LICENSE file in the root directory of this source tree.
  */
-const __iconNode$c = [["path", { d: "m9 18 6-6-6-6", key: "mthhwq" }]];
-const ChevronRight = createLucideIcon("ChevronRight", __iconNode$c);
-/**
- * @license lucide-react v0.475.0 - ISC
- *
- * This source code is licensed under the ISC license.
- * See the LICENSE file in the root directory of this source tree.
- */
-const __iconNode$b = [
-  ["circle", { cx: "12", cy: "12", r: "10", key: "1mglay" }],
-  ["line", { x1: "12", x2: "12", y1: "8", y2: "12", key: "1pkeuh" }],
-  ["line", { x1: "12", x2: "12.01", y1: "16", y2: "16", key: "4dfq90" }]
-];
-const CircleAlert = createLucideIcon("CircleAlert", __iconNode$b);
-/**
- * @license lucide-react v0.475.0 - ISC
- *
- * This source code is licensed under the ISC license.
- * See the LICENSE file in the root directory of this source tree.
- */
-const __iconNode$a = [
-  ["rect", { width: "18", height: "18", x: "3", y: "3", rx: "2", key: "afitv7" }],
-  ["path", { d: "M12 3v18", key: "108xh3" }]
-];
-const Columns2 = createLucideIcon("Columns2", __iconNode$a);
+const __iconNode$a = [["path", { d: "m9 18 6-6-6-6", key: "mthhwq" }]];
+const ChevronRight = createLucideIcon("ChevronRight", __iconNode$a);
 /**
  * @license lucide-react v0.475.0 - ISC
  *
@@ -7114,9 +7091,11 @@ const Columns2 = createLucideIcon("Columns2", __iconNode$a);
  * See the LICENSE file in the root directory of this source tree.
  */
 const __iconNode$9 = [
-  ["polygon", { points: "22 3 2 3 10 12.46 10 19 14 21 14 12.46 22 3", key: "1yg77f" }]
+  ["circle", { cx: "12", cy: "12", r: "10", key: "1mglay" }],
+  ["line", { x1: "12", x2: "12", y1: "8", y2: "12", key: "1pkeuh" }],
+  ["line", { x1: "12", x2: "12.01", y1: "16", y2: "16", key: "4dfq90" }]
 ];
-const Filter = createLucideIcon("Filter", __iconNode$9);
+const CircleAlert = createLucideIcon("CircleAlert", __iconNode$9);
 /**
  * @license lucide-react v0.475.0 - ISC
  *
@@ -7124,6 +7103,16 @@ const Filter = createLucideIcon("Filter", __iconNode$9);
  * See the LICENSE file in the root directory of this source tree.
  */
 const __iconNode$8 = [
+  ["polygon", { points: "22 3 2 3 10 12.46 10 19 14 21 14 12.46 22 3", key: "1yg77f" }]
+];
+const Filter = createLucideIcon("Filter", __iconNode$8);
+/**
+ * @license lucide-react v0.475.0 - ISC
+ *
+ * This source code is licensed under the ISC license.
+ * See the LICENSE file in the root directory of this source tree.
+ */
+const __iconNode$7 = [
   [
     "path",
     {
@@ -7132,20 +7121,7 @@ const __iconNode$8 = [
     }
   ]
 ];
-const FolderOpen = createLucideIcon("FolderOpen", __iconNode$8);
-/**
- * @license lucide-react v0.475.0 - ISC
- *
- * This source code is licensed under the ISC license.
- * See the LICENSE file in the root directory of this source tree.
- */
-const __iconNode$7 = [
-  ["rect", { width: "7", height: "7", x: "3", y: "3", rx: "1", key: "1g98yp" }],
-  ["rect", { width: "7", height: "7", x: "14", y: "3", rx: "1", key: "6d4xhi" }],
-  ["rect", { width: "7", height: "7", x: "14", y: "14", rx: "1", key: "nxv5o0" }],
-  ["rect", { width: "7", height: "7", x: "3", y: "14", rx: "1", key: "1bb6yr" }]
-];
-const LayoutGrid = createLucideIcon("LayoutGrid", __iconNode$7);
+const FolderOpen = createLucideIcon("FolderOpen", __iconNode$7);
 /**
  * @license lucide-react v0.475.0 - ISC
  *
@@ -7270,27 +7246,6 @@ function addDays(date, amount, options) {
   _date.setDate(_date.getDate() + amount);
   return _date;
 }
-function addMonths(date, amount, options) {
-  const _date = toDate(date, options?.in);
-  if (isNaN(amount)) return constructFrom(date, NaN);
-  if (!amount) {
-    return _date;
-  }
-  const dayOfMonth = _date.getDate();
-  const endOfDesiredMonth = constructFrom(date, _date.getTime());
-  endOfDesiredMonth.setMonth(_date.getMonth() + amount + 1, 0);
-  const daysInMonth = endOfDesiredMonth.getDate();
-  if (dayOfMonth >= daysInMonth) {
-    return endOfDesiredMonth;
-  } else {
-    _date.setFullYear(
-      endOfDesiredMonth.getFullYear(),
-      endOfDesiredMonth.getMonth(),
-      dayOfMonth
-    );
-    return _date;
-  }
-}
 function isWeekend(date, options) {
   const day = toDate(date, options?.in).getDay();
   return day === 0 || day === 6;
@@ -7394,11 +7349,6 @@ function isDate(value) {
 }
 function isValid(date) {
   return !(!isDate(date) && typeof date !== "number" || isNaN(+toDate(date)));
-}
-function endOfDay(date, options) {
-  const _date = toDate(date, options?.in);
-  _date.setHours(23, 59, 59, 999);
-  return _date;
 }
 function endOfMonth(date, options) {
   const _date = toDate(date, options?.in);
@@ -8774,9 +8724,6 @@ function isSameMonth(laterDate, earlierDate, options) {
   );
   return laterDate_.getFullYear() === earlierDate_.getFullYear() && laterDate_.getMonth() === earlierDate_.getMonth();
 }
-function subMonths(date, amount, options) {
-  return addMonths(date, -1, options);
-}
 function subWeeks(date, amount, options) {
   return addWeeks(date, -1, options);
 }
@@ -9231,25 +9178,23 @@ const it = {
 };
 class CalendarGridEngine {
   /**
-   * Sorts events: all-day events first, then chronologically by start date
+   * Sorts events: alphabetically by title, then creation date
    */
   static sortEvents(events) {
     return [...events].sort((a, b) => {
-      if (a.isAllDay && !b.isAllDay) return -1;
-      if (!a.isAllDay && b.isAllDay) return 1;
-      return new Date(a.startDate).getTime() - new Date(b.startDate).getTime();
+      const titleCompare = a.title.localeCompare(b.title);
+      if (titleCompare !== 0) return titleCompare;
+      return (a.createdAt || "").localeCompare(b.createdAt || "");
     });
   }
   /**
    * Checks if an event is active on a given day (Date object)
-   * Uses precise timestamp interval overlap: eventStart <= dayEnd && eventEnd >= dayStart
+   * Matches event date (YYYY-MM-DD) with target day
    */
   static isEventOnDay(event, targetDate) {
-    const dayStart = startOfDay(targetDate).getTime();
-    const dayEnd = endOfDay(targetDate).getTime();
-    const eventStart = new Date(event.startDate).getTime();
-    const eventEnd = event.endDate ? new Date(event.endDate).getTime() : eventStart;
-    return eventStart <= dayEnd && eventEnd >= dayStart;
+    const targetIso = format(targetDate, "yyyy-MM-dd");
+    const eventDate = event.date?.slice(0, 10);
+    return eventDate === targetIso;
   }
   /**
    * Builds the complete 42-day month grid (6 weeks of 7 days, starting on Monday)
@@ -9537,8 +9482,6 @@ function useEvents() {
 }
 const CalendarHeader = ({
   title,
-  currentView,
-  onViewChange,
   onPrev,
   onNext,
   onToday,
@@ -9558,7 +9501,7 @@ const CalendarHeader = ({
             {
               onClick: onPrev,
               className: "p-1.5 text-slate-500 hover:bg-slate-50 hover:text-slate-800 transition rounded-l-lg",
-              title: "Precedente",
+              title: "Settimana precedente",
               children: /* @__PURE__ */ jsxRuntimeExports.jsx(ChevronLeft, { className: "h-4 w-4" })
             }
           ),
@@ -9575,49 +9518,23 @@ const CalendarHeader = ({
             {
               onClick: onNext,
               className: "p-1.5 text-slate-500 hover:bg-slate-50 hover:text-slate-800 transition rounded-r-lg",
-              title: "Successivo",
+              title: "Settimana successiva",
               children: /* @__PURE__ */ jsxRuntimeExports.jsx(ChevronRight, { className: "h-4 w-4" })
             }
           )
         ] })
       ] }),
-      /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { className: "flex items-center gap-2", children: [
-        /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { className: "flex items-center rounded-lg border border-slate-200 bg-slate-100/70 p-0.5 text-xs font-medium shadow-2xs", children: [
-          /* @__PURE__ */ jsxRuntimeExports.jsxs(
-            "button",
-            {
-              onClick: () => onViewChange("month"),
-              className: `inline-flex items-center gap-1.5 rounded-md px-3 py-1 transition ${currentView === "month" ? "bg-white text-slate-900 shadow-2xs" : "text-slate-600 hover:text-slate-900"}`,
-              children: [
-                /* @__PURE__ */ jsxRuntimeExports.jsx(LayoutGrid, { className: "h-3.5 w-3.5" }),
-                "Mese"
-              ]
-            }
-          ),
-          /* @__PURE__ */ jsxRuntimeExports.jsxs(
-            "button",
-            {
-              onClick: () => onViewChange("week"),
-              className: `inline-flex items-center gap-1.5 rounded-md px-3 py-1 transition ${currentView === "week" ? "bg-white text-slate-900 shadow-2xs" : "text-slate-600 hover:text-slate-900"}`,
-              children: [
-                /* @__PURE__ */ jsxRuntimeExports.jsx(Columns2, { className: "h-3.5 w-3.5" }),
-                "Settimana"
-              ]
-            }
-          )
-        ] }),
-        /* @__PURE__ */ jsxRuntimeExports.jsxs(
-          "button",
-          {
-            onClick: onNewEvent,
-            className: "inline-flex items-center gap-1.5 rounded-lg bg-blue-600 px-3.5 py-1.5 text-xs font-semibold text-white shadow-xs transition hover:bg-blue-700 active:scale-95",
-            children: [
-              /* @__PURE__ */ jsxRuntimeExports.jsx(Plus, { className: "h-4 w-4" }),
-              "Nuovo Evento"
-            ]
-          }
-        )
-      ] })
+      /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: "flex items-center gap-2", children: /* @__PURE__ */ jsxRuntimeExports.jsxs(
+        "button",
+        {
+          onClick: onNewEvent,
+          className: "inline-flex items-center gap-1.5 rounded-lg bg-blue-600 px-3.5 py-1.5 text-xs font-semibold text-white shadow-xs transition hover:bg-blue-700 active:scale-95",
+          children: [
+            /* @__PURE__ */ jsxRuntimeExports.jsx(Plus, { className: "h-4 w-4" }),
+            "Nuova Scadenza"
+          ]
+        }
+      ) })
     ] }),
     tags.length > 0 && /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { className: "flex items-center gap-2 overflow-x-auto pt-1 text-xs", children: [
       /* @__PURE__ */ jsxRuntimeExports.jsxs("span", { className: "inline-flex items-center gap-1 text-[11px] font-semibold text-slate-400 uppercase tracking-wider shrink-0", children: [
@@ -9661,103 +9578,6 @@ const CalendarHeader = ({
       })
     ] })
   ] });
-};
-const WEEKDAYS = ["Lun", "Mar", "Mer", "Gio", "Ven", "Sab", "Dom"];
-const MonthCalendarView = ({
-  grid,
-  onDayClick,
-  onEventClick
-}) => {
-  return /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { className: "flex flex-1 flex-col overflow-hidden bg-white", children: [
-    /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: "grid grid-cols-7 border-b border-slate-200 bg-slate-50 text-center text-xs font-semibold uppercase tracking-wider text-slate-500 py-2", children: WEEKDAYS.map((day, idx) => /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: idx >= 5 ? "text-blue-600/80" : "", children: day }, day)) }),
-    /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: "grid flex-1 grid-cols-7 grid-rows-6 divide-x divide-y divide-slate-100 overflow-y-auto", children: grid.days.map((dayCell) => /* @__PURE__ */ jsxRuntimeExports.jsx(
-      DayCellItem,
-      {
-        day: dayCell,
-        onDayClick,
-        onEventClick
-      },
-      dayCell.isoDateString
-    )) })
-  ] });
-};
-const DayCellItem = ({ day, onDayClick, onEventClick }) => {
-  const MAX_VISIBLE_EVENTS = 3;
-  const visibleEvents = day.events.slice(0, MAX_VISIBLE_EVENTS);
-  const remainingCount = day.events.length - MAX_VISIBLE_EVENTS;
-  return /* @__PURE__ */ jsxRuntimeExports.jsxs(
-    "div",
-    {
-      onClick: () => onDayClick(day.date),
-      className: `group relative flex flex-col p-1.5 transition select-none cursor-pointer min-h-[95px] ${!day.isCurrentMonth ? "bg-slate-50/60 text-slate-400" : day.isWeekend ? "bg-slate-50/20 text-slate-800" : "bg-white text-slate-800"} hover:bg-blue-50/20`,
-      children: [
-        /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { className: "flex items-center justify-between", children: [
-          /* @__PURE__ */ jsxRuntimeExports.jsx(
-            "span",
-            {
-              className: `flex h-6 w-6 items-center justify-center rounded-full text-xs font-semibold ${day.isToday ? "bg-blue-600 text-white shadow-2xs font-bold" : !day.isCurrentMonth ? "text-slate-400" : "text-slate-700"}`,
-              children: day.dayNumber
-            }
-          ),
-          /* @__PURE__ */ jsxRuntimeExports.jsx(
-            "button",
-            {
-              type: "button",
-              onClick: (e) => {
-                e.stopPropagation();
-                onDayClick(day.date);
-              },
-              className: "opacity-0 group-hover:opacity-100 rounded p-0.5 text-slate-400 hover:bg-slate-200 hover:text-slate-700 transition",
-              title: "Aggiungi evento qui",
-              children: /* @__PURE__ */ jsxRuntimeExports.jsx(Plus, { className: "h-3.5 w-3.5" })
-            }
-          )
-        ] }),
-        /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { className: "mt-1 flex flex-1 flex-col gap-1 overflow-hidden", children: [
-          visibleEvents.map((evt) => {
-            const primaryTag = evt.tags[0];
-            const tagColor = primaryTag ? primaryTag.colorHex : "#3B82F6";
-            return /* @__PURE__ */ jsxRuntimeExports.jsxs(
-              "div",
-              {
-                onClick: (e) => {
-                  e.stopPropagation();
-                  onEventClick(evt);
-                },
-                className: "group/card flex items-center justify-between gap-1 rounded-md px-1.5 py-0.5 text-[11px] font-medium transition shadow-2xs hover:brightness-95 hover:shadow-xs",
-                style: {
-                  backgroundColor: `${tagColor}1C`,
-                  color: tagColor,
-                  borderLeft: `3px solid ${tagColor}`
-                },
-                title: `${evt.title}${evt.attachments?.length ? ` (${evt.attachments.length} allegati)` : ""}`,
-                children: [
-                  /* @__PURE__ */ jsxRuntimeExports.jsx("span", { className: "truncate flex-1 text-slate-800 text-[10px] font-semibold", children: evt.title }),
-                  evt.attachments && evt.attachments.length > 0 && /* @__PURE__ */ jsxRuntimeExports.jsxs(
-                    "span",
-                    {
-                      className: "shrink-0 text-slate-500 flex items-center gap-0.5 text-[9px]",
-                      title: `${evt.attachments.length} allegati locali`,
-                      children: [
-                        /* @__PURE__ */ jsxRuntimeExports.jsx(Paperclip, { className: "h-2.5 w-2.5" }),
-                        evt.attachments.length > 1 && evt.attachments.length
-                      ]
-                    }
-                  )
-                ]
-              },
-              evt.id
-            );
-          }),
-          remainingCount > 0 && /* @__PURE__ */ jsxRuntimeExports.jsxs("span", { className: "text-[10px] font-medium text-slate-400 pl-1", children: [
-            "+",
-            remainingCount,
-            " altri..."
-          ] })
-        ] })
-      ]
-    }
-  );
 };
 const WeekCalendarView = ({
   grid,
@@ -9852,22 +9672,36 @@ const WeekCalendarView = ({
     );
   }) }) });
 };
+const DEFAULT_TAG_COLORS = [
+  "#3B82F6",
+  // Blue
+  "#10B981",
+  // Emerald
+  "#8B5CF6",
+  // Purple
+  "#F59E0B",
+  // Amber
+  "#EC4899",
+  // Pink
+  "#06B6D4"
+  // Cyan
+];
 const EventModal = ({
   isOpen,
   onClose,
   initialDate,
   eventToEdit,
   availableTags,
+  onCreateTag,
   onSave,
   onDelete
 }) => {
   const isEditing = !!eventToEdit;
   const [title, setTitle] = reactExports.useState("");
   const [description, setDescription] = reactExports.useState("");
-  const [startDate, setStartDate] = reactExports.useState("");
-  const [endDate, setEndDate] = reactExports.useState("");
-  const [isAllDay, setIsAllDay] = reactExports.useState(false);
+  const [date, setDate] = reactExports.useState("");
   const [selectedTagIds, setSelectedTagIds] = reactExports.useState([]);
+  const [tagInput, setTagInput] = reactExports.useState("");
   const [attachments, setAttachments] = reactExports.useState([]);
   const [submitting, setSubmitting] = reactExports.useState(false);
   const [errorMessage, setErrorMessage] = reactExports.useState(null);
@@ -9878,17 +9712,13 @@ const EventModal = ({
       setErrorMessage(null);
       setRevealStatus(null);
       setConfirmDelete(false);
+      setTagInput("");
       return;
     }
     if (eventToEdit) {
       setTitle(eventToEdit.title);
       setDescription(eventToEdit.description || "");
-      setStartDate(
-        eventToEdit.startDate.slice(0, 16)
-        // format for datetime-local
-      );
-      setEndDate(eventToEdit.endDate ? eventToEdit.endDate.slice(0, 16) : "");
-      setIsAllDay(eventToEdit.isAllDay);
+      setDate(eventToEdit.date.slice(0, 10));
       setSelectedTagIds(eventToEdit.tags.map((t2) => t2.id));
       setAttachments(
         eventToEdit.attachments.map((a) => ({
@@ -9899,12 +9729,10 @@ const EventModal = ({
       );
     } else {
       const defaultDate = initialDate ? new Date(initialDate) : /* @__PURE__ */ new Date();
-      const formattedDefault = format(defaultDate, "yyyy-MM-dd'T'10:00");
+      const formattedDefault = format(defaultDate, "yyyy-MM-dd");
       setTitle("");
       setDescription("");
-      setStartDate(formattedDefault);
-      setEndDate("");
-      setIsAllDay(false);
+      setDate(formattedDefault);
       setSelectedTagIds([]);
       setAttachments([]);
     }
@@ -9917,10 +9745,42 @@ const EventModal = ({
     return () => window.removeEventListener("keydown", handleKeyDown);
   }, [isOpen, onClose]);
   if (!isOpen) return null;
-  const handleToggleTag = (tagId) => {
-    setSelectedTagIds(
-      (prev) => prev.includes(tagId) ? prev.filter((id2) => id2 !== tagId) : [...prev, tagId]
+  const handleAddOrApplyTag = async (tagNameToApply) => {
+    const trimmed = tagNameToApply.trim();
+    if (!trimmed) return;
+    const existing = availableTags.find(
+      (t2) => t2.name.toLowerCase() === trimmed.toLowerCase()
     );
+    if (existing) {
+      if (!selectedTagIds.includes(existing.id)) {
+        setSelectedTagIds((prev) => [...prev, existing.id]);
+      }
+      setTagInput("");
+      return;
+    }
+    if (onCreateTag) {
+      try {
+        const randomColor = DEFAULT_TAG_COLORS[Math.floor(Math.random() * DEFAULT_TAG_COLORS.length)];
+        const newTag = await onCreateTag({
+          name: trimmed,
+          colorHex: randomColor
+        });
+        setSelectedTagIds((prev) => [...prev, newTag.id]);
+        setTagInput("");
+      } catch (err) {
+        const msg = err instanceof Error ? err.message : String(err);
+        setErrorMessage(msg);
+      }
+    }
+  };
+  const handleTagInputKeyDown = (e) => {
+    if (e.key === "Enter") {
+      e.preventDefault();
+      handleAddOrApplyTag(tagInput);
+    }
+  };
+  const handleRemoveTag = (tagIdToRemove) => {
+    setSelectedTagIds((prev) => prev.filter((id2) => id2 !== tagIdToRemove));
   };
   const handlePickFiles = async () => {
     try {
@@ -9963,8 +9823,8 @@ const EventModal = ({
       setErrorMessage("Inserisci un titolo per l'evento.");
       return;
     }
-    if (!startDate) {
-      setErrorMessage("Inserisci una data di inizio valida.");
+    if (!date) {
+      setErrorMessage("Inserisci una data valida.");
       return;
     }
     setSubmitting(true);
@@ -9972,9 +9832,7 @@ const EventModal = ({
       const payload = {
         title: trimmedTitle,
         description: description.trim() || null,
-        startDate,
-        endDate: endDate ? endDate : null,
-        isAllDay,
+        date,
         tagIds: selectedTagIds,
         attachments,
         type: attachments.length > 0 ? "attachment" : "simple"
@@ -10001,20 +9859,36 @@ const EventModal = ({
       setSubmitting(false);
     }
   };
+  const tagsById = new Map(availableTags.map((t2) => [t2.id, t2]));
+  const selectedTags = selectedTagIds.map((id2) => tagsById.get(id2)).filter((t2) => !!t2);
+  const unselectedTags = availableTags.filter((t2) => !selectedTagIds.includes(t2.id));
+  const formattedDateText = reactExports.useMemo(() => {
+    if (!date) return "";
+    try {
+      const parsed = /* @__PURE__ */ new Date(`${date}T12:00:00`);
+      const formatted = format(parsed, "EEEE d MMMM yyyy", { locale: it });
+      return formatted.charAt(0).toUpperCase() + formatted.slice(1);
+    } catch {
+      return date;
+    }
+  }, [date]);
   return /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: "fixed inset-0 z-50 flex items-center justify-center bg-slate-900/40 backdrop-blur-xs p-4", children: /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { className: "w-full max-w-xl rounded-2xl bg-white shadow-xl border border-slate-200 overflow-hidden flex flex-col max-h-[92vh]", children: [
     /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { className: "flex items-center justify-between border-b border-slate-100 px-6 py-4", children: [
       /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { className: "flex items-center gap-2.5", children: [
         /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: "flex h-8 w-8 items-center justify-center rounded-lg bg-blue-50 text-blue-600", children: /* @__PURE__ */ jsxRuntimeExports.jsx(Calendar, { className: "h-4 w-4" }) }),
         /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { children: [
-          /* @__PURE__ */ jsxRuntimeExports.jsx("h2", { className: "text-base font-semibold text-slate-900", children: isEditing ? "Modifica Evento" : "Nuovo Evento" }),
-          /* @__PURE__ */ jsxRuntimeExports.jsx("p", { className: "text-xs text-slate-500", children: isEditing ? "Aggiorna le informazioni dell'evento e gli allegati associati" : "Crea un nuovo evento con tag e file locali" })
+          /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { className: "flex items-center gap-2", children: [
+            /* @__PURE__ */ jsxRuntimeExports.jsx("h2", { className: "text-base font-semibold text-slate-900", children: isEditing ? "Modifica Scadenza" : "Nuova Scadenza" }),
+            formattedDateText && /* @__PURE__ */ jsxRuntimeExports.jsx("span", { className: "rounded-md bg-blue-50 px-2 py-0.5 text-[11px] font-semibold text-blue-700 border border-blue-200", children: formattedDateText })
+          ] }),
+          /* @__PURE__ */ jsxRuntimeExports.jsx("p", { className: "text-xs text-slate-500 mt-0.5", children: isEditing ? "Aggiorna i dettagli, tag e allegati della scadenza" : "Aggiungi titolo, tag e file associati a questo giorno" })
         ] })
       ] }),
       /* @__PURE__ */ jsxRuntimeExports.jsx(
         "button",
         {
           onClick: onClose,
-          className: "rounded-lg p-1.5 text-slate-400 hover:bg-slate-100 hover:text-slate-600 transition",
+          className: "rounded-lg p-1.5 text-slate-400 hover:bg-slate-100 hover:text-slate-600 transition cursor-pointer",
           children: /* @__PURE__ */ jsxRuntimeExports.jsx(X, { className: "h-4 w-4" })
         }
       )
@@ -10033,7 +9907,7 @@ const EventModal = ({
           "input",
           {
             type: "text",
-            placeholder: "es. Pubblicazione Video YouTube, Articolo Blog...",
+            placeholder: "es. Pubblicazione Video YouTube, Invio Newsletter...",
             value: title,
             onChange: (e) => setTitle(e.target.value),
             maxLength: 200,
@@ -10042,64 +9916,77 @@ const EventModal = ({
           }
         )
       ] }),
-      /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { className: "grid grid-cols-1 md:grid-cols-2 gap-3", children: [
-        /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { children: [
-          /* @__PURE__ */ jsxRuntimeExports.jsxs("label", { className: "block text-xs font-semibold text-slate-700 mb-1", children: [
-            "Data Inizio ",
-            /* @__PURE__ */ jsxRuntimeExports.jsx("span", { className: "text-rose-500", children: "*" })
-          ] }),
-          /* @__PURE__ */ jsxRuntimeExports.jsx(
-            "input",
-            {
-              type: isAllDay ? "date" : "datetime-local",
-              value: isAllDay ? startDate.slice(0, 10) : startDate,
-              onChange: (e) => setStartDate(e.target.value),
-              required: true,
-              className: "w-full rounded-lg border border-slate-300 bg-white px-3 py-1.5 text-xs text-slate-800 focus:border-blue-500 focus:outline-hidden"
-            }
-          )
-        ] }),
-        /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { children: [
-          /* @__PURE__ */ jsxRuntimeExports.jsx("label", { className: "block text-xs font-semibold text-slate-700 mb-1", children: "Data Fine (Opzionale)" }),
-          /* @__PURE__ */ jsxRuntimeExports.jsx(
-            "input",
-            {
-              type: isAllDay ? "date" : "datetime-local",
-              value: isAllDay ? endDate ? endDate.slice(0, 10) : "" : endDate,
-              onChange: (e) => setEndDate(e.target.value),
-              className: "w-full rounded-lg border border-slate-300 bg-white px-3 py-1.5 text-xs text-slate-800 focus:border-blue-500 focus:outline-hidden"
-            }
-          )
-        ] })
-      ] }),
-      /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { className: "flex items-center gap-2", children: [
-        /* @__PURE__ */ jsxRuntimeExports.jsx(
-          "input",
+      /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { className: "space-y-2", children: [
+        /* @__PURE__ */ jsxRuntimeExports.jsx("label", { className: "block text-xs font-semibold text-slate-700", children: "Tag Associati" }),
+        selectedTags.length > 0 && /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: "flex flex-wrap gap-1.5 mb-1.5", children: selectedTags.map((tag) => /* @__PURE__ */ jsxRuntimeExports.jsxs(
+          "span",
           {
-            type: "checkbox",
-            id: "isAllDay",
-            checked: isAllDay,
-            onChange: (e) => setIsAllDay(e.target.checked),
-            className: "h-3.5 w-3.5 rounded border-slate-300 text-blue-600 focus:ring-blue-500"
-          }
-        ),
-        /* @__PURE__ */ jsxRuntimeExports.jsx("label", { htmlFor: "isAllDay", className: "text-xs font-medium text-slate-600 cursor-pointer", children: "Evento per tutto il giorno" })
-      ] }),
-      /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { children: [
-        /* @__PURE__ */ jsxRuntimeExports.jsx("label", { className: "block text-xs font-semibold text-slate-700 mb-1.5", children: "Tag Associati" }),
-        availableTags.length === 0 ? /* @__PURE__ */ jsxRuntimeExports.jsx("p", { className: "text-xs text-slate-400 italic", children: 'Nessun tag disponibile. Creane uno tramite il pulsante "Gestione Tag".' }) : /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: "flex flex-wrap gap-1.5", children: availableTags.map((tag) => {
-          const isSelected = selectedTagIds.includes(tag.id);
-          return /* @__PURE__ */ jsxRuntimeExports.jsxs(
+            className: "inline-flex items-center gap-1.5 rounded-full px-2.5 py-1 text-xs font-semibold border shadow-2xs transition",
+            style: {
+              backgroundColor: `${tag.colorHex}20`,
+              color: tag.colorHex,
+              borderColor: `${tag.colorHex}50`
+            },
+            children: [
+              /* @__PURE__ */ jsxRuntimeExports.jsx(
+                "span",
+                {
+                  className: "h-1.5 w-1.5 rounded-full",
+                  style: { backgroundColor: tag.colorHex }
+                }
+              ),
+              /* @__PURE__ */ jsxRuntimeExports.jsx("span", { children: tag.name }),
+              /* @__PURE__ */ jsxRuntimeExports.jsx(
+                "button",
+                {
+                  type: "button",
+                  onClick: () => handleRemoveTag(tag.id),
+                  className: "ml-0.5 rounded-full p-0.5 hover:bg-black/10 transition cursor-pointer",
+                  title: "Rimuovi tag",
+                  children: /* @__PURE__ */ jsxRuntimeExports.jsx(X, { className: "h-3 w-3" })
+                }
+              )
+            ]
+          },
+          tag.id
+        )) }),
+        /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { className: "flex items-center gap-2", children: [
+          /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { className: "relative flex-1", children: [
+            /* @__PURE__ */ jsxRuntimeExports.jsx(Tag, { className: "absolute left-2.5 top-2.5 h-3.5 w-3.5 text-slate-400" }),
+            /* @__PURE__ */ jsxRuntimeExports.jsx(
+              "input",
+              {
+                type: "text",
+                placeholder: "Scrivi un tag e premi Invio per applicarlo o crearlo...",
+                value: tagInput,
+                onChange: (e) => setTagInput(e.target.value),
+                onKeyDown: handleTagInputKeyDown,
+                className: "w-full rounded-lg border border-slate-300 bg-white pl-8 pr-3 py-1.5 text-xs text-slate-800 placeholder-slate-400 focus:border-blue-500 focus:outline-hidden"
+              }
+            )
+          ] }),
+          tagInput.trim() && /* @__PURE__ */ jsxRuntimeExports.jsx(
             "button",
             {
               type: "button",
-              onClick: () => handleToggleTag(tag.id),
-              className: `inline-flex items-center gap-1.5 rounded-full px-2.5 py-1 text-xs font-medium transition border ${isSelected ? "ring-2 ring-offset-1 font-semibold" : "opacity-60 hover:opacity-100"}`,
+              onClick: () => handleAddOrApplyTag(tagInput),
+              className: "rounded-lg bg-blue-50 hover:bg-blue-100 border border-blue-200 px-3 py-1.5 text-xs font-semibold text-blue-700 transition",
+              children: "Applica"
+            }
+          )
+        ] }),
+        unselectedTags.length > 0 && /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { className: "pt-1", children: [
+          /* @__PURE__ */ jsxRuntimeExports.jsx("span", { className: "text-[11px] text-slate-400 block mb-1", children: "Tag disponibili (clicca per associare):" }),
+          /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: "flex flex-wrap gap-1.5 max-h-24 overflow-y-auto", children: unselectedTags.map((tag) => /* @__PURE__ */ jsxRuntimeExports.jsxs(
+            "button",
+            {
+              type: "button",
+              onClick: () => handleAddOrApplyTag(tag.name),
+              className: "inline-flex items-center gap-1.5 rounded-full px-2 py-0.5 text-xs font-medium transition opacity-70 hover:opacity-100 border cursor-pointer",
               style: {
-                backgroundColor: `${tag.colorHex}20`,
+                backgroundColor: `${tag.colorHex}15`,
                 color: tag.colorHex,
-                borderColor: `${tag.colorHex}50`,
-                ...isSelected ? { ringColor: tag.colorHex } : {}
+                borderColor: `${tag.colorHex}40`
               },
               children: [
                 /* @__PURE__ */ jsxRuntimeExports.jsx(
@@ -10109,12 +9996,15 @@ const EventModal = ({
                     style: { backgroundColor: tag.colorHex }
                   }
                 ),
-                /* @__PURE__ */ jsxRuntimeExports.jsx("span", { children: tag.name })
+                /* @__PURE__ */ jsxRuntimeExports.jsxs("span", { children: [
+                  "+ ",
+                  tag.name
+                ] })
               ]
             },
             tag.id
-          );
-        }) })
+          )) })
+        ] })
       ] }),
       /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { children: [
         /* @__PURE__ */ jsxRuntimeExports.jsx("label", { className: "block text-xs font-semibold text-slate-700 mb-1", children: "Descrizione / Note" }),
@@ -10241,7 +10131,7 @@ const EventModal = ({
             onClick: handleSubmit,
             disabled: submitting || !title.trim(),
             className: "rounded-lg bg-blue-600 px-4 py-1.5 text-xs font-semibold text-white shadow-xs hover:bg-blue-700 disabled:opacity-50 transition",
-            children: submitting ? "Salvataggio..." : isEditing ? "Salva Modifiche" : "Crea Evento"
+            children: submitting ? "Salvataggio..." : isEditing ? "Salva Modifiche" : "Crea Scadenza"
           }
         )
       ] })
@@ -10616,7 +10506,6 @@ const TagManagerModal = ({
 };
 function App() {
   const [currentDate, setCurrentDate] = reactExports.useState(/* @__PURE__ */ new Date());
-  const [viewMode, setViewMode] = reactExports.useState("month");
   const [activeTagIds, setActiveTagIds] = reactExports.useState([]);
   const [isTagModalOpen, setIsTagModalOpen] = reactExports.useState(false);
   const [isEventModalOpen, setIsEventModalOpen] = reactExports.useState(false);
@@ -10641,37 +10530,20 @@ function App() {
     deleteEvent
   } = useEvents();
   const reloadEvents = reactExports.useCallback(async () => {
-    let start;
-    let end;
-    if (viewMode === "month") {
-      const monthStart = startOfMonth(currentDate);
-      const monthEnd = endOfMonth(currentDate);
-      start = startOfWeek(monthStart, { weekStartsOn: 1 });
-      end = endOfWeek(monthEnd, { weekStartsOn: 1 });
-    } else {
-      start = startOfWeek(currentDate, { weekStartsOn: 1 });
-      end = endOfWeek(currentDate, { weekStartsOn: 1 });
-    }
+    const start = startOfWeek(currentDate, { weekStartsOn: 1 });
+    const end = endOfWeek(currentDate, { weekStartsOn: 1 });
     const startIso = format(start, "yyyy-MM-dd");
     const endIso = format(end, "yyyy-MM-dd");
     await fetchEventsByRange(startIso, endIso);
-  }, [currentDate, viewMode, fetchEventsByRange]);
+  }, [currentDate, fetchEventsByRange]);
   reactExports.useEffect(() => {
     reloadEvents();
   }, [reloadEvents]);
   const handlePrev = () => {
-    if (viewMode === "month") {
-      setCurrentDate((prev) => subMonths(prev));
-    } else {
-      setCurrentDate((prev) => subWeeks(prev));
-    }
+    setCurrentDate((prev) => subWeeks(prev));
   };
   const handleNext = () => {
-    if (viewMode === "month") {
-      setCurrentDate((prev) => addMonths(prev, 1));
-    } else {
-      setCurrentDate((prev) => addWeeks(prev, 1));
-    }
+    setCurrentDate((prev) => addWeeks(prev, 1));
   };
   const handleToday = () => {
     setCurrentDate(/* @__PURE__ */ new Date());
@@ -10684,29 +10556,30 @@ function App() {
   const handleClearFilters = () => {
     setActiveTagIds([]);
   };
+  const tagsMap = reactExports.useMemo(() => new Map(tags.map((t2) => [t2.id, t2])), [tags]);
+  const eventsWithLiveTags = reactExports.useMemo(() => {
+    return events.map((evt) => ({
+      ...evt,
+      tags: evt.tags.map((t2) => tagsMap.get(t2.id) ?? t2).filter((t2) => tagsMap.has(t2.id))
+    }));
+  }, [events, tagsMap]);
   const filteredEvents = reactExports.useMemo(() => {
-    return EventFilterEngine.filter(events, {
+    return EventFilterEngine.filter(eventsWithLiveTags, {
       activeTagIds
     });
-  }, [events, activeTagIds]);
-  const monthGrid = reactExports.useMemo(() => {
-    const year = currentDate.getFullYear();
-    const month = currentDate.getMonth() + 1;
-    return CalendarGridEngine.buildMonthMatrix(year, month, filteredEvents);
-  }, [currentDate, filteredEvents]);
+  }, [eventsWithLiveTags, activeTagIds]);
   const weekGrid = reactExports.useMemo(() => {
     return CalendarGridEngine.buildWeekMatrix(currentDate, filteredEvents);
   }, [currentDate, filteredEvents]);
   const headerTitle = reactExports.useMemo(() => {
-    if (viewMode === "month") {
-      const formatted = format(currentDate, "MMMM yyyy", { locale: it });
-      return formatted.charAt(0).toUpperCase() + formatted.slice(1);
-    } else {
-      const weekNumber = format(currentDate, "w");
-      const formatted = format(currentDate, "MMMM yyyy", { locale: it });
-      return `Settimana ${weekNumber} • ${formatted.charAt(0).toUpperCase() + formatted.slice(1)}`;
-    }
-  }, [currentDate, viewMode]);
+    const start = startOfWeek(currentDate, { weekStartsOn: 1 });
+    const end = endOfWeek(currentDate, { weekStartsOn: 1 });
+    const weekNumber = format(currentDate, "w");
+    const monthText = format(currentDate, "MMMM yyyy", { locale: it });
+    const capitalizedMonth = monthText.charAt(0).toUpperCase() + monthText.slice(1);
+    const rangeText = `${format(start, "d MMM", { locale: it })} - ${format(end, "d MMM", { locale: it })}`;
+    return `Settimana ${weekNumber} • ${rangeText} (${capitalizedMonth})`;
+  }, [currentDate]);
   const handleOpenNewEvent = (targetDate) => {
     setSelectedDayDate(targetDate || currentDate);
     setEventToEdit(null);
@@ -10727,6 +10600,21 @@ function App() {
   const handleDeleteEvent = async (id2) => {
     await deleteEvent(id2);
     await reloadEvents();
+  };
+  const handleCreateTag = async (input) => {
+    const res = await createTag(input);
+    await reloadEvents();
+    return res;
+  };
+  const handleUpdateTag = async (id2, input) => {
+    const res = await updateTag(id2, input);
+    await reloadEvents();
+    return res;
+  };
+  const handleDeleteTag = async (id2) => {
+    const res = await deleteTag(id2);
+    await reloadEvents();
+    return res;
   };
   const handleRunDiagnostics = async () => {
     if (window.api) {
@@ -10749,7 +10637,7 @@ function App() {
           "button",
           {
             onClick: () => setIsTagModalOpen(true),
-            className: "inline-flex items-center gap-1.5 rounded-lg border border-slate-200 bg-white px-3 py-1.5 text-xs font-semibold text-slate-700 shadow-2xs transition hover:bg-slate-50",
+            className: "inline-flex items-center gap-1.5 rounded-lg border border-slate-200 bg-white px-3 py-1.5 text-xs font-semibold text-slate-700 shadow-2xs transition hover:bg-slate-50 cursor-pointer",
             children: [
               /* @__PURE__ */ jsxRuntimeExports.jsx(Tag, { className: "h-3.5 w-3.5 text-blue-600" }),
               /* @__PURE__ */ jsxRuntimeExports.jsx("span", { children: "Tag" }),
@@ -10761,7 +10649,7 @@ function App() {
           "button",
           {
             onClick: handleRunDiagnostics,
-            className: "rounded-lg border border-slate-200 bg-white p-1.5 text-slate-500 shadow-2xs hover:bg-slate-50 transition",
+            className: "rounded-lg border border-slate-200 bg-white p-1.5 text-slate-500 shadow-2xs hover:bg-slate-50 transition cursor-pointer",
             title: "Diagnostica di Sistema",
             children: /* @__PURE__ */ jsxRuntimeExports.jsx(SlidersHorizontal, { className: "h-3.5 w-3.5" })
           }
@@ -10782,7 +10670,7 @@ function App() {
         "button",
         {
           onClick: () => setShowDiagnostics(false),
-          className: "text-blue-700 hover:text-blue-900 text-xs font-bold",
+          className: "text-blue-700 hover:text-blue-900 text-xs font-bold cursor-pointer",
           children: "Chiudi"
         }
       )
@@ -10791,8 +10679,6 @@ function App() {
       CalendarHeader,
       {
         title: headerTitle,
-        currentView: viewMode,
-        onViewChange: setViewMode,
         onPrev: handlePrev,
         onNext: handleNext,
         onToday: handleToday,
@@ -10803,14 +10689,7 @@ function App() {
         onClearFilters: handleClearFilters
       }
     ),
-    /* @__PURE__ */ jsxRuntimeExports.jsx("main", { className: "flex flex-1 overflow-hidden", children: viewMode === "month" ? /* @__PURE__ */ jsxRuntimeExports.jsx(
-      MonthCalendarView,
-      {
-        grid: monthGrid,
-        onDayClick: (date) => handleOpenNewEvent(date),
-        onEventClick: (evt) => handleOpenEditEvent(evt)
-      }
-    ) : /* @__PURE__ */ jsxRuntimeExports.jsx(
+    /* @__PURE__ */ jsxRuntimeExports.jsx("main", { className: "flex flex-1 overflow-hidden", children: /* @__PURE__ */ jsxRuntimeExports.jsx(
       WeekCalendarView,
       {
         grid: weekGrid,
@@ -10826,6 +10705,7 @@ function App() {
         initialDate: selectedDayDate,
         eventToEdit,
         availableTags: tags,
+        onCreateTag: handleCreateTag,
         onSave: handleSaveEvent,
         onDelete: handleDeleteEvent
       }
@@ -10838,9 +10718,9 @@ function App() {
         tags,
         loading: tagsLoading,
         error: tagsError,
-        onCreateTag: createTag,
-        onUpdateTag: updateTag,
-        onDeleteTag: deleteTag,
+        onCreateTag: handleCreateTag,
+        onUpdateTag: handleUpdateTag,
+        onDeleteTag: handleDeleteTag,
         onClearError: clearTagError
       }
     )

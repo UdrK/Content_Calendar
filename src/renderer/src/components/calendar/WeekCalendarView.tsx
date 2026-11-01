@@ -70,9 +70,6 @@ export const WeekCalendarView: React.FC<WeekCalendarViewProps> = ({
                   </span>
                 ) : (
                   day.events.map((evt) => {
-                    const primaryTag = evt.tags[0]
-                    const tagColor = primaryTag ? primaryTag.colorHex : '#3B82F6'
-
                     return (
                       <div
                         key={evt.id}
@@ -80,22 +77,16 @@ export const WeekCalendarView: React.FC<WeekCalendarViewProps> = ({
                           e.stopPropagation()
                           onEventClick(evt)
                         }}
-                        className="rounded-lg p-2 text-xs transition shadow-2xs hover:shadow-xs hover:brightness-95 border"
-                        style={{
-                          backgroundColor: `${tagColor}14`,
-                          borderColor: `${tagColor}40`,
-                          borderLeftWidth: '4px',
-                          borderLeftColor: tagColor
-                        }}
+                        className="rounded-lg border border-slate-200 bg-slate-100/90 p-2 text-xs transition shadow-2xs hover:bg-slate-200/80 hover:border-slate-300 cursor-pointer"
                       >
                         <div className="flex items-start justify-between gap-1">
-                          <h4 className="font-semibold text-slate-900 leading-tight">
+                          <h4 className="font-semibold text-slate-800 leading-tight">
                             {evt.title}
                           </h4>
 
                           {evt.attachments && evt.attachments.length > 0 && (
                             <span
-                              className="text-slate-500 shrink-0"
+                              className="text-slate-400 shrink-0"
                               title={`${evt.attachments.length} allegati`}
                             >
                               <Paperclip className="h-3 w-3" />
@@ -114,10 +105,11 @@ export const WeekCalendarView: React.FC<WeekCalendarViewProps> = ({
                             {evt.tags.map((t) => (
                               <span
                                 key={t.id}
-                                className="rounded px-1 py-0.2 text-[9px] font-semibold"
+                                className="rounded px-1.5 py-0.5 text-[9px] font-semibold border shadow-2xs"
                                 style={{
-                                  backgroundColor: `${t.colorHex}25`,
-                                  color: t.colorHex
+                                  backgroundColor: `${t.colorHex}20`,
+                                  color: t.colorHex,
+                                  borderColor: `${t.colorHex}40`
                                 }}
                               >
                                 {t.name}

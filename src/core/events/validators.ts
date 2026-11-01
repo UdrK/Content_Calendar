@@ -16,23 +16,15 @@ export function validateEventTitle(title: string): string {
   return trimmed
 }
 
-export function validateEventDates(startDate: string, endDate?: string | null): void {
-  if (!startDate) {
-    throw new EventValidationError("La data di inizio dell'evento è obbligatoria.")
+export function validateEventDate(date: string): string {
+  const trimmed = date?.trim()
+  if (!trimmed) {
+    throw new EventValidationError("La data dell'evento è obbligatoria.")
   }
 
-  const start = new Date(startDate).getTime()
-  if (isNaN(start)) {
-    throw new EventValidationError("La data di inizio dell'evento non è valida.")
+  const parsed = new Date(trimmed).getTime()
+  if (isNaN(parsed)) {
+    throw new EventValidationError("La data dell'evento non è valida.")
   }
-
-  if (endDate) {
-    const end = new Date(endDate).getTime()
-    if (isNaN(end)) {
-      throw new EventValidationError("La data di fine dell'evento non è valida.")
-    }
-    if (end < start) {
-      throw new EventValidationError("La data di fine non può essere precedente alla data di inizio.")
-    }
-  }
+  return trimmed
 }

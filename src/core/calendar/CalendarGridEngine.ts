@@ -4,8 +4,6 @@ import {
   startOfWeek,
   endOfWeek,
   eachDayOfInterval,
-  startOfDay,
-  endOfDay,
   format,
   isSameMonth,
   isSameDay,
@@ -18,28 +16,24 @@ import { CalendarDayCell, CalendarMonthGrid, CalendarWeekGrid } from './types'
 
 export class CalendarGridEngine {
   /**
-   * Sorts events: all-day events first, then chronologically by start date
+   * Sorts events: alphabetically by title, then creation date
    */
   public static sortEvents(events: EventWithDetails[]): EventWithDetails[] {
     return [...events].sort((a, b) => {
-      if (a.isAllDay && !b.isAllDay) return -1
-      if (!a.isAllDay && b.isAllDay) return 1
-      return new Date(a.startDate).getTime() - new Date(b.startDate).getTime()
+      const titleCompare = a.title.localeCompare(b.title)
+      if (titleCompare !== 0) return titleCompare
+      return (a.createdAt || '').localeCompare(b.createdAt || '')
     })
   }
 
   /**
    * Checks if an event is active on a given day (Date object)
-   * Uses precise timestamp interval overlap: eventStart <= dayEnd && eventEnd >= dayStart
+   * Matches event date (YYYY-MM-DD) with target day
    */
   public static isEventOnDay(event: EventWithDetails, targetDate: Date): boolean {
-    const dayStart = startOfDay(targetDate).getTime()
-    const dayEnd = endOfDay(targetDate).getTime()
-
-    const eventStart = new Date(event.startDate).getTime()
-    const eventEnd = event.endDate ? new Date(event.endDate).getTime() : eventStart
-
-    return eventStart <= dayEnd && eventEnd >= dayStart
+    const targetIso = format(targetDate, 'yyyy-MM-dd')
+    const eventDate = event.date?.slice(0, 10)
+    return eventDate === targetIso
   }
 
   /**

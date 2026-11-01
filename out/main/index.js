@@ -105,9 +105,7 @@ const events = sqliteCore.sqliteTable("events", {
   type: sqliteCore.text("type").$type().notNull(),
   title: sqliteCore.text("title").notNull(),
   description: sqliteCore.text("description"),
-  startDate: sqliteCore.text("start_date").notNull(),
-  endDate: sqliteCore.text("end_date"),
-  isAllDay: sqliteCore.integer("is_all_day", { mode: "boolean" }).notNull().default(false),
+  date: sqliteCore.text("date").notNull(),
   metadata: sqliteCore.text("metadata"),
   createdAt: sqliteCore.text("created_at").notNull(),
   updatedAt: sqliteCore.text("updated_at").notNull()
@@ -173,7 +171,9 @@ function formatFileUrl(filePath) {
 async function initDatabase(customPath) {
   const dbPath = getDatabasePath();
   currentDbPath = dbPath;
-  fs.mkdirSync(path.dirname(dbPath), { recursive: true });
+  {
+    fs.mkdirSync(path.dirname(dbPath), { recursive: true });
+  }
   client = client$1.createClient({
     url: formatFileUrl(dbPath)
   });
@@ -184,9 +184,7 @@ async function initDatabase(customPath) {
       type TEXT NOT NULL,
       title TEXT NOT NULL,
       description TEXT,
-      start_date TEXT NOT NULL,
-      end_date TEXT,
-      is_all_day INTEGER NOT NULL DEFAULT 0,
+      date TEXT NOT NULL,
       metadata TEXT,
       created_at TEXT NOT NULL,
       updated_at TEXT NOT NULL
@@ -213,6 +211,27 @@ async function initDatabase(customPath) {
       added_at TEXT NOT NULL
     );
   `);
+  const tableInfo = await client.execute("PRAGMA table_info('events');");
+  const columnNames = tableInfo.rows.map((r) => String(r.name));
+  if (columnNames.length > 0) {
+    if (!columnNames.includes("date")) {
+      await client.execute("ALTER TABLE events ADD COLUMN date TEXT;");
+      if (columnNames.includes("start_date")) {
+        await client.execute(
+          "UPDATE events SET date = substr(start_date, 1, 10) WHERE date IS NULL OR date = '';"
+        );
+      }
+    }
+    if (columnNames.includes("start_date")) {
+      await client.execute("ALTER TABLE events DROP COLUMN start_date;");
+    }
+    if (columnNames.includes("end_date")) {
+      await client.execute("ALTER TABLE events DROP COLUMN end_date;");
+    }
+    if (columnNames.includes("is_all_day")) {
+      await client.execute("ALTER TABLE events DROP COLUMN is_all_day;");
+    }
+  }
   drizzleDb = libsql.drizzle(client, { schema });
   return { client, db: drizzleDb };
 }
@@ -373,33 +392,23 @@ function validateEventTitle(title) {
   }
   return trimmed;
 }
-function validateEventDates(startDate, endDate) {
-  if (!startDate) {
-    throw new EventValidationError("La data di inizio dell'evento è obbligatoria.");
+function validateEventDate(date) {
+  const trimmed = date?.trim();
+  if (!trimmed) {
+    throw new EventValidationError("La data dell'evento è obbligatoria.");
   }
-  const start = new Date(startDate).getTime();
-  if (isNaN(start)) {
-    throw new EventValidationError("La data di inizio dell'evento non è valida.");
+  const parsed = new Date(trimmed).getTime();
+  if (isNaN(parsed)) {
+    throw new EventValidationError("La data dell'evento non è valida.");
   }
-  if (endDate) {
-    const end = new Date(endDate).getTime();
-    if (isNaN(end)) {
-      throw new EventValidationError("La data di fine dell'evento non è valida.");
-    }
-    if (end < start) {
-      throw new EventValidationError("La data di fine non può essere precedente alla data di inizio.");
-    }
-  }
+  return trimmed;
 }
 async function getEventsByDateRange(startDate, endDate) {
   const db = getDb();
   const eventRecords = await db.select().from(events).where(
     drizzleOrm.and(
-      drizzleOrm.lte(events.startDate, endDate),
-      drizzleOrm.or(
-        drizzleOrm.gte(events.endDate, startDate),
-        drizzleOrm.gte(events.startDate, startDate)
-      )
+      drizzleOrm.gte(events.date, startDate),
+      drizzleOrm.lte(events.date, endDate)
     )
   );
   if (eventRecords.length === 0) return [];
@@ -465,7 +474,7 @@ async function getEventById(id) {
 async function createEvent(input) {
   const db = getDb();
   const validatedTitle = validateEventTitle(input.title);
-  validateEventDates(input.startDate, input.endDate);
+  const validatedDate = validateEventDate(input.date);
   const id = crypto.randomUUID();
   const now = (/* @__PURE__ */ new Date()).toISOString();
   const type = input.attachments && input.attachments.length > 0 || input.type === "attachment" ? "attachment" : "simple";
@@ -474,9 +483,7 @@ async function createEvent(input) {
     type,
     title: validatedTitle,
     description: input.description ?? null,
-    startDate: input.startDate,
-    endDate: input.endDate ?? null,
-    isAllDay: input.isAllDay ?? false,
+    date: validatedDate,
     createdAt: now,
     updatedAt: now
   });
@@ -518,9 +525,7 @@ async function createEvent(input) {
     type,
     title: validatedTitle,
     description: input.description ?? null,
-    startDate: input.startDate,
-    endDate: input.endDate ?? null,
-    isAllDay: input.isAllDay ?? false,
+    date: validatedDate,
     createdAt: now,
     updatedAt: now,
     tags: assignedTags,
@@ -542,12 +547,9 @@ async function updateEvent(id, input) {
   if (input.description !== void 0) {
     updates.description = input.description;
   }
-  const newStart = input.startDate ?? current.startDate;
-  const newEnd = input.endDate !== void 0 ? input.endDate : current.endDate;
-  validateEventDates(newStart, newEnd);
-  if (input.startDate !== void 0) updates.startDate = input.startDate;
-  if (input.endDate !== void 0) updates.endDate = input.endDate;
-  if (input.isAllDay !== void 0) updates.isAllDay = input.isAllDay;
+  if (input.date !== void 0) {
+    updates.date = validateEventDate(input.date);
+  }
   if (input.attachments !== void 0) {
     updates.type = input.attachments.length > 0 ? "attachment" : "simple";
   }

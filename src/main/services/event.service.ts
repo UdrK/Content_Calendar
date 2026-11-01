@@ -1,5 +1,5 @@
 import { randomUUID } from 'crypto'
-import { eq, inArray, gte, lte, and, or } from 'drizzle-orm'
+import { eq, inArray, gte, lte, and } from 'drizzle-orm'
 import { getDb } from '../db'
 import { events, tags, eventTags, eventAttachments } from '../db/schema'
 import {
@@ -9,7 +9,7 @@ import {
   TagRecord,
   AttachmentRecord
 } from '../../shared/types'
-import { validateEventTitle, validateEventDates, EventValidationError } from '../../core/events/validators'
+import { validateEventTitle, validateEventDate, EventValidationError } from '../../core/events/validators'
 
 export async function getEventsByDateRange(
   startDate: string,
@@ -17,18 +17,14 @@ export async function getEventsByDateRange(
 ): Promise<EventWithDetails[]> {
   const db = getDb()
 
-  // Find all events that overlap [startDate, endDate]
-  // Event starts <= endDate AND (event ends >= startDate OR event starts >= startDate)
+  // Find all events within [startDate, endDate]
   const eventRecords = await db
     .select()
     .from(events)
     .where(
       and(
-        lte(events.startDate, endDate),
-        or(
-          gte(events.endDate, startDate),
-          gte(events.startDate, startDate)
-        )
+        gte(events.date, startDate),
+        lte(events.date, endDate)
       )
     )
 
@@ -123,7 +119,7 @@ export async function getEventById(id: string): Promise<EventWithDetails | null>
 export async function createEvent(input: CreateEventInput): Promise<EventWithDetails> {
   const db = getDb()
   const validatedTitle = validateEventTitle(input.title)
-  validateEventDates(input.startDate, input.endDate)
+  const validatedDate = validateEventDate(input.date)
 
   const id = randomUUID()
   const now = new Date().toISOString()
@@ -137,9 +133,7 @@ export async function createEvent(input: CreateEventInput): Promise<EventWithDet
     type,
     title: validatedTitle,
     description: input.description ?? null,
-    startDate: input.startDate,
-    endDate: input.endDate ?? null,
-    isAllDay: input.isAllDay ?? false,
+    date: validatedDate,
     createdAt: now,
     updatedAt: now
   })
@@ -189,9 +183,7 @@ export async function createEvent(input: CreateEventInput): Promise<EventWithDet
     type,
     title: validatedTitle,
     description: input.description ?? null,
-    startDate: input.startDate,
-    endDate: input.endDate ?? null,
-    isAllDay: input.isAllDay ?? false,
+    date: validatedDate,
     createdAt: now,
     updatedAt: now,
     tags: assignedTags,
@@ -219,14 +211,9 @@ export async function updateEvent(
   if (input.description !== undefined) {
     updates.description = input.description
   }
-
-  const newStart = input.startDate ?? current.startDate
-  const newEnd = input.endDate !== undefined ? input.endDate : current.endDate
-  validateEventDates(newStart, newEnd)
-
-  if (input.startDate !== undefined) updates.startDate = input.startDate
-  if (input.endDate !== undefined) updates.endDate = input.endDate
-  if (input.isAllDay !== undefined) updates.isAllDay = input.isAllDay
+  if (input.date !== undefined) {
+    updates.date = validateEventDate(input.date)
+  }
 
   // If attachments are modified, update type accordingly
   if (input.attachments !== undefined) {

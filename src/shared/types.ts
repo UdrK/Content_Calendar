@@ -36,9 +36,7 @@ export interface EventRecord {
   type: EventType
   title: string
   description?: string | null
-  startDate: string
-  endDate?: string | null
-  isAllDay: boolean
+  date: string
   metadata?: string | null
   createdAt: string
   updatedAt: string
@@ -53,9 +51,7 @@ export interface CreateEventInput {
   type: EventType
   title: string
   description?: string | null
-  startDate: string
-  endDate?: string | null
-  isAllDay?: boolean
+  date: string
   tagIds?: string[]
   attachments?: FileAttachmentInput[]
 }
@@ -63,9 +59,7 @@ export interface CreateEventInput {
 export interface UpdateEventInput {
   title?: string
   description?: string | null
-  startDate?: string
-  endDate?: string | null
-  isAllDay?: boolean
+  date?: string
   tagIds?: string[]
   attachments?: FileAttachmentInput[]
 }

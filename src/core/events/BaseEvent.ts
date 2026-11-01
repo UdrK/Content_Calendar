@@ -1,14 +1,12 @@
 import { EventType, TagRecord, AttachmentRecord, EventWithDetails } from '../../shared/types'
-import { validateEventTitle, validateEventDates } from './validators'
+import { validateEventTitle, validateEventDate } from './validators'
 
 export abstract class BaseEvent {
   public readonly id: string
   public readonly type: EventType
   public title: string
   public description: string | null
-  public startDate: string
-  public endDate: string | null
-  public isAllDay: boolean
+  public date: string
   public tags: TagRecord[]
   public attachments: AttachmentRecord[]
   public readonly createdAt: string
@@ -19,9 +17,7 @@ export abstract class BaseEvent {
     this.type = record.type
     this.title = record.title
     this.description = record.description ?? null
-    this.startDate = record.startDate
-    this.endDate = record.endDate ?? null
-    this.isAllDay = record.isAllDay
+    this.date = record.date
     this.tags = record.tags ?? []
     this.attachments = record.attachments ?? []
     this.createdAt = record.createdAt
@@ -30,14 +26,7 @@ export abstract class BaseEvent {
 
   public validate(): void {
     validateEventTitle(this.title)
-    validateEventDates(this.startDate, this.endDate)
-  }
-
-  public isMultiDay(): boolean {
-    if (!this.endDate) return false
-    const startDay = this.startDate.slice(0, 10)
-    const endDay = this.endDate.slice(0, 10)
-    return startDay !== endDay
+    validateEventDate(this.date)
   }
 
   public hasAttachments(): boolean {
@@ -50,9 +39,7 @@ export abstract class BaseEvent {
       type: this.type,
       title: this.title,
       description: this.description,
-      startDate: this.startDate,
-      endDate: this.endDate,
-      isAllDay: this.isAllDay,
+      date: this.date,
       createdAt: this.createdAt,
       updatedAt: this.updatedAt,
       tags: this.tags,

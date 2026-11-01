@@ -14,23 +14,14 @@ import {
   TagValidationError
 } from '../src/main/services/tag.service'
 
-const TEST_DB_PATH = join(process.cwd(), 'data', 'test_tags.sqlite')
-
 describe('Story 03 - Tag Service & Logic', () => {
   beforeEach(async () => {
-    const { db } = await initDatabase(TEST_DB_PATH)
+    const { db } = await initDatabase(':memory:')
     await db.delete(tags)
   })
 
   afterEach(() => {
     closeDatabase()
-    if (existsSync(TEST_DB_PATH)) {
-      try {
-        unlinkSync(TEST_DB_PATH)
-      } catch {
-        // ignore
-      }
-    }
   })
 
   describe('Validation Functions', () => {

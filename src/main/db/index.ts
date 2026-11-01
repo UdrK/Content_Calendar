@@ -45,13 +45,16 @@ export async function initDatabase(customPath?: string): Promise<{
   client: Client
   db: LibSQLDatabase<typeof schema>
 }> {
+  const isMemory = customPath === ':memory:'
   const dbPath = customPath || getDatabasePath()
   currentDbPath = dbPath
 
-  mkdirSync(dirname(dbPath), { recursive: true })
+  if (!isMemory) {
+    mkdirSync(dirname(dbPath), { recursive: true })
+  }
 
   client = createClient({
-    url: formatFileUrl(dbPath)
+    url: isMemory ? ':memory:' : formatFileUrl(dbPath)
   })
 
   // Enable foreign keys
@@ -64,9 +67,7 @@ export async function initDatabase(customPath?: string): Promise<{
       type TEXT NOT NULL,
       title TEXT NOT NULL,
       description TEXT,
-      start_date TEXT NOT NULL,
-      end_date TEXT,
-      is_all_day INTEGER NOT NULL DEFAULT 0,
+      date TEXT NOT NULL,
       metadata TEXT,
       created_at TEXT NOT NULL,
       updated_at TEXT NOT NULL
@@ -93,6 +94,30 @@ export async function initDatabase(customPath?: string): Promise<{
       added_at TEXT NOT NULL
     );
   `)
+
+  // Migration check: handle legacy columns (start_date, end_date, is_all_day)
+  const tableInfo = await client.execute("PRAGMA table_info('events');")
+  const columnNames = tableInfo.rows.map((r: any) => String(r.name))
+  if (columnNames.length > 0) {
+    if (!columnNames.includes('date')) {
+      await client.execute('ALTER TABLE events ADD COLUMN date TEXT;')
+      if (columnNames.includes('start_date')) {
+        await client.execute(
+          "UPDATE events SET date = substr(start_date, 1, 10) WHERE date IS NULL OR date = '';"
+        )
+      }
+    }
+    // Drop legacy columns to eliminate NOT NULL constraint failures
+    if (columnNames.includes('start_date')) {
+      await client.execute('ALTER TABLE events DROP COLUMN start_date;')
+    }
+    if (columnNames.includes('end_date')) {
+      await client.execute('ALTER TABLE events DROP COLUMN end_date;')
+    }
+    if (columnNames.includes('is_all_day')) {
+      await client.execute('ALTER TABLE events DROP COLUMN is_all_day;')
+    }
+  }
 
   drizzleDb = drizzle(client, { schema })
   return { client, db: drizzleDb }
