@@ -210,7 +210,6 @@ export default function App(): React.ReactElement {
         onPrev={handlePrev}
         onNext={handleNext}
         onToday={handleToday}
-        onNewEvent={() => handleOpenNewEvent()}
         onOpenTagManager={() => setIsTagModalOpen(true)}
         tagsCount={tags.length}
         onRunDiagnostics={handleRunDiagnostics}

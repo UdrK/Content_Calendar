@@ -46,3 +46,36 @@ A seguito del primo ciclo di implementazione dell'MVP, vengono applicate le segu
   - In `App.tsx`, gli eventi aperti a schermo risolvono dinamicamente i propri tag tramite una mappa reattiva (`tagsMap`) derivata dallo stato globale `tags`.
   - Quando `updateTag` aggiorna il colore nel database e nello stato React, tutti i badge degli eventi associati si aggiornano istantaneamente in tutta l'interfaccia.
   - Al termine dell'aggiornamento o eliminazione di un tag viene inoltre invocato `reloadEvents()` per garantire la sincronizzazione a livello di persistenza.
+
+---
+
+## 5. Pulizia e Semplificazione Grafica della Header e della Vista Settimanale
+- **Header unificata e pulita:**
+  - Rimosso il numero della settimana ("Settimana X").
+  - Rimossi titolo e sottotitolo dell'applicazione ("Content Calendar / Desktop Edition").
+  - Spostata l'indicazione dell'intervallo date della settimana (es. "2 - 8 Novembre 2026") e i comandi di navigazione (`<`, `Oggi`, `>`) direttamente nell'intestazione principale a fianco dell'icona del calendario.
+  - Rimossa la scatola di sfondo colorata dall'icona del calendario, mantenendo l'icona colorata di blu.
+  - Rimosso il pulsante "+ Nuova Scadenza" dall'header: la creazione degli eventi avviene cliccando direttamente sulla colonna/giorno desiderato nel calendario.
+- **Filtri Tag:**
+  - Rimossa l'indicazione testuale "Filtra:" e l'icona a forma di filtro.
+  - Rimosso il badge testuale "Tutti", sostituito con un'icona compatta per azzerare i filtri attivi (`FilterX`).
+- **Caselle degli Eventi nel Calendario:**
+  - Aspetto cromatico neutro (sfondo grigio chiaro `bg-slate-100/90` con bordo `border-slate-200`), slegato dal colore del tag per una lettura più pulita e ordinata.
+  - I badge dei tag all'interno delle caselle evento conservano i propri colori distintivi.
+
+---
+
+## 6. Semplificazione Scheda Evento in stile "Notion / Document"
+- **Header minimalista:**
+  - Rimosso il riquadro icona ingombrante e il sottotitolo esplicativo.
+  - Sostituito con un'intestazione discreta e pulita con indicatore di contesto (*"Nuovo Evento"* / *"Modifica Evento"*) e pulsante di chiusura `X`.
+- **Hero Title prominente:**
+  - Il titolo dell'evento è diventato l'elemento centrale: testo grande (`text-xl font-bold tracking-tight`), borderless e con autofocus all'apertura della modale.
+- **Tabella Proprietà integrata (Data & Tag):**
+  - **Data:** riga chiave-valore con icona, etichetta chiara e badge con la data completa formattata.
+  - **Tag:** unificati su un'unica riga orizzontale. I tag selezionati sono chip compatti con pulsante `×` di rimozione; accanto è presente un campo inline tratteggiato (`+ Altro tag...`) per digitare e premere Invio per creare/applicare; i tag disponibili non ancora associati appaiono subito sotto come pillole ghost discrete (senza label ridondanti).
+- **Area Note / Descrizione canvas:**
+  - Textarea con sfondo e bordo morbidi, pensata per prendere appunti, inserire scalette o descrizioni in modo naturale.
+- **Allegati Locali intelligenti e leggeri:**
+  - **A stato vuoto:** rimosso il grande box grigio e il contatore "0"; sostituito con un pulsante compatto e discreto tratteggiato (*"+ Allega file dal computer"*).
+  - **Con file presenti:** lista pulita dei file con card cliccabile per aprire la cartella di sistema ed evidenziare il file (con gestione del troncamento del nome ed esclusione di overflow) e pulsante di rimozione separato.

@@ -2,7 +2,6 @@ import React from 'react'
 import {
   ChevronLeft,
   ChevronRight,
-  Plus,
   Calendar as CalendarIcon,
   Tag as TagIcon,
   SlidersHorizontal,
@@ -15,7 +14,6 @@ interface CalendarHeaderProps {
   onPrev: () => void
   onNext: () => void
   onToday: () => void
-  onNewEvent: () => void
   onOpenTagManager: () => void
   tagsCount: number
   onRunDiagnostics: () => void
@@ -30,7 +28,6 @@ export const CalendarHeader: React.FC<CalendarHeaderProps> = ({
   onPrev,
   onNext,
   onToday,
-  onNewEvent,
   onOpenTagManager,
   tagsCount,
   onRunDiagnostics,
@@ -80,16 +77,6 @@ export const CalendarHeader: React.FC<CalendarHeaderProps> = ({
 
         {/* Right: Actions */}
         <div className="flex items-center gap-2">
-          {/* New Event Button */}
-          <button
-            type="button"
-            onClick={onNewEvent}
-            className="inline-flex items-center gap-1.5 rounded-lg bg-blue-600 px-3.5 py-1.5 text-xs font-semibold text-white shadow-xs transition hover:bg-blue-700 active:scale-95 cursor-pointer"
-          >
-            <Plus className="h-4 w-4" />
-            <span>Nuova Scadenza</span>
-          </button>
-
           {/* Tag Manager Button */}
           <button
             type="button"
