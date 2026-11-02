@@ -6,7 +6,9 @@ import {
   Paperclip,
   Trash2,
   Tag as TagIcon,
-  AlertCircle
+  AlertCircle,
+  CheckCircle2,
+  Circle
 } from 'lucide-react'
 import {
   EventWithDetails,
@@ -55,6 +57,7 @@ export const EventModal: React.FC<EventModalProps> = ({
   const [title, setTitle] = useState('')
   const [description, setDescription] = useState('')
   const [date, setDate] = useState('')
+  const [isDone, setIsDone] = useState(false)
   const [selectedTagIds, setSelectedTagIds] = useState<string[]>([])
   const [tagInput, setTagInput] = useState('')
   const [attachments, setAttachments] = useState<FileAttachmentInput[]>([])
@@ -89,6 +92,7 @@ export const EventModal: React.FC<EventModalProps> = ({
       setTitle(eventToEdit.title)
       setDescription(eventToEdit.description || '')
       setDate(eventToEdit.date.slice(0, 10))
+      setIsDone(!!eventToEdit.isDone)
       setSelectedTagIds(eventToEdit.tags.map((t) => t.id))
       setAttachments(
         eventToEdit.attachments.map((a) => ({
@@ -103,6 +107,7 @@ export const EventModal: React.FC<EventModalProps> = ({
       setTitle('')
       setDescription('')
       setDate(formattedDefault)
+      setIsDone(false)
       setSelectedTagIds([])
       setAttachments([])
     }
@@ -234,6 +239,7 @@ export const EventModal: React.FC<EventModalProps> = ({
         title: trimmedTitle,
         description: description.trim() || null,
         date,
+        isDone,
         tagIds: selectedTagIds,
         attachments,
         type: attachments.length > 0 ? 'attachment' : 'simple'
@@ -326,6 +332,38 @@ export const EventModal: React.FC<EventModalProps> = ({
                 <span className="font-medium text-slate-700 bg-slate-100/90 px-2.5 py-1 rounded-md text-xs">
                   {formattedDateText || 'Nessuna data'}
                 </span>
+              </div>
+            </div>
+
+            {/* Status / Fatto Property */}
+            <div className="flex items-center gap-3">
+              <div className="flex items-center gap-1.5 w-20 text-slate-400 font-medium shrink-0">
+                <CheckCircle2 className="h-3.5 w-3.5" />
+                <span>Stato</span>
+              </div>
+              <div>
+                <button
+                  type="button"
+                  onClick={() => setIsDone(!isDone)}
+                  className={`inline-flex items-center gap-1.5 rounded-md px-2.5 py-1 text-xs font-semibold border transition cursor-pointer ${
+                    isDone
+                      ? 'bg-emerald-50 text-emerald-700 border-emerald-200 hover:bg-emerald-100'
+                      : 'bg-rose-50 text-rose-700 border-rose-200 hover:bg-rose-100'
+                  }`}
+                  title="Clicca per cambiare stato"
+                >
+                  {isDone ? (
+                    <>
+                      <CheckCircle2 className="h-3.5 w-3.5 text-emerald-600" />
+                      <span>Fatto</span>
+                    </>
+                  ) : (
+                    <>
+                      <Circle className="h-3.5 w-3.5 text-rose-500" />
+                      <span>Da fare</span>
+                    </>
+                  )}
+                </button>
               </div>
             </div>
 

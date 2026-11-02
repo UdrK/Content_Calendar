@@ -25,6 +25,7 @@ import { useEvents } from './hooks/useEvents'
 import { CalendarHeader } from './components/calendar/CalendarHeader'
 import { WeekCalendarView } from './components/calendar/WeekCalendarView'
 import { EventModal } from './components/events/EventModal'
+import { EventDetailsPanel } from './components/events/EventDetailsPanel'
 import { TagManagerModal } from './components/TagManagerModal'
 
 export default function App(): React.ReactElement {
@@ -37,6 +38,7 @@ export default function App(): React.ReactElement {
   const [isEventModalOpen, setIsEventModalOpen] = useState(false)
   const [selectedDayDate, setSelectedDayDate] = useState<Date | null>(null)
   const [eventToEdit, setEventToEdit] = useState<EventWithDetails | null>(null)
+  const [selectedEventId, setSelectedEventId] = useState<string | null>(null)
 
   // Diagnostics panel toggle
   const [showDiagnostics, setShowDiagnostics] = useState(false)
@@ -112,6 +114,12 @@ export default function App(): React.ReactElement {
     }))
   }, [events, tagsMap])
 
+  // Current active event for persistent bottom inspection panel
+  const selectedEvent = useMemo(() => {
+    if (!selectedEventId) return null
+    return eventsWithLiveTags.find((e) => e.id === selectedEventId) ?? null
+  }, [selectedEventId, eventsWithLiveTags])
+
   // Filter events using Headless EventFilterEngine
   const filteredEvents = useMemo(() => {
     return EventFilterEngine.filter(eventsWithLiveTags, {
@@ -170,7 +178,16 @@ export default function App(): React.ReactElement {
   }
 
   const handleDeleteEvent = async (id: string) => {
+    if (selectedEventId === id) {
+      setSelectedEventId(null)
+    }
     await deleteEvent(id)
+    await reloadEvents()
+  }
+
+  // Immediate toggle of event status from bottom panel
+  const handleToggleDone = async (evt: EventWithDetails) => {
+    await updateEvent(evt.id, { isDone: !evt.isDone })
     await reloadEvents()
   }
 
@@ -237,14 +254,26 @@ export default function App(): React.ReactElement {
         </div>
       )}
 
-      {/* Calendar Grid View (Week Only) */}
-      <main className="flex flex-1 overflow-hidden">
-        <WeekCalendarView
-          grid={weekGrid}
-          onDayClick={(date) => handleOpenNewEvent(date)}
-          onEventClick={(evt) => handleOpenEditEvent(evt)}
+      {/* Workspace Master-Detail Split Area */}
+      <div className="flex flex-1 flex-col overflow-hidden">
+        {/* Top: Calendar Grid View (Week Only) */}
+        <main className="flex-1 overflow-hidden flex flex-col">
+          <WeekCalendarView
+            grid={weekGrid}
+            selectedEventId={selectedEventId}
+            onDayClick={(date) => handleOpenNewEvent(date)}
+            onEventClick={(evt) => setSelectedEventId(evt.id)}
+          />
+        </main>
+
+        {/* Bottom: Persistent Details Panel */}
+        <EventDetailsPanel
+          event={selectedEvent}
+          onToggleDone={handleToggleDone}
+          onEdit={(evt) => handleOpenEditEvent(evt)}
+          onDeselect={() => setSelectedEventId(null)}
         />
-      </main>
+      </div>
 
       {/* Event Create / Edit Modal */}
       <EventModal

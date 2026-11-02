@@ -68,6 +68,7 @@ export async function initDatabase(customPath?: string): Promise<{
       title TEXT NOT NULL,
       description TEXT,
       date TEXT NOT NULL,
+      is_done INTEGER NOT NULL DEFAULT 0,
       metadata TEXT,
       created_at TEXT NOT NULL,
       updated_at TEXT NOT NULL
@@ -106,6 +107,9 @@ export async function initDatabase(customPath?: string): Promise<{
           "UPDATE events SET date = substr(start_date, 1, 10) WHERE date IS NULL OR date = '';"
         )
       }
+    }
+    if (!columnNames.includes('is_done')) {
+      await client.execute('ALTER TABLE events ADD COLUMN is_done INTEGER NOT NULL DEFAULT 0;')
     }
     // Drop legacy columns to eliminate NOT NULL constraint failures
     if (columnNames.includes('start_date')) {

@@ -37,6 +37,7 @@ export interface EventRecord {
   title: string
   description?: string | null
   date: string
+  isDone: boolean
   metadata?: string | null
   createdAt: string
   updatedAt: string
@@ -52,6 +53,7 @@ export interface CreateEventInput {
   title: string
   description?: string | null
   date: string
+  isDone?: boolean
   tagIds?: string[]
   attachments?: FileAttachmentInput[]
 }
@@ -60,6 +62,7 @@ export interface UpdateEventInput {
   title?: string
   description?: string | null
   date?: string
+  isDone?: boolean
   tagIds?: string[]
   attachments?: FileAttachmentInput[]
 }

@@ -144,6 +144,9 @@ describe('Story 02 - SQLite Database & Drizzle ORM', () => {
         "UPDATE events SET date = substr(start_date, 1, 10) WHERE date IS NULL OR date = '';"
       )
     }
+    if (!columnNames.includes('is_done')) {
+      await client.execute('ALTER TABLE events ADD COLUMN is_done INTEGER NOT NULL DEFAULT 0;')
+    }
     if (columnNames.includes('start_date')) {
       await client.execute('ALTER TABLE events DROP COLUMN start_date;')
     }

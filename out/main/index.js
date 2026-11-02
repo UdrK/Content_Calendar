@@ -106,6 +106,7 @@ const events = sqliteCore.sqliteTable("events", {
   title: sqliteCore.text("title").notNull(),
   description: sqliteCore.text("description"),
   date: sqliteCore.text("date").notNull(),
+  isDone: sqliteCore.integer("is_done", { mode: "boolean" }).notNull().default(false),
   metadata: sqliteCore.text("metadata"),
   createdAt: sqliteCore.text("created_at").notNull(),
   updatedAt: sqliteCore.text("updated_at").notNull()
@@ -185,6 +186,7 @@ async function initDatabase(customPath) {
       title TEXT NOT NULL,
       description TEXT,
       date TEXT NOT NULL,
+      is_done INTEGER NOT NULL DEFAULT 0,
       metadata TEXT,
       created_at TEXT NOT NULL,
       updated_at TEXT NOT NULL
@@ -221,6 +223,9 @@ async function initDatabase(customPath) {
           "UPDATE events SET date = substr(start_date, 1, 10) WHERE date IS NULL OR date = '';"
         );
       }
+    }
+    if (!columnNames.includes("is_done")) {
+      await client.execute("ALTER TABLE events ADD COLUMN is_done INTEGER NOT NULL DEFAULT 0;");
     }
     if (columnNames.includes("start_date")) {
       await client.execute("ALTER TABLE events DROP COLUMN start_date;");
@@ -484,6 +489,7 @@ async function createEvent(input) {
     title: validatedTitle,
     description: input.description ?? null,
     date: validatedDate,
+    isDone: input.isDone ?? false,
     createdAt: now,
     updatedAt: now
   });
@@ -526,6 +532,7 @@ async function createEvent(input) {
     title: validatedTitle,
     description: input.description ?? null,
     date: validatedDate,
+    isDone: input.isDone ?? false,
     createdAt: now,
     updatedAt: now,
     tags: assignedTags,
@@ -549,6 +556,9 @@ async function updateEvent(id, input) {
   }
   if (input.date !== void 0) {
     updates.date = validateEventDate(input.date);
+  }
+  if (input.isDone !== void 0) {
+    updates.isDone = input.isDone;
   }
   if (input.attachments !== void 0) {
     updates.type = input.attachments.length > 0 ? "attachment" : "simple";

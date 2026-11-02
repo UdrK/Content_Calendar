@@ -1,4 +1,4 @@
-import { sqliteTable, text, primaryKey } from 'drizzle-orm/sqlite-core'
+import { sqliteTable, text, integer, primaryKey } from 'drizzle-orm/sqlite-core'
 
 export const events = sqliteTable('events', {
   id: text('id').primaryKey(),
@@ -6,6 +6,7 @@ export const events = sqliteTable('events', {
   title: text('title').notNull(),
   description: text('description'),
   date: text('date').notNull(),
+  isDone: integer('is_done', { mode: 'boolean' }).notNull().default(false),
   metadata: text('metadata'),
   createdAt: text('created_at').notNull(),
   updatedAt: text('updated_at').notNull()

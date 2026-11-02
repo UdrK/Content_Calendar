@@ -134,6 +134,7 @@ export async function createEvent(input: CreateEventInput): Promise<EventWithDet
     title: validatedTitle,
     description: input.description ?? null,
     date: validatedDate,
+    isDone: input.isDone ?? false,
     createdAt: now,
     updatedAt: now
   })
@@ -184,6 +185,7 @@ export async function createEvent(input: CreateEventInput): Promise<EventWithDet
     title: validatedTitle,
     description: input.description ?? null,
     date: validatedDate,
+    isDone: input.isDone ?? false,
     createdAt: now,
     updatedAt: now,
     tags: assignedTags,
@@ -213,6 +215,9 @@ export async function updateEvent(
   }
   if (input.date !== undefined) {
     updates.date = validateEventDate(input.date)
+  }
+  if (input.isDone !== undefined) {
+    updates.isDone = input.isDone
   }
 
   // If attachments are modified, update type accordingly

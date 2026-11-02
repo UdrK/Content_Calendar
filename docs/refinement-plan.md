@@ -59,9 +59,35 @@ A seguito del primo ciclo di implementazione dell'MVP, vengono applicate le segu
 - **Filtri Tag:**
   - Rimossa l'indicazione testuale "Filtra:" e l'icona a forma di filtro.
   - Rimosso il badge testuale "Tutti", sostituito con un'icona compatta per azzerare i filtri attivi (`FilterX`).
-- **Caselle degli Eventi nel Calendario:**
-  - Aspetto cromatico neutro (sfondo grigio chiaro `bg-slate-100/90` con bordo `border-slate-200`), slegato dal colore del tag per una lettura più pulita e ordinata.
-  - I badge dei tag all'interno delle caselle evento conservano i propri colori distintivi.
+- **Caselle degli Eventi nel Calendario (Stile Card con Striscia d'Accento di Stato):**
+  - Le card sono ora a sfondo **bianco puro (`bg-white`)** su un canvas settimanale delicato (`bg-slate-50/40`), con elevazione morbida (`shadow-2xs hover:shadow-md hover:-translate-y-0.5`).
+  - **Stato "Fatto" (`isDone`) & Bordo d'Accento:**
+    - È stato aggiunto il campo `isDone: boolean` nel modello e nel database SQLite (con valore di default `false`).
+    - Quando un evento **non è fatto** (`isDone: false`), il bordo d'accento laterale è **Rosso** (`#EF4444`).
+    - Quando un evento viene contrassegnato come **fatto** (`isDone: true`), il bordo d'accento laterale diventa **Verde** (`#10B981`) e il titolo viene delicatamente barrato/attenuato.
+    - La modifica dello stato avviene direttamente dall'apposita proprietà nella scheda dell'evento (`EventModal`) o con **un solo clic immediato** dal nuovo drawer di lettura.
+
+---
+
+## 7. Pannello Inferiore Fisso di Ispezione Evento (Master-Detail Layout)
+- **Architettura a Schermo Diviso (Master-Detail):**
+  - Al posto di un drawer/overlay fluttuante che copriva parzialmente la griglia e richiedeva aperture/chiusure continue, la schermata adotta un layout desktop fisso:
+    - **Parte superiore (Master):** Vista settimanale completa a 7 colonne.
+    - **Parte inferiore (Detail):** Pannello fisso e permanente di ispezione ([`EventDetailsPanel.tsx`](file:///C:/Users/costa/Home/Opus/Content_Calendar/src/renderer/src/components/events/EventDetailsPanel.tsx)).
+- **Comportamento & Interazioni:**
+  - **Navigazione fluida a zero attrito:** Cliccando in sequenza sui diversi eventi del calendario, il pannello inferiore si aggiorna all'istante senza animazioni invasive.
+  - **Evidenziazione visiva neutra della card attiva:** Eliminato qualsiasi bordo/anello colorato (es. blu) che creava confusione con i colori dei tag e dello stato. L'evento selezionato assume uno sfondo grigio neutro morbido (`bg-slate-100 border-slate-300 shadow-xs`), facendo risaltare la striscia d'accento laterale rossa o verde come unico e chiaro indicatore di stato.
+  - **Barra superiore integrata & Layout verticale pulito:**
+    - **Header bar superiore:** contiene il pulsante istantaneo di stato (*"Da fare"* / *"Fatto"*), il **titolo dell'evento** al centro, la pillola con la data formattata, e a destra i pulsanti per *Modifica* e *Deseleziona*.
+    - **Area contenuti (Body):**
+      1. Tag associati
+      2. Descrizione / Note dell'evento (con altezza espansa)
+      3. Allegati locali posizionati sotto alla descrizione, con apertura diretta della cartella di sistema.
+  - **Modifica istantanea dello stato:** Il pulsante badge di stato in alto a sinistra permette di passare istantaneamente tra *"Da fare"* (rosso) e *"Fatto"* (verde) con **un solo clic**, aggiornando subito DB, pannello e card in alto.
+  - **Apertura cartella allegati:** Le card degli allegati locali sono cliccabili ed evidenziano direttamente il file nel file manager di sistema (Explorer).
+  - **Pulsante "Modifica":** Permette di aprire la modale completa `EventModal` per modifiche approfondite (titolo, data, tag, file).
+  - **Stato vuoto elegante:** Quando nessun evento è selezionato (o cliccando su "Deseleziona" `X`), il pannello mostra un messaggio sobrio che invita a selezionare un evento o cliccare sulle colonne per crearne uno nuovo.
+  - I badge interni dei tag conservano i propri colori ad alto contrasto e massima leggibilità sul fondo bianco.
 
 ---
 

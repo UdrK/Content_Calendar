@@ -40,6 +40,7 @@ describe('Story 06, 07, 09 - Event Service (CRUD & Relations)', () => {
     expect(created.tags).toHaveLength(1)
     expect(created.tags[0].name).toBe('Design')
     expect(created.attachments).toHaveLength(0)
+    expect(created.isDone).toBe(false)
   })
 
   it('should create an event with local attachments', async () => {
@@ -93,6 +94,7 @@ describe('Story 06, 07, 09 - Event Service (CRUD & Relations)', () => {
     const updated = await updateEvent(event.id, {
       title: 'Updated Title',
       date: '2026-11-15',
+      isDone: true,
       tagIds: [tag2.id],
       attachments: [
         {
@@ -105,6 +107,7 @@ describe('Story 06, 07, 09 - Event Service (CRUD & Relations)', () => {
 
     expect(updated.title).toBe('Updated Title')
     expect(updated.date).toBe('2026-11-15')
+    expect(updated.isDone).toBe(true)
     expect(updated.type).toBe('attachment')
     expect(updated.tags).toHaveLength(1)
     expect(updated.tags[0].name).toBe('Tag Two')

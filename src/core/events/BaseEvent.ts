@@ -7,6 +7,7 @@ export abstract class BaseEvent {
   public title: string
   public description: string | null
   public date: string
+  public isDone: boolean
   public tags: TagRecord[]
   public attachments: AttachmentRecord[]
   public readonly createdAt: string
@@ -18,6 +19,7 @@ export abstract class BaseEvent {
     this.title = record.title
     this.description = record.description ?? null
     this.date = record.date
+    this.isDone = record.isDone ?? false
     this.tags = record.tags ?? []
     this.attachments = record.attachments ?? []
     this.createdAt = record.createdAt
@@ -40,6 +42,7 @@ export abstract class BaseEvent {
       title: this.title,
       description: this.description,
       date: this.date,
+      isDone: this.isDone,
       createdAt: this.createdAt,
       updatedAt: this.updatedAt,
       tags: this.tags,

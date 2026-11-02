@@ -6966,266 +6966,6 @@ var m = reactDomExports;
   client.createRoot = m.createRoot;
   client.hydrateRoot = m.hydrateRoot;
 }
-/**
- * @license lucide-react v0.475.0 - ISC
- *
- * This source code is licensed under the ISC license.
- * See the LICENSE file in the root directory of this source tree.
- */
-const toKebabCase = (string) => string.replace(/([a-z0-9])([A-Z])/g, "$1-$2").toLowerCase();
-const mergeClasses = (...classes) => classes.filter((className, index, array) => {
-  return Boolean(className) && className.trim() !== "" && array.indexOf(className) === index;
-}).join(" ").trim();
-/**
- * @license lucide-react v0.475.0 - ISC
- *
- * This source code is licensed under the ISC license.
- * See the LICENSE file in the root directory of this source tree.
- */
-var defaultAttributes = {
-  xmlns: "http://www.w3.org/2000/svg",
-  width: 24,
-  height: 24,
-  viewBox: "0 0 24 24",
-  fill: "none",
-  stroke: "currentColor",
-  strokeWidth: 2,
-  strokeLinecap: "round",
-  strokeLinejoin: "round"
-};
-/**
- * @license lucide-react v0.475.0 - ISC
- *
- * This source code is licensed under the ISC license.
- * See the LICENSE file in the root directory of this source tree.
- */
-const Icon = reactExports.forwardRef(
-  ({
-    color = "currentColor",
-    size = 24,
-    strokeWidth = 2,
-    absoluteStrokeWidth,
-    className = "",
-    children,
-    iconNode,
-    ...rest
-  }, ref) => {
-    return reactExports.createElement(
-      "svg",
-      {
-        ref,
-        ...defaultAttributes,
-        width: size,
-        height: size,
-        stroke: color,
-        strokeWidth: absoluteStrokeWidth ? Number(strokeWidth) * 24 / Number(size) : strokeWidth,
-        className: mergeClasses("lucide", className),
-        ...rest
-      },
-      [
-        ...iconNode.map(([tag, attrs]) => reactExports.createElement(tag, attrs)),
-        ...Array.isArray(children) ? children : [children]
-      ]
-    );
-  }
-);
-/**
- * @license lucide-react v0.475.0 - ISC
- *
- * This source code is licensed under the ISC license.
- * See the LICENSE file in the root directory of this source tree.
- */
-const createLucideIcon = (iconName, iconNode) => {
-  const Component = reactExports.forwardRef(
-    ({ className, ...props }, ref) => reactExports.createElement(Icon, {
-      ref,
-      iconNode,
-      className: mergeClasses(`lucide-${toKebabCase(iconName)}`, className),
-      ...props
-    })
-  );
-  Component.displayName = `${iconName}`;
-  return Component;
-};
-/**
- * @license lucide-react v0.475.0 - ISC
- *
- * This source code is licensed under the ISC license.
- * See the LICENSE file in the root directory of this source tree.
- */
-const __iconNode$d = [
-  ["path", { d: "M8 2v4", key: "1cmpym" }],
-  ["path", { d: "M16 2v4", key: "4m81vk" }],
-  ["rect", { width: "18", height: "18", x: "3", y: "4", rx: "2", key: "1hopcy" }],
-  ["path", { d: "M3 10h18", key: "8toen8" }]
-];
-const Calendar = createLucideIcon("Calendar", __iconNode$d);
-/**
- * @license lucide-react v0.475.0 - ISC
- *
- * This source code is licensed under the ISC license.
- * See the LICENSE file in the root directory of this source tree.
- */
-const __iconNode$c = [["path", { d: "M20 6 9 17l-5-5", key: "1gmf2c" }]];
-const Check = createLucideIcon("Check", __iconNode$c);
-/**
- * @license lucide-react v0.475.0 - ISC
- *
- * This source code is licensed under the ISC license.
- * See the LICENSE file in the root directory of this source tree.
- */
-const __iconNode$b = [["path", { d: "m15 18-6-6 6-6", key: "1wnfg3" }]];
-const ChevronLeft = createLucideIcon("ChevronLeft", __iconNode$b);
-/**
- * @license lucide-react v0.475.0 - ISC
- *
- * This source code is licensed under the ISC license.
- * See the LICENSE file in the root directory of this source tree.
- */
-const __iconNode$a = [["path", { d: "m9 18 6-6-6-6", key: "mthhwq" }]];
-const ChevronRight = createLucideIcon("ChevronRight", __iconNode$a);
-/**
- * @license lucide-react v0.475.0 - ISC
- *
- * This source code is licensed under the ISC license.
- * See the LICENSE file in the root directory of this source tree.
- */
-const __iconNode$9 = [
-  ["circle", { cx: "12", cy: "12", r: "10", key: "1mglay" }],
-  ["line", { x1: "12", x2: "12", y1: "8", y2: "12", key: "1pkeuh" }],
-  ["line", { x1: "12", x2: "12.01", y1: "16", y2: "16", key: "4dfq90" }]
-];
-const CircleAlert = createLucideIcon("CircleAlert", __iconNode$9);
-/**
- * @license lucide-react v0.475.0 - ISC
- *
- * This source code is licensed under the ISC license.
- * See the LICENSE file in the root directory of this source tree.
- */
-const __iconNode$8 = [
-  ["polygon", { points: "22 3 2 3 10 12.46 10 19 14 21 14 12.46 22 3", key: "1yg77f" }]
-];
-const Filter = createLucideIcon("Filter", __iconNode$8);
-/**
- * @license lucide-react v0.475.0 - ISC
- *
- * This source code is licensed under the ISC license.
- * See the LICENSE file in the root directory of this source tree.
- */
-const __iconNode$7 = [
-  [
-    "path",
-    {
-      d: "m6 14 1.5-2.9A2 2 0 0 1 9.24 10H20a2 2 0 0 1 1.94 2.5l-1.54 6a2 2 0 0 1-1.95 1.5H4a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h3.9a2 2 0 0 1 1.69.9l.81 1.2a2 2 0 0 0 1.67.9H18a2 2 0 0 1 2 2v2",
-      key: "usdka0"
-    }
-  ]
-];
-const FolderOpen = createLucideIcon("FolderOpen", __iconNode$7);
-/**
- * @license lucide-react v0.475.0 - ISC
- *
- * This source code is licensed under the ISC license.
- * See the LICENSE file in the root directory of this source tree.
- */
-const __iconNode$6 = [
-  ["path", { d: "M13.234 20.252 21 12.3", key: "1cbrk9" }],
-  [
-    "path",
-    {
-      d: "m16 6-8.414 8.586a2 2 0 0 0 0 2.828 2 2 0 0 0 2.828 0l8.414-8.586a4 4 0 0 0 0-5.656 4 4 0 0 0-5.656 0l-8.415 8.585a6 6 0 1 0 8.486 8.486",
-      key: "1pkts6"
-    }
-  ]
-];
-const Paperclip = createLucideIcon("Paperclip", __iconNode$6);
-/**
- * @license lucide-react v0.475.0 - ISC
- *
- * This source code is licensed under the ISC license.
- * See the LICENSE file in the root directory of this source tree.
- */
-const __iconNode$5 = [
-  [
-    "path",
-    {
-      d: "M21.174 6.812a1 1 0 0 0-3.986-3.987L3.842 16.174a2 2 0 0 0-.5.83l-1.321 4.352a.5.5 0 0 0 .623.622l4.353-1.32a2 2 0 0 0 .83-.497z",
-      key: "1a8usu"
-    }
-  ]
-];
-const Pen = createLucideIcon("Pen", __iconNode$5);
-/**
- * @license lucide-react v0.475.0 - ISC
- *
- * This source code is licensed under the ISC license.
- * See the LICENSE file in the root directory of this source tree.
- */
-const __iconNode$4 = [
-  ["path", { d: "M5 12h14", key: "1ays0h" }],
-  ["path", { d: "M12 5v14", key: "s699le" }]
-];
-const Plus = createLucideIcon("Plus", __iconNode$4);
-/**
- * @license lucide-react v0.475.0 - ISC
- *
- * This source code is licensed under the ISC license.
- * See the LICENSE file in the root directory of this source tree.
- */
-const __iconNode$3 = [
-  ["line", { x1: "21", x2: "14", y1: "4", y2: "4", key: "obuewd" }],
-  ["line", { x1: "10", x2: "3", y1: "4", y2: "4", key: "1q6298" }],
-  ["line", { x1: "21", x2: "12", y1: "12", y2: "12", key: "1iu8h1" }],
-  ["line", { x1: "8", x2: "3", y1: "12", y2: "12", key: "ntss68" }],
-  ["line", { x1: "21", x2: "16", y1: "20", y2: "20", key: "14d8ph" }],
-  ["line", { x1: "12", x2: "3", y1: "20", y2: "20", key: "m0wm8r" }],
-  ["line", { x1: "14", x2: "14", y1: "2", y2: "6", key: "14e1ph" }],
-  ["line", { x1: "8", x2: "8", y1: "10", y2: "14", key: "1i6ji0" }],
-  ["line", { x1: "16", x2: "16", y1: "18", y2: "22", key: "1lctlv" }]
-];
-const SlidersHorizontal = createLucideIcon("SlidersHorizontal", __iconNode$3);
-/**
- * @license lucide-react v0.475.0 - ISC
- *
- * This source code is licensed under the ISC license.
- * See the LICENSE file in the root directory of this source tree.
- */
-const __iconNode$2 = [
-  [
-    "path",
-    {
-      d: "M12.586 2.586A2 2 0 0 0 11.172 2H4a2 2 0 0 0-2 2v7.172a2 2 0 0 0 .586 1.414l8.704 8.704a2.426 2.426 0 0 0 3.42 0l6.58-6.58a2.426 2.426 0 0 0 0-3.42z",
-      key: "vktsd0"
-    }
-  ],
-  ["circle", { cx: "7.5", cy: "7.5", r: ".5", fill: "currentColor", key: "kqv944" }]
-];
-const Tag = createLucideIcon("Tag", __iconNode$2);
-/**
- * @license lucide-react v0.475.0 - ISC
- *
- * This source code is licensed under the ISC license.
- * See the LICENSE file in the root directory of this source tree.
- */
-const __iconNode$1 = [
-  ["path", { d: "M3 6h18", key: "d0wm0j" }],
-  ["path", { d: "M19 6v14c0 1-1 2-2 2H7c-1 0-2-1-2-2V6", key: "4alrt4" }],
-  ["path", { d: "M8 6V4c0-1 1-2 2-2h4c1 0 2 1 2 2v2", key: "v07s0e" }],
-  ["line", { x1: "10", x2: "10", y1: "11", y2: "17", key: "1uufr5" }],
-  ["line", { x1: "14", x2: "14", y1: "11", y2: "17", key: "xtxkd" }]
-];
-const Trash2 = createLucideIcon("Trash2", __iconNode$1);
-/**
- * @license lucide-react v0.475.0 - ISC
- *
- * This source code is licensed under the ISC license.
- * See the LICENSE file in the root directory of this source tree.
- */
-const __iconNode = [
-  ["path", { d: "M18 6 6 18", key: "1bl5f8" }],
-  ["path", { d: "m6 6 12 12", key: "d8bk6v" }]
-];
-const X = createLucideIcon("X", __iconNode);
 const millisecondsInWeek = 6048e5;
 const millisecondsInDay = 864e5;
 const constructFromSymbol = Symbol.for("constructDateFrom");
@@ -9480,27 +9220,329 @@ function useEvents() {
     clearError
   };
 }
+/**
+ * @license lucide-react v0.475.0 - ISC
+ *
+ * This source code is licensed under the ISC license.
+ * See the LICENSE file in the root directory of this source tree.
+ */
+const toKebabCase = (string) => string.replace(/([a-z0-9])([A-Z])/g, "$1-$2").toLowerCase();
+const mergeClasses = (...classes) => classes.filter((className, index, array) => {
+  return Boolean(className) && className.trim() !== "" && array.indexOf(className) === index;
+}).join(" ").trim();
+/**
+ * @license lucide-react v0.475.0 - ISC
+ *
+ * This source code is licensed under the ISC license.
+ * See the LICENSE file in the root directory of this source tree.
+ */
+var defaultAttributes = {
+  xmlns: "http://www.w3.org/2000/svg",
+  width: 24,
+  height: 24,
+  viewBox: "0 0 24 24",
+  fill: "none",
+  stroke: "currentColor",
+  strokeWidth: 2,
+  strokeLinecap: "round",
+  strokeLinejoin: "round"
+};
+/**
+ * @license lucide-react v0.475.0 - ISC
+ *
+ * This source code is licensed under the ISC license.
+ * See the LICENSE file in the root directory of this source tree.
+ */
+const Icon = reactExports.forwardRef(
+  ({
+    color = "currentColor",
+    size = 24,
+    strokeWidth = 2,
+    absoluteStrokeWidth,
+    className = "",
+    children,
+    iconNode,
+    ...rest
+  }, ref) => {
+    return reactExports.createElement(
+      "svg",
+      {
+        ref,
+        ...defaultAttributes,
+        width: size,
+        height: size,
+        stroke: color,
+        strokeWidth: absoluteStrokeWidth ? Number(strokeWidth) * 24 / Number(size) : strokeWidth,
+        className: mergeClasses("lucide", className),
+        ...rest
+      },
+      [
+        ...iconNode.map(([tag, attrs]) => reactExports.createElement(tag, attrs)),
+        ...Array.isArray(children) ? children : [children]
+      ]
+    );
+  }
+);
+/**
+ * @license lucide-react v0.475.0 - ISC
+ *
+ * This source code is licensed under the ISC license.
+ * See the LICENSE file in the root directory of this source tree.
+ */
+const createLucideIcon = (iconName, iconNode) => {
+  const Component = reactExports.forwardRef(
+    ({ className, ...props }, ref) => reactExports.createElement(Icon, {
+      ref,
+      iconNode,
+      className: mergeClasses(`lucide-${toKebabCase(iconName)}`, className),
+      ...props
+    })
+  );
+  Component.displayName = `${iconName}`;
+  return Component;
+};
+/**
+ * @license lucide-react v0.475.0 - ISC
+ *
+ * This source code is licensed under the ISC license.
+ * See the LICENSE file in the root directory of this source tree.
+ */
+const __iconNode$g = [
+  ["path", { d: "M8 2v4", key: "1cmpym" }],
+  ["path", { d: "M16 2v4", key: "4m81vk" }],
+  ["rect", { width: "18", height: "18", x: "3", y: "4", rx: "2", key: "1hopcy" }],
+  ["path", { d: "M3 10h18", key: "8toen8" }]
+];
+const Calendar = createLucideIcon("Calendar", __iconNode$g);
+/**
+ * @license lucide-react v0.475.0 - ISC
+ *
+ * This source code is licensed under the ISC license.
+ * See the LICENSE file in the root directory of this source tree.
+ */
+const __iconNode$f = [["path", { d: "M20 6 9 17l-5-5", key: "1gmf2c" }]];
+const Check = createLucideIcon("Check", __iconNode$f);
+/**
+ * @license lucide-react v0.475.0 - ISC
+ *
+ * This source code is licensed under the ISC license.
+ * See the LICENSE file in the root directory of this source tree.
+ */
+const __iconNode$e = [["path", { d: "m15 18-6-6 6-6", key: "1wnfg3" }]];
+const ChevronLeft = createLucideIcon("ChevronLeft", __iconNode$e);
+/**
+ * @license lucide-react v0.475.0 - ISC
+ *
+ * This source code is licensed under the ISC license.
+ * See the LICENSE file in the root directory of this source tree.
+ */
+const __iconNode$d = [["path", { d: "m9 18 6-6-6-6", key: "mthhwq" }]];
+const ChevronRight = createLucideIcon("ChevronRight", __iconNode$d);
+/**
+ * @license lucide-react v0.475.0 - ISC
+ *
+ * This source code is licensed under the ISC license.
+ * See the LICENSE file in the root directory of this source tree.
+ */
+const __iconNode$c = [
+  ["circle", { cx: "12", cy: "12", r: "10", key: "1mglay" }],
+  ["line", { x1: "12", x2: "12", y1: "8", y2: "12", key: "1pkeuh" }],
+  ["line", { x1: "12", x2: "12.01", y1: "16", y2: "16", key: "4dfq90" }]
+];
+const CircleAlert = createLucideIcon("CircleAlert", __iconNode$c);
+/**
+ * @license lucide-react v0.475.0 - ISC
+ *
+ * This source code is licensed under the ISC license.
+ * See the LICENSE file in the root directory of this source tree.
+ */
+const __iconNode$b = [
+  ["circle", { cx: "12", cy: "12", r: "10", key: "1mglay" }],
+  ["path", { d: "m9 12 2 2 4-4", key: "dzmm74" }]
+];
+const CircleCheck = createLucideIcon("CircleCheck", __iconNode$b);
+/**
+ * @license lucide-react v0.475.0 - ISC
+ *
+ * This source code is licensed under the ISC license.
+ * See the LICENSE file in the root directory of this source tree.
+ */
+const __iconNode$a = [["circle", { cx: "12", cy: "12", r: "10", key: "1mglay" }]];
+const Circle = createLucideIcon("Circle", __iconNode$a);
+/**
+ * @license lucide-react v0.475.0 - ISC
+ *
+ * This source code is licensed under the ISC license.
+ * See the LICENSE file in the root directory of this source tree.
+ */
+const __iconNode$9 = [
+  ["path", { d: "M13.013 3H2l8 9.46V19l4 2v-8.54l.9-1.055", key: "1fi1da" }],
+  ["path", { d: "m22 3-5 5", key: "12jva0" }],
+  ["path", { d: "m17 3 5 5", key: "k36vhe" }]
+];
+const FilterX = createLucideIcon("FilterX", __iconNode$9);
+/**
+ * @license lucide-react v0.475.0 - ISC
+ *
+ * This source code is licensed under the ISC license.
+ * See the LICENSE file in the root directory of this source tree.
+ */
+const __iconNode$8 = [
+  [
+    "path",
+    {
+      d: "m6 14 1.5-2.9A2 2 0 0 1 9.24 10H20a2 2 0 0 1 1.94 2.5l-1.54 6a2 2 0 0 1-1.95 1.5H4a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h3.9a2 2 0 0 1 1.69.9l.81 1.2a2 2 0 0 0 1.67.9H18a2 2 0 0 1 2 2v2",
+      key: "usdka0"
+    }
+  ]
+];
+const FolderOpen = createLucideIcon("FolderOpen", __iconNode$8);
+/**
+ * @license lucide-react v0.475.0 - ISC
+ *
+ * This source code is licensed under the ISC license.
+ * See the LICENSE file in the root directory of this source tree.
+ */
+const __iconNode$7 = [
+  ["path", { d: "M13.234 20.252 21 12.3", key: "1cbrk9" }],
+  [
+    "path",
+    {
+      d: "m16 6-8.414 8.586a2 2 0 0 0 0 2.828 2 2 0 0 0 2.828 0l8.414-8.586a4 4 0 0 0 0-5.656 4 4 0 0 0-5.656 0l-8.415 8.585a6 6 0 1 0 8.486 8.486",
+      key: "1pkts6"
+    }
+  ]
+];
+const Paperclip = createLucideIcon("Paperclip", __iconNode$7);
+/**
+ * @license lucide-react v0.475.0 - ISC
+ *
+ * This source code is licensed under the ISC license.
+ * See the LICENSE file in the root directory of this source tree.
+ */
+const __iconNode$6 = [
+  [
+    "path",
+    {
+      d: "M21.174 6.812a1 1 0 0 0-3.986-3.987L3.842 16.174a2 2 0 0 0-.5.83l-1.321 4.352a.5.5 0 0 0 .623.622l4.353-1.32a2 2 0 0 0 .83-.497z",
+      key: "1a8usu"
+    }
+  ]
+];
+const Pen = createLucideIcon("Pen", __iconNode$6);
+/**
+ * @license lucide-react v0.475.0 - ISC
+ *
+ * This source code is licensed under the ISC license.
+ * See the LICENSE file in the root directory of this source tree.
+ */
+const __iconNode$5 = [
+  [
+    "path",
+    {
+      d: "M21.174 6.812a1 1 0 0 0-3.986-3.987L3.842 16.174a2 2 0 0 0-.5.83l-1.321 4.352a.5.5 0 0 0 .623.622l4.353-1.32a2 2 0 0 0 .83-.497z",
+      key: "1a8usu"
+    }
+  ],
+  ["path", { d: "m15 5 4 4", key: "1mk7zo" }]
+];
+const Pencil = createLucideIcon("Pencil", __iconNode$5);
+/**
+ * @license lucide-react v0.475.0 - ISC
+ *
+ * This source code is licensed under the ISC license.
+ * See the LICENSE file in the root directory of this source tree.
+ */
+const __iconNode$4 = [
+  ["path", { d: "M5 12h14", key: "1ays0h" }],
+  ["path", { d: "M12 5v14", key: "s699le" }]
+];
+const Plus = createLucideIcon("Plus", __iconNode$4);
+/**
+ * @license lucide-react v0.475.0 - ISC
+ *
+ * This source code is licensed under the ISC license.
+ * See the LICENSE file in the root directory of this source tree.
+ */
+const __iconNode$3 = [
+  ["line", { x1: "21", x2: "14", y1: "4", y2: "4", key: "obuewd" }],
+  ["line", { x1: "10", x2: "3", y1: "4", y2: "4", key: "1q6298" }],
+  ["line", { x1: "21", x2: "12", y1: "12", y2: "12", key: "1iu8h1" }],
+  ["line", { x1: "8", x2: "3", y1: "12", y2: "12", key: "ntss68" }],
+  ["line", { x1: "21", x2: "16", y1: "20", y2: "20", key: "14d8ph" }],
+  ["line", { x1: "12", x2: "3", y1: "20", y2: "20", key: "m0wm8r" }],
+  ["line", { x1: "14", x2: "14", y1: "2", y2: "6", key: "14e1ph" }],
+  ["line", { x1: "8", x2: "8", y1: "10", y2: "14", key: "1i6ji0" }],
+  ["line", { x1: "16", x2: "16", y1: "18", y2: "22", key: "1lctlv" }]
+];
+const SlidersHorizontal = createLucideIcon("SlidersHorizontal", __iconNode$3);
+/**
+ * @license lucide-react v0.475.0 - ISC
+ *
+ * This source code is licensed under the ISC license.
+ * See the LICENSE file in the root directory of this source tree.
+ */
+const __iconNode$2 = [
+  [
+    "path",
+    {
+      d: "M12.586 2.586A2 2 0 0 0 11.172 2H4a2 2 0 0 0-2 2v7.172a2 2 0 0 0 .586 1.414l8.704 8.704a2.426 2.426 0 0 0 3.42 0l6.58-6.58a2.426 2.426 0 0 0 0-3.42z",
+      key: "vktsd0"
+    }
+  ],
+  ["circle", { cx: "7.5", cy: "7.5", r: ".5", fill: "currentColor", key: "kqv944" }]
+];
+const Tag = createLucideIcon("Tag", __iconNode$2);
+/**
+ * @license lucide-react v0.475.0 - ISC
+ *
+ * This source code is licensed under the ISC license.
+ * See the LICENSE file in the root directory of this source tree.
+ */
+const __iconNode$1 = [
+  ["path", { d: "M3 6h18", key: "d0wm0j" }],
+  ["path", { d: "M19 6v14c0 1-1 2-2 2H7c-1 0-2-1-2-2V6", key: "4alrt4" }],
+  ["path", { d: "M8 6V4c0-1 1-2 2-2h4c1 0 2 1 2 2v2", key: "v07s0e" }],
+  ["line", { x1: "10", x2: "10", y1: "11", y2: "17", key: "1uufr5" }],
+  ["line", { x1: "14", x2: "14", y1: "11", y2: "17", key: "xtxkd" }]
+];
+const Trash2 = createLucideIcon("Trash2", __iconNode$1);
+/**
+ * @license lucide-react v0.475.0 - ISC
+ *
+ * This source code is licensed under the ISC license.
+ * See the LICENSE file in the root directory of this source tree.
+ */
+const __iconNode = [
+  ["path", { d: "M18 6 6 18", key: "1bl5f8" }],
+  ["path", { d: "m6 6 12 12", key: "d8bk6v" }]
+];
+const X = createLucideIcon("X", __iconNode);
 const CalendarHeader = ({
   title,
   onPrev,
   onNext,
   onToday,
-  onNewEvent,
+  onOpenTagManager,
+  tagsCount,
+  onRunDiagnostics,
   tags,
   activeTagIds,
   onToggleTagFilter,
   onClearFilters
 }) => {
-  return /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { className: "border-b border-slate-200 bg-white px-6 py-3 shadow-xs space-y-3", children: [
-    /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { className: "flex flex-wrap items-center justify-between gap-3", children: [
+  return /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { className: "border-b border-slate-200 bg-white shadow-2xs", children: [
+    /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { className: "flex h-14 items-center justify-between px-6", children: [
       /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { className: "flex items-center gap-3", children: [
-        /* @__PURE__ */ jsxRuntimeExports.jsx("h2", { className: "text-lg font-bold tracking-tight text-slate-900 min-w-[180px]", children: title }),
-        /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { className: "flex items-center rounded-lg border border-slate-200 bg-white shadow-2xs", children: [
+        /* @__PURE__ */ jsxRuntimeExports.jsx(Calendar, { className: "h-5 w-5 text-blue-600 shrink-0" }),
+        /* @__PURE__ */ jsxRuntimeExports.jsx("h2", { className: "text-base font-bold tracking-tight text-slate-900", children: title }),
+        /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { className: "flex items-center rounded-lg border border-slate-200 bg-white shadow-2xs ml-1", children: [
           /* @__PURE__ */ jsxRuntimeExports.jsx(
             "button",
             {
+              type: "button",
               onClick: onPrev,
-              className: "p-1.5 text-slate-500 hover:bg-slate-50 hover:text-slate-800 transition rounded-l-lg",
+              className: "p-1.5 text-slate-500 hover:bg-slate-50 hover:text-slate-800 transition rounded-l-lg cursor-pointer",
               title: "Settimana precedente",
               children: /* @__PURE__ */ jsxRuntimeExports.jsx(ChevronLeft, { className: "h-4 w-4" })
             }
@@ -9508,45 +9550,59 @@ const CalendarHeader = ({
           /* @__PURE__ */ jsxRuntimeExports.jsx(
             "button",
             {
+              type: "button",
               onClick: onToday,
-              className: "border-x border-slate-200 px-3 py-1 text-xs font-medium text-slate-700 hover:bg-slate-50 transition",
+              className: "border-x border-slate-200 px-3 py-1 text-xs font-medium text-slate-700 hover:bg-slate-50 transition cursor-pointer",
               children: "Oggi"
             }
           ),
           /* @__PURE__ */ jsxRuntimeExports.jsx(
             "button",
             {
+              type: "button",
               onClick: onNext,
-              className: "p-1.5 text-slate-500 hover:bg-slate-50 hover:text-slate-800 transition rounded-r-lg",
+              className: "p-1.5 text-slate-500 hover:bg-slate-50 hover:text-slate-800 transition rounded-r-lg cursor-pointer",
               title: "Settimana successiva",
               children: /* @__PURE__ */ jsxRuntimeExports.jsx(ChevronRight, { className: "h-4 w-4" })
             }
           )
         ] })
       ] }),
-      /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: "flex items-center gap-2", children: /* @__PURE__ */ jsxRuntimeExports.jsxs(
-        "button",
-        {
-          onClick: onNewEvent,
-          className: "inline-flex items-center gap-1.5 rounded-lg bg-blue-600 px-3.5 py-1.5 text-xs font-semibold text-white shadow-xs transition hover:bg-blue-700 active:scale-95",
-          children: [
-            /* @__PURE__ */ jsxRuntimeExports.jsx(Plus, { className: "h-4 w-4" }),
-            "Nuova Scadenza"
-          ]
-        }
-      ) })
+      /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { className: "flex items-center gap-2", children: [
+        /* @__PURE__ */ jsxRuntimeExports.jsxs(
+          "button",
+          {
+            type: "button",
+            onClick: onOpenTagManager,
+            className: "inline-flex items-center gap-1.5 rounded-lg border border-slate-200 bg-white px-3 py-1.5 text-xs font-semibold text-slate-700 shadow-2xs transition hover:bg-slate-50 cursor-pointer",
+            children: [
+              /* @__PURE__ */ jsxRuntimeExports.jsx(Tag, { className: "h-3.5 w-3.5 text-blue-600" }),
+              /* @__PURE__ */ jsxRuntimeExports.jsx("span", { children: "Tag" }),
+              /* @__PURE__ */ jsxRuntimeExports.jsx("span", { className: "ml-0.5 rounded-full bg-slate-100 px-1.5 py-0.2 text-[10px] font-bold text-slate-600", children: tagsCount })
+            ]
+          }
+        ),
+        /* @__PURE__ */ jsxRuntimeExports.jsx(
+          "button",
+          {
+            type: "button",
+            onClick: onRunDiagnostics,
+            className: "rounded-lg border border-slate-200 bg-white p-1.5 text-slate-500 shadow-2xs hover:bg-slate-50 transition cursor-pointer",
+            title: "Diagnostica di Sistema",
+            children: /* @__PURE__ */ jsxRuntimeExports.jsx(SlidersHorizontal, { className: "h-3.5 w-3.5" })
+          }
+        )
+      ] })
     ] }),
-    tags.length > 0 && /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { className: "flex items-center gap-2 overflow-x-auto pt-1 text-xs", children: [
-      /* @__PURE__ */ jsxRuntimeExports.jsxs("span", { className: "inline-flex items-center gap-1 text-[11px] font-semibold text-slate-400 uppercase tracking-wider shrink-0", children: [
-        /* @__PURE__ */ jsxRuntimeExports.jsx(Filter, { className: "h-3 w-3" }),
-        " Filtra:"
-      ] }),
+    tags.length > 0 && /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { className: "flex items-center gap-2 border-t border-slate-100 px-6 py-2 overflow-x-auto text-xs bg-slate-50/50", children: [
       /* @__PURE__ */ jsxRuntimeExports.jsx(
         "button",
         {
+          type: "button",
           onClick: onClearFilters,
-          className: `rounded-full px-2.5 py-0.5 text-xs font-medium transition ${activeTagIds.length === 0 ? "bg-slate-900 text-white" : "bg-slate-100 text-slate-600 hover:bg-slate-200"}`,
-          children: "Tutti"
+          className: `inline-flex items-center justify-center rounded-lg p-1.5 text-xs font-medium transition cursor-pointer border ${activeTagIds.length > 0 ? "bg-blue-600 border-blue-600 text-white shadow-2xs hover:bg-blue-700" : "bg-white border-slate-200 text-slate-400 hover:text-slate-600 hover:bg-slate-100"}`,
+          title: activeTagIds.length > 0 ? "Rimuovi filtri applicati" : "Nessun filtro attivo (mostra tutti)",
+          children: /* @__PURE__ */ jsxRuntimeExports.jsx(FilterX, { className: "h-3.5 w-3.5" })
         }
       ),
       tags.map((tag) => {
@@ -9554,8 +9610,9 @@ const CalendarHeader = ({
         return /* @__PURE__ */ jsxRuntimeExports.jsxs(
           "button",
           {
+            type: "button",
             onClick: () => onToggleTagFilter(tag.id),
-            className: `inline-flex items-center gap-1.5 rounded-full px-2.5 py-0.5 text-xs font-medium transition border ${isActive ? "ring-2 ring-offset-1 font-semibold" : "opacity-70 hover:opacity-100"}`,
+            className: `inline-flex items-center gap-1.5 rounded-full px-2.5 py-0.5 text-xs font-medium transition border cursor-pointer ${isActive ? "ring-2 ring-offset-1 font-semibold" : "opacity-70 hover:opacity-100"}`,
             style: {
               backgroundColor: `${tag.colorHex}18`,
               color: tag.colorHex,
@@ -9581,10 +9638,11 @@ const CalendarHeader = ({
 };
 const WeekCalendarView = ({
   grid,
+  selectedEventId,
   onDayClick,
   onEventClick
 }) => {
-  return /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: "flex flex-1 flex-col overflow-hidden bg-white", children: /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: "grid flex-1 grid-cols-7 divide-x divide-slate-200 overflow-y-auto", children: grid.days.map((day) => {
+  return /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: "flex flex-1 flex-col overflow-hidden bg-slate-50/40", children: /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: "grid flex-1 grid-cols-7 divide-x divide-slate-200 overflow-y-auto", children: grid.days.map((day) => {
     const weekdayName = format(day.date, "EEEE", { locale: it });
     const capitalizedWeekday = weekdayName.charAt(0).toUpperCase() + weekdayName.slice(1);
     const formattedDate = format(day.date, "d MMM", { locale: it });
@@ -9592,9 +9650,9 @@ const WeekCalendarView = ({
       "div",
       {
         onClick: () => onDayClick(day.date),
-        className: `flex flex-col p-2.5 transition cursor-pointer group ${day.isToday ? "bg-blue-50/20" : "bg-white"} hover:bg-slate-50/80`,
+        className: `flex flex-col p-2.5 transition cursor-pointer group ${day.isToday ? "bg-blue-50/35" : "bg-transparent"} hover:bg-slate-100/50`,
         children: [
-          /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { className: "flex items-center justify-between border-b border-slate-100 pb-2 mb-2", children: [
+          /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { className: "flex items-center justify-between border-b border-slate-200/80 pb-2 mb-2", children: [
             /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { children: [
               /* @__PURE__ */ jsxRuntimeExports.jsx("span", { className: "text-[11px] font-semibold uppercase tracking-wider text-slate-400 block", children: capitalizedWeekday }),
               /* @__PURE__ */ jsxRuntimeExports.jsx(
@@ -9613,15 +9671,16 @@ const WeekCalendarView = ({
                   e.stopPropagation();
                   onDayClick(day.date);
                 },
-                className: "opacity-0 group-hover:opacity-100 rounded p-1 text-slate-400 hover:bg-slate-200 hover:text-slate-700 transition",
+                className: "opacity-0 group-hover:opacity-100 rounded p-1 text-slate-400 hover:bg-slate-200 hover:text-slate-700 transition cursor-pointer",
                 title: "Nuovo evento",
                 children: /* @__PURE__ */ jsxRuntimeExports.jsx(Plus, { className: "h-4 w-4" })
               }
             )
           ] }),
-          /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: "flex flex-1 flex-col gap-1.5 overflow-y-auto", children: day.events.length === 0 ? /* @__PURE__ */ jsxRuntimeExports.jsx("span", { className: "text-[11px] text-slate-300 italic pt-2 text-center", children: "Nessun evento" }) : day.events.map((evt) => {
-            const primaryTag = evt.tags[0];
-            const tagColor = primaryTag ? primaryTag.colorHex : "#3B82F6";
+          /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: "flex flex-1 flex-col gap-1.5 overflow-y-auto", children: day.events.length === 0 ? /* @__PURE__ */ jsxRuntimeExports.jsx("span", { className: "text-[11px] text-slate-300 italic pt-2 text-center select-none", children: "Nessun evento" }) : day.events.map((evt) => {
+            const isDone = !!evt.isDone;
+            const accentColor = isDone ? "#10B981" : "#EF4444";
+            const isSelected = selectedEventId === evt.id;
             return /* @__PURE__ */ jsxRuntimeExports.jsxs(
               "div",
               {
@@ -9629,33 +9688,41 @@ const WeekCalendarView = ({
                   e.stopPropagation();
                   onEventClick(evt);
                 },
-                className: "rounded-lg p-2 text-xs transition shadow-2xs hover:shadow-xs hover:brightness-95 border",
-                style: {
-                  backgroundColor: `${tagColor}14`,
-                  borderColor: `${tagColor}40`,
-                  borderLeftWidth: "4px",
-                  borderLeftColor: tagColor
-                },
+                className: `rounded-lg border p-2.5 text-xs transition cursor-pointer border-l-4 ${isSelected ? "bg-slate-100 border-slate-300 shadow-xs" : "bg-white border-slate-200/90 shadow-2xs hover:bg-slate-50 hover:border-slate-300 hover:shadow-xs"}`,
+                style: { borderLeftColor: accentColor },
                 children: [
-                  /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { className: "flex items-start justify-between gap-1", children: [
-                    /* @__PURE__ */ jsxRuntimeExports.jsx("h4", { className: "font-semibold text-slate-900 leading-tight", children: evt.title }),
+                  /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { className: "flex items-start justify-between gap-1.5", children: [
+                    /* @__PURE__ */ jsxRuntimeExports.jsx(
+                      "h4",
+                      {
+                        className: `font-semibold leading-tight break-words text-xs transition flex-1 min-w-0 ${isDone ? "text-slate-400 line-through" : "text-slate-800"}`,
+                        children: evt.title
+                      }
+                    ),
                     evt.attachments && evt.attachments.length > 0 && /* @__PURE__ */ jsxRuntimeExports.jsx(
                       "span",
                       {
-                        className: "text-slate-500 shrink-0",
+                        className: "text-slate-400 shrink-0 ml-1",
                         title: `${evt.attachments.length} allegati`,
                         children: /* @__PURE__ */ jsxRuntimeExports.jsx(Paperclip, { className: "h-3 w-3" })
                       }
                     )
                   ] }),
-                  evt.description && /* @__PURE__ */ jsxRuntimeExports.jsx("p", { className: "mt-1 text-[10px] text-slate-500 line-clamp-2", children: evt.description }),
-                  evt.tags && evt.tags.length > 0 && /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: "mt-1.5 flex flex-wrap gap-1", children: evt.tags.map((t2) => /* @__PURE__ */ jsxRuntimeExports.jsx(
+                  evt.description && /* @__PURE__ */ jsxRuntimeExports.jsx(
+                    "p",
+                    {
+                      className: `mt-1 text-[11px] line-clamp-2 leading-relaxed transition ${isDone ? "text-slate-400" : "text-slate-500"}`,
+                      children: evt.description
+                    }
+                  ),
+                  evt.tags && evt.tags.length > 0 && /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: "mt-2 flex flex-wrap gap-1", children: evt.tags.map((t2) => /* @__PURE__ */ jsxRuntimeExports.jsx(
                     "span",
                     {
-                      className: "rounded px-1 py-0.2 text-[9px] font-semibold",
+                      className: "rounded px-1.5 py-0.5 text-[9px] font-semibold border shadow-2xs",
                       style: {
-                        backgroundColor: `${t2.colorHex}25`,
-                        color: t2.colorHex
+                        backgroundColor: `${t2.colorHex}18`,
+                        color: t2.colorHex,
+                        borderColor: `${t2.colorHex}35`
                       },
                       children: t2.name
                     },
@@ -9700,6 +9767,7 @@ const EventModal = ({
   const [title, setTitle] = reactExports.useState("");
   const [description, setDescription] = reactExports.useState("");
   const [date, setDate] = reactExports.useState("");
+  const [isDone, setIsDone] = reactExports.useState(false);
   const [selectedTagIds, setSelectedTagIds] = reactExports.useState([]);
   const [tagInput, setTagInput] = reactExports.useState("");
   const [attachments, setAttachments] = reactExports.useState([]);
@@ -9707,6 +9775,15 @@ const EventModal = ({
   const [errorMessage, setErrorMessage] = reactExports.useState(null);
   const [revealStatus, setRevealStatus] = reactExports.useState(null);
   const [confirmDelete, setConfirmDelete] = reactExports.useState(false);
+  const titleInputRef = reactExports.useRef(null);
+  reactExports.useEffect(() => {
+    if (isOpen) {
+      const timer = setTimeout(() => {
+        titleInputRef.current?.focus();
+      }, 50);
+      return () => clearTimeout(timer);
+    }
+  }, [isOpen]);
   reactExports.useEffect(() => {
     if (!isOpen) {
       setErrorMessage(null);
@@ -9719,6 +9796,7 @@ const EventModal = ({
       setTitle(eventToEdit.title);
       setDescription(eventToEdit.description || "");
       setDate(eventToEdit.date.slice(0, 10));
+      setIsDone(!!eventToEdit.isDone);
       setSelectedTagIds(eventToEdit.tags.map((t2) => t2.id));
       setAttachments(
         eventToEdit.attachments.map((a) => ({
@@ -9733,6 +9811,7 @@ const EventModal = ({
       setTitle("");
       setDescription("");
       setDate(formattedDefault);
+      setIsDone(false);
       setSelectedTagIds([]);
       setAttachments([]);
     }
@@ -9744,7 +9823,17 @@ const EventModal = ({
     if (isOpen) window.addEventListener("keydown", handleKeyDown);
     return () => window.removeEventListener("keydown", handleKeyDown);
   }, [isOpen, onClose]);
-  if (!isOpen) return null;
+  const formattedDateText = reactExports.useMemo(() => {
+    if (!date) return "";
+    try {
+      const parsed = /* @__PURE__ */ new Date(`${date}T12:00:00`);
+      if (isNaN(parsed.getTime())) return date;
+      const formatted = format(parsed, "EEEE d MMMM yyyy", { locale: it });
+      return formatted.charAt(0).toUpperCase() + formatted.slice(1);
+    } catch {
+      return date;
+    }
+  }, [date]);
   const handleAddOrApplyTag = async (tagNameToApply) => {
     const trimmed = tagNameToApply.trim();
     if (!trimmed) return;
@@ -9833,6 +9922,7 @@ const EventModal = ({
         title: trimmedTitle,
         description: description.trim() || null,
         date,
+        isDone,
         tagIds: selectedTagIds,
         attachments,
         type: attachments.length > 0 ? "attachment" : "simple"
@@ -9859,228 +9949,234 @@ const EventModal = ({
       setSubmitting(false);
     }
   };
+  if (!isOpen) return null;
   const tagsById = new Map(availableTags.map((t2) => [t2.id, t2]));
   const selectedTags = selectedTagIds.map((id2) => tagsById.get(id2)).filter((t2) => !!t2);
   const unselectedTags = availableTags.filter((t2) => !selectedTagIds.includes(t2.id));
-  const formattedDateText = reactExports.useMemo(() => {
-    if (!date) return "";
-    try {
-      const parsed = /* @__PURE__ */ new Date(`${date}T12:00:00`);
-      const formatted = format(parsed, "EEEE d MMMM yyyy", { locale: it });
-      return formatted.charAt(0).toUpperCase() + formatted.slice(1);
-    } catch {
-      return date;
-    }
-  }, [date]);
   return /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: "fixed inset-0 z-50 flex items-center justify-center bg-slate-900/40 backdrop-blur-xs p-4", children: /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { className: "w-full max-w-xl rounded-2xl bg-white shadow-xl border border-slate-200 overflow-hidden flex flex-col max-h-[92vh]", children: [
-    /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { className: "flex items-center justify-between border-b border-slate-100 px-6 py-4", children: [
-      /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { className: "flex items-center gap-2.5", children: [
-        /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: "flex h-8 w-8 items-center justify-center rounded-lg bg-blue-50 text-blue-600", children: /* @__PURE__ */ jsxRuntimeExports.jsx(Calendar, { className: "h-4 w-4" }) }),
-        /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { children: [
-          /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { className: "flex items-center gap-2", children: [
-            /* @__PURE__ */ jsxRuntimeExports.jsx("h2", { className: "text-base font-semibold text-slate-900", children: isEditing ? "Modifica Scadenza" : "Nuova Scadenza" }),
-            formattedDateText && /* @__PURE__ */ jsxRuntimeExports.jsx("span", { className: "rounded-md bg-blue-50 px-2 py-0.5 text-[11px] font-semibold text-blue-700 border border-blue-200", children: formattedDateText })
-          ] }),
-          /* @__PURE__ */ jsxRuntimeExports.jsx("p", { className: "text-xs text-slate-500 mt-0.5", children: isEditing ? "Aggiorna i dettagli, tag e allegati della scadenza" : "Aggiungi titolo, tag e file associati a questo giorno" })
-        ] })
-      ] }),
+    /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { className: "flex items-center justify-between px-6 pt-5 pb-2", children: [
+      /* @__PURE__ */ jsxRuntimeExports.jsx("span", { className: "text-[11px] font-semibold uppercase tracking-wider text-slate-400", children: isEditing ? "Modifica Evento" : "Nuovo Evento" }),
       /* @__PURE__ */ jsxRuntimeExports.jsx(
         "button",
         {
+          type: "button",
           onClick: onClose,
           className: "rounded-lg p-1.5 text-slate-400 hover:bg-slate-100 hover:text-slate-600 transition cursor-pointer",
+          title: "Chiudi (Esc)",
           children: /* @__PURE__ */ jsxRuntimeExports.jsx(X, { className: "h-4 w-4" })
         }
       )
     ] }),
-    /* @__PURE__ */ jsxRuntimeExports.jsxs("form", { onSubmit: handleSubmit, className: "flex-1 overflow-y-auto p-6 space-y-4", children: [
+    /* @__PURE__ */ jsxRuntimeExports.jsxs("form", { onSubmit: handleSubmit, className: "flex-1 overflow-y-auto overflow-x-hidden px-6 pb-6 pt-1 space-y-4", children: [
       errorMessage && /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { className: "flex items-center gap-2 rounded-lg bg-rose-50 border border-rose-200 p-3 text-xs text-rose-700", children: [
         /* @__PURE__ */ jsxRuntimeExports.jsx(CircleAlert, { className: "h-4 w-4 shrink-0 text-rose-600" }),
         /* @__PURE__ */ jsxRuntimeExports.jsx("span", { children: errorMessage })
       ] }),
-      /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { children: [
-        /* @__PURE__ */ jsxRuntimeExports.jsxs("label", { className: "block text-xs font-semibold text-slate-700 mb-1", children: [
-          "Titolo Evento ",
-          /* @__PURE__ */ jsxRuntimeExports.jsx("span", { className: "text-rose-500", children: "*" })
+      /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: "pt-1", children: /* @__PURE__ */ jsxRuntimeExports.jsx(
+        "input",
+        {
+          ref: titleInputRef,
+          type: "text",
+          placeholder: "Inserisci un titolo...",
+          value: title,
+          onChange: (e) => setTitle(e.target.value),
+          maxLength: 200,
+          required: true,
+          className: "w-full text-xl font-bold text-slate-900 placeholder:text-slate-300 focus:outline-none border-none p-0 bg-transparent tracking-tight"
+        }
+      ) }),
+      /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { className: "space-y-3 py-3 border-y border-slate-100 text-xs", children: [
+        /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { className: "flex items-center gap-3", children: [
+          /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { className: "flex items-center gap-1.5 w-20 text-slate-400 font-medium shrink-0", children: [
+            /* @__PURE__ */ jsxRuntimeExports.jsx(Calendar, { className: "h-3.5 w-3.5" }),
+            /* @__PURE__ */ jsxRuntimeExports.jsx("span", { children: "Data" })
+          ] }),
+          /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: "flex items-center gap-2", children: /* @__PURE__ */ jsxRuntimeExports.jsx("span", { className: "font-medium text-slate-700 bg-slate-100/90 px-2.5 py-1 rounded-md text-xs", children: formattedDateText || "Nessuna data" }) })
         ] }),
-        /* @__PURE__ */ jsxRuntimeExports.jsx(
-          "input",
-          {
-            type: "text",
-            placeholder: "es. Pubblicazione Video YouTube, Invio Newsletter...",
-            value: title,
-            onChange: (e) => setTitle(e.target.value),
-            maxLength: 200,
-            required: true,
-            className: "w-full rounded-lg border border-slate-300 bg-white px-3 py-2 text-xs text-slate-800 placeholder-slate-400 focus:border-blue-500 focus:outline-hidden focus:ring-1 focus:ring-blue-500"
-          }
-        )
-      ] }),
-      /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { className: "space-y-2", children: [
-        /* @__PURE__ */ jsxRuntimeExports.jsx("label", { className: "block text-xs font-semibold text-slate-700", children: "Tag Associati" }),
-        selectedTags.length > 0 && /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: "flex flex-wrap gap-1.5 mb-1.5", children: selectedTags.map((tag) => /* @__PURE__ */ jsxRuntimeExports.jsxs(
-          "span",
-          {
-            className: "inline-flex items-center gap-1.5 rounded-full px-2.5 py-1 text-xs font-semibold border shadow-2xs transition",
-            style: {
-              backgroundColor: `${tag.colorHex}20`,
-              color: tag.colorHex,
-              borderColor: `${tag.colorHex}50`
-            },
-            children: [
-              /* @__PURE__ */ jsxRuntimeExports.jsx(
+        /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { className: "flex items-center gap-3", children: [
+          /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { className: "flex items-center gap-1.5 w-20 text-slate-400 font-medium shrink-0", children: [
+            /* @__PURE__ */ jsxRuntimeExports.jsx(CircleCheck, { className: "h-3.5 w-3.5" }),
+            /* @__PURE__ */ jsxRuntimeExports.jsx("span", { children: "Stato" })
+          ] }),
+          /* @__PURE__ */ jsxRuntimeExports.jsx("div", { children: /* @__PURE__ */ jsxRuntimeExports.jsx(
+            "button",
+            {
+              type: "button",
+              onClick: () => setIsDone(!isDone),
+              className: `inline-flex items-center gap-1.5 rounded-md px-2.5 py-1 text-xs font-semibold border transition cursor-pointer ${isDone ? "bg-emerald-50 text-emerald-700 border-emerald-200 hover:bg-emerald-100" : "bg-rose-50 text-rose-700 border-rose-200 hover:bg-rose-100"}`,
+              title: "Clicca per cambiare stato",
+              children: isDone ? /* @__PURE__ */ jsxRuntimeExports.jsxs(jsxRuntimeExports.Fragment, { children: [
+                /* @__PURE__ */ jsxRuntimeExports.jsx(CircleCheck, { className: "h-3.5 w-3.5 text-emerald-600" }),
+                /* @__PURE__ */ jsxRuntimeExports.jsx("span", { children: "Fatto" })
+              ] }) : /* @__PURE__ */ jsxRuntimeExports.jsxs(jsxRuntimeExports.Fragment, { children: [
+                /* @__PURE__ */ jsxRuntimeExports.jsx(Circle, { className: "h-3.5 w-3.5 text-rose-500" }),
+                /* @__PURE__ */ jsxRuntimeExports.jsx("span", { children: "Da fare" })
+              ] })
+            }
+          ) })
+        ] }),
+        /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { className: "flex items-start gap-3", children: [
+          /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { className: "flex items-center gap-1.5 w-20 text-slate-400 font-medium shrink-0 pt-1", children: [
+            /* @__PURE__ */ jsxRuntimeExports.jsx(Tag, { className: "h-3.5 w-3.5" }),
+            /* @__PURE__ */ jsxRuntimeExports.jsx("span", { children: "Tag" })
+          ] }),
+          /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { className: "flex-1 space-y-2 min-w-0", children: [
+            /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { className: "flex flex-wrap items-center gap-1.5", children: [
+              selectedTags.map((tag) => /* @__PURE__ */ jsxRuntimeExports.jsxs(
                 "span",
                 {
-                  className: "h-1.5 w-1.5 rounded-full",
-                  style: { backgroundColor: tag.colorHex }
-                }
-              ),
-              /* @__PURE__ */ jsxRuntimeExports.jsx("span", { children: tag.name }),
-              /* @__PURE__ */ jsxRuntimeExports.jsx(
-                "button",
-                {
-                  type: "button",
-                  onClick: () => handleRemoveTag(tag.id),
-                  className: "ml-0.5 rounded-full p-0.5 hover:bg-black/10 transition cursor-pointer",
-                  title: "Rimuovi tag",
-                  children: /* @__PURE__ */ jsxRuntimeExports.jsx(X, { className: "h-3 w-3" })
-                }
-              )
-            ]
-          },
-          tag.id
-        )) }),
-        /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { className: "flex items-center gap-2", children: [
-          /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { className: "relative flex-1", children: [
-            /* @__PURE__ */ jsxRuntimeExports.jsx(Tag, { className: "absolute left-2.5 top-2.5 h-3.5 w-3.5 text-slate-400" }),
-            /* @__PURE__ */ jsxRuntimeExports.jsx(
-              "input",
-              {
-                type: "text",
-                placeholder: "Scrivi un tag e premi Invio per applicarlo o crearlo...",
-                value: tagInput,
-                onChange: (e) => setTagInput(e.target.value),
-                onKeyDown: handleTagInputKeyDown,
-                className: "w-full rounded-lg border border-slate-300 bg-white pl-8 pr-3 py-1.5 text-xs text-slate-800 placeholder-slate-400 focus:border-blue-500 focus:outline-hidden"
-              }
-            )
-          ] }),
-          tagInput.trim() && /* @__PURE__ */ jsxRuntimeExports.jsx(
-            "button",
-            {
-              type: "button",
-              onClick: () => handleAddOrApplyTag(tagInput),
-              className: "rounded-lg bg-blue-50 hover:bg-blue-100 border border-blue-200 px-3 py-1.5 text-xs font-semibold text-blue-700 transition",
-              children: "Applica"
-            }
-          )
-        ] }),
-        unselectedTags.length > 0 && /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { className: "pt-1", children: [
-          /* @__PURE__ */ jsxRuntimeExports.jsx("span", { className: "text-[11px] text-slate-400 block mb-1", children: "Tag disponibili (clicca per associare):" }),
-          /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: "flex flex-wrap gap-1.5 max-h-24 overflow-y-auto", children: unselectedTags.map((tag) => /* @__PURE__ */ jsxRuntimeExports.jsxs(
-            "button",
-            {
-              type: "button",
-              onClick: () => handleAddOrApplyTag(tag.name),
-              className: "inline-flex items-center gap-1.5 rounded-full px-2 py-0.5 text-xs font-medium transition opacity-70 hover:opacity-100 border cursor-pointer",
-              style: {
-                backgroundColor: `${tag.colorHex}15`,
-                color: tag.colorHex,
-                borderColor: `${tag.colorHex}40`
-              },
-              children: [
+                  className: "inline-flex items-center gap-1.5 rounded-md px-2 py-0.5 text-xs font-medium border shadow-2xs transition",
+                  style: {
+                    backgroundColor: `${tag.colorHex}18`,
+                    color: tag.colorHex,
+                    borderColor: `${tag.colorHex}40`
+                  },
+                  children: [
+                    /* @__PURE__ */ jsxRuntimeExports.jsx(
+                      "span",
+                      {
+                        className: "h-1.5 w-1.5 rounded-full",
+                        style: { backgroundColor: tag.colorHex }
+                      }
+                    ),
+                    /* @__PURE__ */ jsxRuntimeExports.jsx("span", { children: tag.name }),
+                    /* @__PURE__ */ jsxRuntimeExports.jsx(
+                      "button",
+                      {
+                        type: "button",
+                        onClick: () => handleRemoveTag(tag.id),
+                        className: "ml-0.5 rounded-sm p-0.5 hover:bg-black/10 transition cursor-pointer",
+                        title: "Rimuovi tag",
+                        children: /* @__PURE__ */ jsxRuntimeExports.jsx(X, { className: "h-3 w-3" })
+                      }
+                    )
+                  ]
+                },
+                tag.id
+              )),
+              /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { className: "inline-flex items-center gap-1", children: [
                 /* @__PURE__ */ jsxRuntimeExports.jsx(
-                  "span",
+                  "input",
                   {
-                    className: "h-1.5 w-1.5 rounded-full",
-                    style: { backgroundColor: tag.colorHex }
+                    type: "text",
+                    placeholder: selectedTags.length === 0 ? "Scrivi tag e premi Invio..." : "+ Altro tag...",
+                    value: tagInput,
+                    onChange: (e) => setTagInput(e.target.value),
+                    onKeyDown: handleTagInputKeyDown,
+                    className: "text-xs bg-transparent placeholder-slate-400 text-slate-700 focus:outline-none px-2 py-0.5 min-w-[150px] border border-dashed border-slate-200 hover:border-slate-300 focus:border-blue-400 rounded-md transition"
                   }
                 ),
-                /* @__PURE__ */ jsxRuntimeExports.jsxs("span", { children: [
-                  "+ ",
-                  tag.name
-                ] })
-              ]
-            },
-            tag.id
-          )) })
+                tagInput.trim() && /* @__PURE__ */ jsxRuntimeExports.jsx(
+                  "button",
+                  {
+                    type: "button",
+                    onClick: () => handleAddOrApplyTag(tagInput),
+                    className: "text-[11px] font-semibold text-blue-600 hover:text-blue-700 bg-blue-50 px-2 py-0.5 rounded-md border border-blue-200 cursor-pointer",
+                    children: "Applica"
+                  }
+                )
+              ] })
+            ] }),
+            unselectedTags.length > 0 && /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: "flex flex-wrap items-center gap-1.5 pt-0.5", children: unselectedTags.map((tag) => /* @__PURE__ */ jsxRuntimeExports.jsxs(
+              "button",
+              {
+                type: "button",
+                onClick: () => handleAddOrApplyTag(tag.name),
+                className: "inline-flex items-center gap-1 rounded-md px-2 py-0.5 text-[11px] font-medium transition opacity-60 hover:opacity-100 border border-dashed hover:border-solid cursor-pointer",
+                style: {
+                  backgroundColor: `${tag.colorHex}0c`,
+                  color: tag.colorHex,
+                  borderColor: `${tag.colorHex}30`
+                },
+                title: `Associa tag "${tag.name}"`,
+                children: [
+                  /* @__PURE__ */ jsxRuntimeExports.jsx(
+                    "span",
+                    {
+                      className: "h-1.5 w-1.5 rounded-full",
+                      style: { backgroundColor: tag.colorHex }
+                    }
+                  ),
+                  /* @__PURE__ */ jsxRuntimeExports.jsx("span", { children: tag.name })
+                ]
+              },
+              tag.id
+            )) })
+          ] })
         ] })
       ] }),
-      /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { children: [
-        /* @__PURE__ */ jsxRuntimeExports.jsx("label", { className: "block text-xs font-semibold text-slate-700 mb-1", children: "Descrizione / Note" }),
-        /* @__PURE__ */ jsxRuntimeExports.jsx(
-          "textarea",
-          {
-            placeholder: "Aggiungi dettagli, idee, note o script per questo evento...",
-            value: description,
-            onChange: (e) => setDescription(e.target.value),
-            rows: 3,
-            className: "w-full rounded-lg border border-slate-300 bg-white px-3 py-2 text-xs text-slate-800 placeholder-slate-400 focus:border-blue-500 focus:outline-hidden focus:ring-1 focus:ring-blue-500"
-          }
-        )
-      ] }),
-      /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { className: "rounded-xl border border-slate-200 bg-slate-50/70 p-4 space-y-3", children: [
+      /* @__PURE__ */ jsxRuntimeExports.jsx("div", { children: /* @__PURE__ */ jsxRuntimeExports.jsx(
+        "textarea",
+        {
+          placeholder: "Aggiungi una descrizione, note o link per questo evento...",
+          value: description,
+          onChange: (e) => setDescription(e.target.value),
+          rows: 4,
+          className: "w-full rounded-xl border border-slate-200/80 bg-slate-50/40 p-3 text-xs text-slate-800 placeholder-slate-400 hover:border-slate-300 focus:border-blue-400 focus:bg-white focus:outline-none focus:ring-1 focus:ring-blue-100 transition resize-y"
+        }
+      ) }),
+      /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { className: "space-y-2 pt-1", children: [
         /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { className: "flex items-center justify-between", children: [
-          /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { className: "flex items-center gap-2", children: [
-            /* @__PURE__ */ jsxRuntimeExports.jsx(Paperclip, { className: "h-4 w-4 text-slate-600" }),
-            /* @__PURE__ */ jsxRuntimeExports.jsx("span", { className: "text-xs font-semibold text-slate-800", children: "Allegati Locali" }),
-            /* @__PURE__ */ jsxRuntimeExports.jsx("span", { className: "rounded-full bg-slate-200 px-1.5 py-0.2 text-[10px] font-semibold text-slate-600", children: attachments.length })
+          /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { className: "flex items-center gap-1.5 text-xs font-medium text-slate-500", children: [
+            /* @__PURE__ */ jsxRuntimeExports.jsx(Paperclip, { className: "h-3.5 w-3.5" }),
+            /* @__PURE__ */ jsxRuntimeExports.jsx("span", { children: "Allegati" }),
+            attachments.length > 0 && /* @__PURE__ */ jsxRuntimeExports.jsx("span", { className: "rounded-full bg-slate-100 text-slate-600 px-1.5 py-0.2 text-[10px] font-semibold", children: attachments.length })
           ] }),
-          /* @__PURE__ */ jsxRuntimeExports.jsx(
+          attachments.length > 0 && /* @__PURE__ */ jsxRuntimeExports.jsx(
             "button",
             {
               type: "button",
               onClick: handlePickFiles,
-              className: "inline-flex items-center gap-1 rounded-lg border border-slate-300 bg-white px-2.5 py-1 text-xs font-medium text-slate-700 shadow-2xs transition hover:bg-slate-50 hover:border-slate-400",
-              children: "+ Allega File Locale"
+              className: "inline-flex items-center gap-1 text-[11px] font-medium text-blue-600 hover:text-blue-700 hover:underline cursor-pointer",
+              children: "+ Aggiungi file"
             }
           )
         ] }),
-        attachments.length === 0 ? /* @__PURE__ */ jsxRuntimeExports.jsx("p", { className: "text-[11px] text-slate-400 italic", children: "Nessun file locale allegato. Puoi associare qualsiasi file salvato sul tuo computer." }) : /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: "space-y-1.5", children: attachments.map((att, idx) => /* @__PURE__ */ jsxRuntimeExports.jsxs(
-          "div",
+        attachments.length === 0 ? /* @__PURE__ */ jsxRuntimeExports.jsxs(
+          "button",
           {
-            className: "flex items-center justify-between rounded-lg border border-slate-200 bg-white px-3 py-1.5 shadow-2xs group",
+            type: "button",
+            onClick: handlePickFiles,
+            className: "w-full flex items-center justify-center gap-2 rounded-xl border border-dashed border-slate-200 hover:border-slate-300 hover:bg-slate-50/70 py-2.5 px-3 text-xs text-slate-400 hover:text-slate-600 transition cursor-pointer",
             children: [
-              /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { className: "flex items-center gap-2 min-w-0 flex-1", children: [
-                /* @__PURE__ */ jsxRuntimeExports.jsx("span", { className: "rounded bg-blue-50 px-1.5 py-0.5 text-[9px] font-bold text-blue-600 uppercase", children: att.fileExtension || "FILE" }),
-                /* @__PURE__ */ jsxRuntimeExports.jsx("span", { className: "truncate text-xs font-medium text-slate-800", title: att.filePath, children: att.fileName })
-              ] }),
-              /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { className: "flex items-center gap-1 ml-2 shrink-0", children: [
-                /* @__PURE__ */ jsxRuntimeExports.jsxs(
-                  "button",
-                  {
-                    type: "button",
-                    onClick: () => handleRevealInFolder(att.filePath),
-                    className: "inline-flex items-center gap-1 rounded px-2 py-1 text-[11px] font-medium text-blue-600 hover:bg-blue-50 transition",
-                    title: "Apri la cartella contenitore ed evidenzia il file",
-                    children: [
-                      /* @__PURE__ */ jsxRuntimeExports.jsx(FolderOpen, { className: "h-3.5 w-3.5" }),
-                      /* @__PURE__ */ jsxRuntimeExports.jsx("span", { children: "Mostra nella Cartella" })
-                    ]
-                  }
-                ),
-                /* @__PURE__ */ jsxRuntimeExports.jsx(
-                  "button",
-                  {
-                    type: "button",
-                    onClick: () => handleRemoveAttachment(idx),
-                    className: "rounded p-1 text-slate-400 hover:bg-rose-50 hover:text-rose-600 transition",
-                    title: "Rimuovi allegato",
-                    children: /* @__PURE__ */ jsxRuntimeExports.jsx(X, { className: "h-3.5 w-3.5" })
-                  }
-                )
-              ] })
+              /* @__PURE__ */ jsxRuntimeExports.jsx(Paperclip, { className: "h-3.5 w-3.5 text-slate-400" }),
+              /* @__PURE__ */ jsxRuntimeExports.jsx("span", { children: "Allega file dal computer" })
             ]
-          },
-          att.filePath + idx
-        )) }),
+          }
+        ) : /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: "space-y-1.5", children: attachments.map((att, idx) => /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { className: "flex items-center gap-2 group min-w-0 w-full", children: [
+          /* @__PURE__ */ jsxRuntimeExports.jsxs(
+            "div",
+            {
+              onClick: () => handleRevealInFolder(att.filePath),
+              className: "flex flex-1 min-w-0 items-center justify-between rounded-lg border border-slate-200 bg-white px-3 py-2 shadow-2xs hover:bg-blue-50/60 hover:border-blue-300 transition cursor-pointer",
+              title: "Clicca per aprire la cartella contenitore ed evidenziare il file",
+              children: [
+                /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { className: "flex items-center gap-2 min-w-0 flex-1", children: [
+                  /* @__PURE__ */ jsxRuntimeExports.jsx("span", { className: "rounded bg-blue-50 px-1.5 py-0.5 text-[9px] font-bold text-blue-600 uppercase shrink-0", children: att.fileExtension || "FILE" }),
+                  /* @__PURE__ */ jsxRuntimeExports.jsx("span", { className: "truncate text-xs font-medium text-slate-800", title: att.filePath, children: att.fileName })
+                ] }),
+                /* @__PURE__ */ jsxRuntimeExports.jsx(FolderOpen, { className: "h-3.5 w-3.5 text-slate-400 group-hover:text-blue-600 transition shrink-0 ml-2" })
+              ]
+            }
+          ),
+          /* @__PURE__ */ jsxRuntimeExports.jsx(
+            "button",
+            {
+              type: "button",
+              onClick: () => handleRemoveAttachment(idx),
+              className: "rounded-lg p-2 text-slate-400 hover:bg-rose-50 hover:text-rose-600 border border-slate-200 bg-white shadow-2xs transition cursor-pointer shrink-0",
+              title: "Rimuovi allegato",
+              children: /* @__PURE__ */ jsxRuntimeExports.jsx(X, { className: "h-3.5 w-3.5" })
+            }
+          )
+        ] }, att.filePath + idx)) }),
         revealStatus?.error && /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { className: "rounded-md bg-amber-50 border border-amber-200 p-2 text-[11px] text-amber-800 flex items-center gap-1.5", children: [
           /* @__PURE__ */ jsxRuntimeExports.jsx(CircleAlert, { className: "h-3.5 w-3.5 text-amber-600 shrink-0" }),
           /* @__PURE__ */ jsxRuntimeExports.jsx("span", { children: revealStatus.error })
         ] })
       ] })
     ] }),
-    /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { className: "border-t border-slate-100 bg-slate-50/70 px-6 py-3 flex items-center justify-between", children: [
+    /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { className: "border-t border-slate-100 bg-slate-50/60 px-6 py-3 flex items-center justify-between", children: [
       /* @__PURE__ */ jsxRuntimeExports.jsx("div", { children: isEditing && onDelete && /* @__PURE__ */ jsxRuntimeExports.jsx(jsxRuntimeExports.Fragment, { children: confirmDelete ? /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { className: "flex items-center gap-2", children: [
         /* @__PURE__ */ jsxRuntimeExports.jsx("span", { className: "text-xs text-rose-600 font-semibold", children: "Confermi l'eliminazione?" }),
         /* @__PURE__ */ jsxRuntimeExports.jsx(
@@ -10089,7 +10185,7 @@ const EventModal = ({
             type: "button",
             onClick: handleDelete,
             disabled: submitting,
-            className: "rounded-md bg-rose-600 px-2.5 py-1 text-xs font-semibold text-white hover:bg-rose-700",
+            className: "rounded-md bg-rose-600 px-2.5 py-1 text-xs font-semibold text-white hover:bg-rose-700 cursor-pointer",
             children: "Sì, elimina"
           }
         ),
@@ -10098,7 +10194,7 @@ const EventModal = ({
           {
             type: "button",
             onClick: () => setConfirmDelete(false),
-            className: "text-xs text-slate-500 hover:underline",
+            className: "text-xs text-slate-500 hover:underline cursor-pointer",
             children: "Annulla"
           }
         )
@@ -10107,7 +10203,7 @@ const EventModal = ({
         {
           type: "button",
           onClick: () => setConfirmDelete(true),
-          className: "inline-flex items-center gap-1 rounded-md px-2.5 py-1 text-xs font-medium text-rose-600 hover:bg-rose-50 transition",
+          className: "inline-flex items-center gap-1 rounded-md px-2.5 py-1 text-xs font-medium text-rose-600 hover:bg-rose-50 transition cursor-pointer",
           children: [
             /* @__PURE__ */ jsxRuntimeExports.jsx(Trash2, { className: "h-3.5 w-3.5" }),
             "Elimina"
@@ -10120,7 +10216,7 @@ const EventModal = ({
           {
             type: "button",
             onClick: onClose,
-            className: "rounded-lg border border-slate-200 bg-white px-4 py-1.5 text-xs font-medium text-slate-700 shadow-xs hover:bg-slate-50 transition",
+            className: "rounded-lg border border-slate-200 bg-white px-4 py-1.5 text-xs font-medium text-slate-700 shadow-2xs hover:bg-slate-50 transition cursor-pointer",
             children: "Annulla"
           }
         ),
@@ -10130,13 +10226,183 @@ const EventModal = ({
             type: "button",
             onClick: handleSubmit,
             disabled: submitting || !title.trim(),
-            className: "rounded-lg bg-blue-600 px-4 py-1.5 text-xs font-semibold text-white shadow-xs hover:bg-blue-700 disabled:opacity-50 transition",
-            children: submitting ? "Salvataggio..." : isEditing ? "Salva Modifiche" : "Crea Scadenza"
+            className: "rounded-lg bg-blue-600 px-4 py-1.5 text-xs font-semibold text-white shadow-xs hover:bg-blue-700 disabled:opacity-50 transition cursor-pointer",
+            children: submitting ? "Salvataggio..." : isEditing ? "Salva Modifiche" : "Crea Evento"
           }
         )
       ] })
     ] })
   ] }) });
+};
+const EventDetailsPanel = ({
+  event,
+  onToggleDone,
+  onEdit,
+  onDeselect
+}) => {
+  const [revealError, setRevealError] = reactExports.useState(null);
+  const [toggling, setToggling] = reactExports.useState(false);
+  reactExports.useEffect(() => {
+    setRevealError(null);
+    setToggling(false);
+  }, [event?.id]);
+  const formattedDate = reactExports.useMemo(() => {
+    if (!event?.date) return "";
+    try {
+      const parsed = /* @__PURE__ */ new Date(`${event.date.slice(0, 10)}T12:00:00`);
+      if (isNaN(parsed.getTime())) return event.date;
+      const str = format(parsed, "EEEE d MMMM yyyy", { locale: it });
+      return str.charAt(0).toUpperCase() + str.slice(1);
+    } catch {
+      return event.date;
+    }
+  }, [event?.date]);
+  if (!event) {
+    return /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { className: "h-80 border-t border-slate-200 bg-white flex flex-col items-center justify-center text-slate-400 gap-2 select-none shrink-0 px-6", children: [
+      /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: "h-9 w-9 rounded-full bg-slate-100 flex items-center justify-center text-slate-400 mb-0.5", children: /* @__PURE__ */ jsxRuntimeExports.jsx(Calendar, { className: "h-4 w-4" }) }),
+      /* @__PURE__ */ jsxRuntimeExports.jsx("p", { className: "text-xs font-semibold text-slate-600", children: "Nessun evento selezionato" }),
+      /* @__PURE__ */ jsxRuntimeExports.jsx("p", { className: "text-[11px] text-slate-400", children: "Clicca su un evento nel calendario per visualizzarne i dettagli o clicca su un giorno per crearne uno nuovo" })
+    ] });
+  }
+  const isDone = !!event.isDone;
+  const handleStatusToggle = async () => {
+    if (toggling) return;
+    setToggling(true);
+    try {
+      await onToggleDone(event);
+    } finally {
+      setToggling(false);
+    }
+  };
+  const handleRevealInFolder = async (filePath) => {
+    setRevealError(null);
+    try {
+      if (window.api?.fileSystem) {
+        const result = await window.api.fileSystem.revealInFolder(filePath);
+        if (!result.success) {
+          setRevealError(result.error || "Impossibile trovare il file sul disco.");
+        }
+      }
+    } catch (err) {
+      const msg = err instanceof Error ? err.message : String(err);
+      setRevealError(msg);
+    }
+  };
+  return /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { className: "h-80 border-t border-slate-200 bg-white flex flex-col shrink-0 overflow-hidden shadow-xs", children: [
+    /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { className: "flex items-center justify-between gap-4 border-b border-slate-100 px-6 py-2.5 bg-slate-50/70 shrink-0", children: [
+      /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { className: "flex items-center gap-3 min-w-0 flex-1", children: [
+        /* @__PURE__ */ jsxRuntimeExports.jsx(
+          "button",
+          {
+            type: "button",
+            onClick: handleStatusToggle,
+            disabled: toggling,
+            className: `inline-flex items-center gap-1.5 rounded-lg px-2.5 py-1 text-xs font-semibold border transition cursor-pointer active:scale-95 disabled:opacity-50 shrink-0 ${isDone ? "bg-emerald-50 text-emerald-700 border-emerald-200 hover:bg-emerald-100" : "bg-rose-50 text-rose-700 border-rose-200 hover:bg-rose-100"}`,
+            title: "Clicca per invertire lo stato immediatamente (senza conferma)",
+            children: isDone ? /* @__PURE__ */ jsxRuntimeExports.jsxs(jsxRuntimeExports.Fragment, { children: [
+              /* @__PURE__ */ jsxRuntimeExports.jsx(CircleCheck, { className: "h-3.5 w-3.5 text-emerald-600" }),
+              /* @__PURE__ */ jsxRuntimeExports.jsx("span", { children: "Fatto" })
+            ] }) : /* @__PURE__ */ jsxRuntimeExports.jsxs(jsxRuntimeExports.Fragment, { children: [
+              /* @__PURE__ */ jsxRuntimeExports.jsx(Circle, { className: "h-3.5 w-3.5 text-rose-500" }),
+              /* @__PURE__ */ jsxRuntimeExports.jsx("span", { children: "Da fare" })
+            ] })
+          }
+        ),
+        /* @__PURE__ */ jsxRuntimeExports.jsx(
+          "h3",
+          {
+            className: `text-sm md:text-base font-bold tracking-tight truncate transition min-w-0 ${isDone ? "text-slate-400 line-through" : "text-slate-900"}`,
+            title: event.title,
+            children: event.title
+          }
+        ),
+        formattedDate && /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { className: "flex items-center gap-1.5 text-xs font-medium text-slate-500 shrink-0 pl-2 border-l border-slate-200", children: [
+          /* @__PURE__ */ jsxRuntimeExports.jsx(Calendar, { className: "h-3.5 w-3.5 text-slate-400" }),
+          /* @__PURE__ */ jsxRuntimeExports.jsx("span", { children: formattedDate })
+        ] })
+      ] }),
+      /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { className: "flex items-center gap-2 shrink-0", children: [
+        /* @__PURE__ */ jsxRuntimeExports.jsxs(
+          "button",
+          {
+            type: "button",
+            onClick: () => onEdit(event),
+            className: "inline-flex items-center gap-1.5 rounded-lg border border-slate-200 bg-white px-3 py-1.5 text-xs font-semibold text-slate-700 shadow-2xs hover:bg-slate-50 hover:border-slate-300 transition cursor-pointer",
+            title: "Apri la modale per modificare titolo, data, tag o note",
+            children: [
+              /* @__PURE__ */ jsxRuntimeExports.jsx(Pencil, { className: "h-3.5 w-3.5 text-slate-500" }),
+              /* @__PURE__ */ jsxRuntimeExports.jsx("span", { children: "Modifica" })
+            ]
+          }
+        ),
+        /* @__PURE__ */ jsxRuntimeExports.jsx(
+          "button",
+          {
+            type: "button",
+            onClick: onDeselect,
+            className: "rounded-lg p-1.5 text-slate-400 hover:bg-slate-100 hover:text-slate-600 transition cursor-pointer",
+            title: "Chiudi dettagli (Deseleziona)",
+            children: /* @__PURE__ */ jsxRuntimeExports.jsx(X, { className: "h-4 w-4" })
+          }
+        )
+      ] })
+    ] }),
+    /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { className: "flex-1 overflow-y-auto px-6 py-4 space-y-3.5", children: [
+      event.tags && event.tags.length > 0 && /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: "flex flex-wrap items-center gap-1.5", children: event.tags.map((tag) => /* @__PURE__ */ jsxRuntimeExports.jsxs(
+        "span",
+        {
+          className: "inline-flex items-center gap-1.5 rounded-md px-2.5 py-0.5 text-xs font-semibold border shadow-2xs",
+          style: {
+            backgroundColor: `${tag.colorHex}18`,
+            color: tag.colorHex,
+            borderColor: `${tag.colorHex}40`
+          },
+          children: [
+            /* @__PURE__ */ jsxRuntimeExports.jsx(
+              "span",
+              {
+                className: "h-1.5 w-1.5 rounded-full",
+                style: { backgroundColor: tag.colorHex }
+              }
+            ),
+            /* @__PURE__ */ jsxRuntimeExports.jsx("span", { children: tag.name })
+          ]
+        },
+        tag.id
+      )) }),
+      /* @__PURE__ */ jsxRuntimeExports.jsx("div", { children: event.description ? /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: "rounded-xl border border-slate-200/80 bg-slate-50/50 p-3 text-xs text-slate-700 whitespace-pre-wrap leading-relaxed max-h-36 overflow-y-auto", children: event.description }) : /* @__PURE__ */ jsxRuntimeExports.jsx("p", { className: "text-xs text-slate-400 italic", children: "Nessuna descrizione o nota inserita." }) }),
+      event.attachments && event.attachments.length > 0 && /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { className: "space-y-2 pt-1", children: [
+        /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { className: "flex items-center gap-1.5 text-xs font-semibold text-slate-700", children: [
+          /* @__PURE__ */ jsxRuntimeExports.jsx(Paperclip, { className: "h-3.5 w-3.5 text-slate-500" }),
+          /* @__PURE__ */ jsxRuntimeExports.jsxs("span", { children: [
+            "Allegati Locali (",
+            event.attachments.length,
+            ")"
+          ] })
+        ] }),
+        /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: "grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-2", children: event.attachments.map((att, idx) => /* @__PURE__ */ jsxRuntimeExports.jsxs(
+          "div",
+          {
+            onClick: () => handleRevealInFolder(att.filePath),
+            className: "flex items-center justify-between rounded-lg border border-slate-200 bg-white px-3 py-2 shadow-2xs hover:bg-blue-50/60 hover:border-blue-300 transition cursor-pointer min-w-0 group",
+            title: "Clicca per aprire la cartella ed evidenziare il file",
+            children: [
+              /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { className: "flex items-center gap-2 min-w-0 flex-1", children: [
+                /* @__PURE__ */ jsxRuntimeExports.jsx("span", { className: "rounded bg-blue-50 px-1.5 py-0.5 text-[9px] font-bold text-blue-600 uppercase shrink-0", children: att.fileExtension || "FILE" }),
+                /* @__PURE__ */ jsxRuntimeExports.jsx("span", { className: "truncate text-xs font-medium text-slate-800", title: att.filePath, children: att.fileName })
+              ] }),
+              /* @__PURE__ */ jsxRuntimeExports.jsx(FolderOpen, { className: "h-3.5 w-3.5 text-slate-400 group-hover:text-blue-600 transition shrink-0 ml-2" })
+            ]
+          },
+          att.filePath + idx
+        )) })
+      ] }),
+      revealError && /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { className: "rounded-md bg-amber-50 border border-amber-200 p-2 text-xs text-amber-800 flex items-center gap-2", children: [
+        /* @__PURE__ */ jsxRuntimeExports.jsx(CircleAlert, { className: "h-4 w-4 text-amber-600 shrink-0" }),
+        /* @__PURE__ */ jsxRuntimeExports.jsx("span", { children: revealError })
+      ] })
+    ] })
+  ] });
 };
 const TagBadge = ({ tag, size = "sm", onRemove }) => {
   const sizeClasses = size === "sm" ? "px-2 py-0.5 text-xs" : "px-2.5 py-1 text-sm";
@@ -10511,6 +10777,7 @@ function App() {
   const [isEventModalOpen, setIsEventModalOpen] = reactExports.useState(false);
   const [selectedDayDate, setSelectedDayDate] = reactExports.useState(null);
   const [eventToEdit, setEventToEdit] = reactExports.useState(null);
+  const [selectedEventId, setSelectedEventId] = reactExports.useState(null);
   const [showDiagnostics, setShowDiagnostics] = reactExports.useState(false);
   const [dbResult, setDbResult] = reactExports.useState(null);
   const {
@@ -10563,6 +10830,10 @@ function App() {
       tags: evt.tags.map((t2) => tagsMap.get(t2.id) ?? t2).filter((t2) => tagsMap.has(t2.id))
     }));
   }, [events, tagsMap]);
+  const selectedEvent = reactExports.useMemo(() => {
+    if (!selectedEventId) return null;
+    return eventsWithLiveTags.find((e) => e.id === selectedEventId) ?? null;
+  }, [selectedEventId, eventsWithLiveTags]);
   const filteredEvents = reactExports.useMemo(() => {
     return EventFilterEngine.filter(eventsWithLiveTags, {
       activeTagIds
@@ -10574,11 +10845,21 @@ function App() {
   const headerTitle = reactExports.useMemo(() => {
     const start = startOfWeek(currentDate, { weekStartsOn: 1 });
     const end = endOfWeek(currentDate, { weekStartsOn: 1 });
-    const weekNumber = format(currentDate, "w");
-    const monthText = format(currentDate, "MMMM yyyy", { locale: it });
-    const capitalizedMonth = monthText.charAt(0).toUpperCase() + monthText.slice(1);
-    const rangeText = `${format(start, "d MMM", { locale: it })} - ${format(end, "d MMM", { locale: it })}`;
-    return `Settimana ${weekNumber} • ${rangeText} (${capitalizedMonth})`;
+    const startDay = format(start, "d");
+    const endDay = format(end, "d");
+    const startMonth = format(start, "MMMM", { locale: it });
+    const endMonth = format(end, "MMMM", { locale: it });
+    const startYear = format(start, "yyyy");
+    const endYear = format(end, "yyyy");
+    const capStartMonth = startMonth.charAt(0).toUpperCase() + startMonth.slice(1);
+    const capEndMonth = endMonth.charAt(0).toUpperCase() + endMonth.slice(1);
+    if (startYear !== endYear) {
+      return `${startDay} ${capStartMonth} ${startYear} - ${endDay} ${capEndMonth} ${endYear}`;
+    }
+    if (startMonth !== endMonth) {
+      return `${startDay} ${capStartMonth} - ${endDay} ${capEndMonth} ${endYear}`;
+    }
+    return `${startDay} - ${endDay} ${capEndMonth} ${endYear}`;
   }, [currentDate]);
   const handleOpenNewEvent = (targetDate) => {
     setSelectedDayDate(targetDate || currentDate);
@@ -10598,7 +10879,14 @@ function App() {
     await reloadEvents();
   };
   const handleDeleteEvent = async (id2) => {
+    if (selectedEventId === id2) {
+      setSelectedEventId(null);
+    }
     await deleteEvent(id2);
+    await reloadEvents();
+  };
+  const handleToggleDone = async (evt) => {
+    await updateEvent(evt.id, { isDone: !evt.isDone });
     await reloadEvents();
   };
   const handleCreateTag = async (input) => {
@@ -10624,38 +10912,22 @@ function App() {
     setShowDiagnostics(true);
   };
   return /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { className: "flex h-screen flex-col bg-slate-50 text-slate-900 select-none overflow-hidden font-sans", children: [
-    /* @__PURE__ */ jsxRuntimeExports.jsxs("header", { className: "flex h-13 items-center justify-between border-b border-slate-200 bg-white px-6 shadow-2xs", children: [
-      /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { className: "flex items-center gap-2.5", children: [
-        /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: "flex h-8 w-8 items-center justify-center rounded-lg bg-blue-600 text-white shadow-2xs", children: /* @__PURE__ */ jsxRuntimeExports.jsx(Calendar, { className: "h-4 w-4" }) }),
-        /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { children: [
-          /* @__PURE__ */ jsxRuntimeExports.jsx("h1", { className: "text-sm font-bold tracking-tight text-slate-900", children: "Content Calendar" }),
-          /* @__PURE__ */ jsxRuntimeExports.jsx("p", { className: "text-[10px] text-slate-400", children: "Desktop Edition (Windows & macOS)" })
-        ] })
-      ] }),
-      /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { className: "flex items-center gap-2", children: [
-        /* @__PURE__ */ jsxRuntimeExports.jsxs(
-          "button",
-          {
-            onClick: () => setIsTagModalOpen(true),
-            className: "inline-flex items-center gap-1.5 rounded-lg border border-slate-200 bg-white px-3 py-1.5 text-xs font-semibold text-slate-700 shadow-2xs transition hover:bg-slate-50 cursor-pointer",
-            children: [
-              /* @__PURE__ */ jsxRuntimeExports.jsx(Tag, { className: "h-3.5 w-3.5 text-blue-600" }),
-              /* @__PURE__ */ jsxRuntimeExports.jsx("span", { children: "Tag" }),
-              /* @__PURE__ */ jsxRuntimeExports.jsx("span", { className: "ml-1 rounded-full bg-slate-100 px-1.5 py-0.2 text-[10px] font-bold text-slate-600", children: tags.length })
-            ]
-          }
-        ),
-        /* @__PURE__ */ jsxRuntimeExports.jsx(
-          "button",
-          {
-            onClick: handleRunDiagnostics,
-            className: "rounded-lg border border-slate-200 bg-white p-1.5 text-slate-500 shadow-2xs hover:bg-slate-50 transition cursor-pointer",
-            title: "Diagnostica di Sistema",
-            children: /* @__PURE__ */ jsxRuntimeExports.jsx(SlidersHorizontal, { className: "h-3.5 w-3.5" })
-          }
-        )
-      ] })
-    ] }),
+    /* @__PURE__ */ jsxRuntimeExports.jsx(
+      CalendarHeader,
+      {
+        title: headerTitle,
+        onPrev: handlePrev,
+        onNext: handleNext,
+        onToday: handleToday,
+        onOpenTagManager: () => setIsTagModalOpen(true),
+        tagsCount: tags.length,
+        onRunDiagnostics: handleRunDiagnostics,
+        tags,
+        activeTagIds,
+        onToggleTagFilter: handleToggleTagFilter,
+        onClearFilters: handleClearFilters
+      }
+    ),
     showDiagnostics && /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { className: "border-b border-blue-100 bg-blue-50/70 px-6 py-2 flex items-center justify-between text-xs text-blue-900", children: [
       /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { className: "flex items-center gap-3", children: [
         /* @__PURE__ */ jsxRuntimeExports.jsx("span", { className: "font-semibold", children: "Stato Database:" }),
@@ -10675,28 +10947,26 @@ function App() {
         }
       )
     ] }),
-    /* @__PURE__ */ jsxRuntimeExports.jsx(
-      CalendarHeader,
-      {
-        title: headerTitle,
-        onPrev: handlePrev,
-        onNext: handleNext,
-        onToday: handleToday,
-        onNewEvent: () => handleOpenNewEvent(),
-        tags,
-        activeTagIds,
-        onToggleTagFilter: handleToggleTagFilter,
-        onClearFilters: handleClearFilters
-      }
-    ),
-    /* @__PURE__ */ jsxRuntimeExports.jsx("main", { className: "flex flex-1 overflow-hidden", children: /* @__PURE__ */ jsxRuntimeExports.jsx(
-      WeekCalendarView,
-      {
-        grid: weekGrid,
-        onDayClick: (date) => handleOpenNewEvent(date),
-        onEventClick: (evt) => handleOpenEditEvent(evt)
-      }
-    ) }),
+    /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { className: "flex flex-1 flex-col overflow-hidden", children: [
+      /* @__PURE__ */ jsxRuntimeExports.jsx("main", { className: "flex-1 overflow-hidden flex flex-col", children: /* @__PURE__ */ jsxRuntimeExports.jsx(
+        WeekCalendarView,
+        {
+          grid: weekGrid,
+          selectedEventId,
+          onDayClick: (date) => handleOpenNewEvent(date),
+          onEventClick: (evt) => setSelectedEventId(evt.id)
+        }
+      ) }),
+      /* @__PURE__ */ jsxRuntimeExports.jsx(
+        EventDetailsPanel,
+        {
+          event: selectedEvent,
+          onToggleDone: handleToggleDone,
+          onEdit: (evt) => handleOpenEditEvent(evt),
+          onDeselect: () => setSelectedEventId(null)
+        }
+      )
+    ] }),
     /* @__PURE__ */ jsxRuntimeExports.jsx(
       EventModal,
       {
@@ -10726,6 +10996,35 @@ function App() {
     )
   ] });
 }
+class ErrorBoundary extends reactExports.Component {
+  state = {
+    hasError: false,
+    error: null
+  };
+  static getDerivedStateFromError(error) {
+    return { hasError: true, error };
+  }
+  componentDidCatch(error, errorInfo) {
+    console.error("Uncaught error:", error, errorInfo);
+  }
+  render() {
+    if (this.state.hasError) {
+      return /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: "flex h-screen w-screen flex-col items-center justify-center bg-slate-50 p-6 text-slate-800 font-sans", children: /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { className: "max-w-md w-full rounded-2xl bg-white p-6 shadow-xl border border-slate-200", children: [
+        /* @__PURE__ */ jsxRuntimeExports.jsx("h2", { className: "text-lg font-bold text-rose-600 mb-2", children: "Si è verificato un errore" }),
+        /* @__PURE__ */ jsxRuntimeExports.jsx("p", { className: "text-xs text-slate-500 mb-4", children: this.state.error?.message || "Errore imprevisto nell'interfaccia utente." }),
+        /* @__PURE__ */ jsxRuntimeExports.jsx(
+          "button",
+          {
+            onClick: () => window.location.reload(),
+            className: "w-full rounded-lg bg-blue-600 py-2 text-xs font-semibold text-white hover:bg-blue-700 transition cursor-pointer",
+            children: "Ricarica applicazione"
+          }
+        )
+      ] }) });
+    }
+    return this.props.children;
+  }
+}
 client.createRoot(document.getElementById("root")).render(
-  /* @__PURE__ */ jsxRuntimeExports.jsx(React.StrictMode, { children: /* @__PURE__ */ jsxRuntimeExports.jsx(App, {}) })
+  /* @__PURE__ */ jsxRuntimeExports.jsx(React.StrictMode, { children: /* @__PURE__ */ jsxRuntimeExports.jsx(ErrorBoundary, { children: /* @__PURE__ */ jsxRuntimeExports.jsx(App, {}) }) })
 );
