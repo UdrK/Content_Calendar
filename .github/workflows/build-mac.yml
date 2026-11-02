@@ -25,13 +25,18 @@ jobs:
           cache: 'npm'
 
       - name: Install dependencies
-        run: npm ci
+        run: |
+          npm ci
+          npm install --force --no-save @libsql/darwin-x64@0.4.7
 
       - name: Build macOS Application
         env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
           # Disabilita la ricerca automatica di certificati Apple per evitare errori di Code Signing
           CSC_IDENTITY_AUTO_DISCOVERY: false
-        run: npm run build:mac
+        run: |
+          npm run build
+          npx electron-builder --mac -p never
 
       - name: Upload macOS Artifacts (.dmg and .zip)
         uses: actions/upload-artifact@v4
