@@ -10,6 +10,12 @@ import {
   AttachmentRecord
 } from '../../shared/types'
 import { validateEventTitle, validateEventDate, EventValidationError } from '../../core/events/validators'
+import {
+  copyAttachmentForEvent,
+  deleteEventAttachmentsDir,
+  deleteSpecificAttachmentFile
+} from './attachment.service'
+import { normalizeCrossPlatformPath } from '../../core/filesystem/pathUtils'
 
 export async function getEventsByDateRange(
   startDate: string,
@@ -70,6 +76,7 @@ export async function getEventsByDateRange(
       filePath: att.filePath,
       fileName: att.fileName,
       fileExtension: att.fileExtension,
+      originalFilePath: att.originalFilePath ?? undefined,
       addedAt: att.addedAt
     })
   }
@@ -111,6 +118,7 @@ export async function getEventById(id: string): Promise<EventWithDetails | null>
       filePath: a.filePath,
       fileName: a.fileName,
       fileExtension: a.fileExtension,
+      originalFilePath: a.originalFilePath ?? undefined,
       addedAt: a.addedAt
     }))
   }
@@ -159,21 +167,30 @@ export async function createEvent(input: CreateEventInput): Promise<EventWithDet
   const createdAttachments: AttachmentRecord[] = []
   if (input.attachments && input.attachments.length > 0) {
     for (const att of input.attachments) {
+      const copyResult = copyAttachmentForEvent(
+        id,
+        validatedDate,
+        att.filePath,
+        att.fileName
+      )
+
       const attId = randomUUID()
       await db.insert(eventAttachments).values({
         id: attId,
         eventId: id,
-        filePath: att.filePath,
-        fileName: att.fileName,
-        fileExtension: att.fileExtension,
+        filePath: copyResult.filePath,
+        fileName: copyResult.fileName,
+        fileExtension: copyResult.fileExtension,
+        originalFilePath: copyResult.originalFilePath,
         addedAt: now
       })
       createdAttachments.push({
         id: attId,
         eventId: id,
-        filePath: att.filePath,
-        fileName: att.fileName,
-        fileExtension: att.fileExtension,
+        filePath: copyResult.filePath,
+        fileName: copyResult.fileName,
+        fileExtension: copyResult.fileExtension,
+        originalFilePath: copyResult.originalFilePath,
         addedAt: now
       })
     }
@@ -242,15 +259,41 @@ export async function updateEvent(
 
   // Sync attachments if provided
   if (input.attachments !== undefined) {
+    // 1. Identify and delete unlinked managed files on disk
+    const existingAtts = await db
+      .select()
+      .from(eventAttachments)
+      .where(eq(eventAttachments.eventId, id))
+
+    const newPaths = new Set(
+      input.attachments.map((a) => normalizeCrossPlatformPath(a.filePath))
+    )
+
+    for (const oldAtt of existingAtts) {
+      if (!newPaths.has(normalizeCrossPlatformPath(oldAtt.filePath))) {
+        deleteSpecificAttachmentFile(oldAtt.filePath)
+      }
+    }
+
     await db.delete(eventAttachments).where(eq(eventAttachments.eventId, id))
     const now = new Date().toISOString()
+    const targetDate = input.date !== undefined ? validateEventDate(input.date) : current.date
+
     for (const att of input.attachments) {
+      const copyResult = copyAttachmentForEvent(
+        id,
+        targetDate,
+        att.filePath,
+        att.fileName
+      )
+
       await db.insert(eventAttachments).values({
         id: randomUUID(),
         eventId: id,
-        filePath: att.filePath,
-        fileName: att.fileName,
-        fileExtension: att.fileExtension,
+        filePath: copyResult.filePath,
+        fileName: copyResult.fileName,
+        fileExtension: copyResult.fileExtension,
+        originalFilePath: copyResult.originalFilePath,
         addedAt: now
       })
     }
@@ -264,6 +307,9 @@ export async function deleteEvent(id: string): Promise<boolean> {
   const db = getDb()
   const current = await getEventById(id)
   if (!current) return false
+
+  // Clean up all managed files and directories for this event
+  deleteEventAttachmentsDir(id, current.date)
 
   await db.delete(events).where(eq(events.id, id))
   return true

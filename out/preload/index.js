@@ -20,6 +20,12 @@ const api = {
   fileSystem: {
     pickFiles: () => electron.ipcRenderer.invoke("file:pick-files"),
     revealInFolder: (filePath) => electron.ipcRenderer.invoke("file:reveal-in-folder", filePath)
+  },
+  retention: {
+    getPolicy: () => electron.ipcRenderer.invoke("retention:get-policy"),
+    setPolicy: (policy) => electron.ipcRenderer.invoke("retention:set-policy", policy),
+    applyRetention: () => electron.ipcRenderer.invoke("retention:apply"),
+    getStats: () => electron.ipcRenderer.invoke("attachments:get-stats")
   }
 };
 if (process.contextIsolated) {

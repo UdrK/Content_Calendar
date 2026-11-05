@@ -22,6 +22,7 @@ export interface AttachmentRecord {
   filePath: string
   fileName: string
   fileExtension: string
+  originalFilePath?: string | null
   addedAt: string
 }
 
@@ -29,6 +30,7 @@ export interface FileAttachmentInput {
   filePath: string
   fileName: string
   fileExtension: string
+  originalFilePath?: string | null
 }
 
 export interface EventRecord {
@@ -106,10 +108,35 @@ export interface FileSystemAPI {
   revealInFolder: (filePath: string) => Promise<RevealFileResult>
 }
 
+export interface RetentionPolicy {
+  retentionDays: number | null // null or 0 = never
+  onlyDone: boolean // default: true
+}
+
+export interface RetentionStats {
+  purgedFilesCount: number
+  purgedEventsCount: number
+  freedBytes?: number
+}
+
+export interface AttachmentStorageStats {
+  totalFiles: number
+  totalBytes: number
+  storagePath: string
+}
+
+export interface RetentionAPI {
+  getPolicy: () => Promise<RetentionPolicy>
+  setPolicy: (policy: RetentionPolicy) => Promise<RetentionPolicy>
+  applyRetention: () => Promise<RetentionStats>
+  getStats: () => Promise<AttachmentStorageStats>
+}
+
 export interface ElectronAPI {
   ping: () => Promise<string>
   dbHealthCheck: () => Promise<DbHealthCheckResult>
   tags: TagAPI
   events: EventAPI
   fileSystem: FileSystemAPI
+  retention: RetentionAPI
 }

@@ -7,6 +7,7 @@ const libsql = require("drizzle-orm/libsql");
 const sqliteCore = require("drizzle-orm/sqlite-core");
 const crypto = require("crypto");
 const drizzleOrm = require("drizzle-orm");
+const os = require("os");
 const is = {
   dev: !electron.app.isPackaged
 };
@@ -130,10 +131,16 @@ const eventAttachments = sqliteCore.sqliteTable("event_attachments", {
   filePath: sqliteCore.text("file_path").notNull(),
   fileName: sqliteCore.text("file_name").notNull(),
   fileExtension: sqliteCore.text("file_extension").notNull(),
+  originalFilePath: sqliteCore.text("original_file_path"),
   addedAt: sqliteCore.text("added_at").notNull()
+});
+const appSettings = sqliteCore.sqliteTable("app_settings", {
+  key: sqliteCore.text("key").primaryKey(),
+  value: sqliteCore.text("value").notNull()
 });
 const schema = /* @__PURE__ */ Object.freeze(/* @__PURE__ */ Object.defineProperty({
   __proto__: null,
+  appSettings,
   eventAttachments,
   eventTags,
   events,
@@ -142,7 +149,7 @@ const schema = /* @__PURE__ */ Object.freeze(/* @__PURE__ */ Object.defineProper
 let client = null;
 let drizzleDb = null;
 let currentDbPath = "";
-function getElectronApp() {
+function getElectronApp$1() {
   try {
     return require("electron").app;
   } catch {
@@ -152,7 +159,7 @@ function getElectronApp() {
 function getDatabasePath() {
   if (currentDbPath) return currentDbPath;
   try {
-    const electronApp2 = getElectronApp();
+    const electronApp2 = getElectronApp$1();
     if (electronApp2 && typeof electronApp2.getPath === "function") {
       const userDataPath = electronApp2.getPath("userData");
       fs.mkdirSync(userDataPath, { recursive: true });
@@ -210,7 +217,13 @@ async function initDatabase(customPath) {
       file_path TEXT NOT NULL,
       file_name TEXT NOT NULL,
       file_extension TEXT NOT NULL,
+      original_file_path TEXT,
       added_at TEXT NOT NULL
+    );
+
+    CREATE TABLE IF NOT EXISTS app_settings (
+      key TEXT PRIMARY KEY,
+      value TEXT NOT NULL
     );
   `);
   const tableInfo = await client.execute("PRAGMA table_info('events');");
@@ -235,6 +248,14 @@ async function initDatabase(customPath) {
     }
     if (columnNames.includes("is_all_day")) {
       await client.execute("ALTER TABLE events DROP COLUMN is_all_day;");
+    }
+  }
+  const attInfo = await client.execute("PRAGMA table_info('event_attachments');");
+  const attColumnNames = attInfo.rows.map((r) => String(r.name));
+  if (attColumnNames.length > 0 && !attColumnNames.includes("original_file_path")) {
+    try {
+      await client.execute("ALTER TABLE event_attachments ADD COLUMN original_file_path TEXT;");
+    } catch {
     }
   }
   drizzleDb = libsql.drizzle(client, { schema });
@@ -408,6 +429,247 @@ function validateEventDate(date) {
   }
   return trimmed;
 }
+function normalizeCrossPlatformPath(inputPath) {
+  if (!inputPath) return "";
+  return inputPath.replace(/\\/g, "/");
+}
+function extractFileMetadata(fullPath) {
+  const normalized = normalizeCrossPlatformPath(fullPath);
+  const segments = normalized.split("/");
+  const fileName = segments[segments.length - 1] || "";
+  const lastDotIndex = fileName.lastIndexOf(".");
+  const fileExtension = lastDotIndex > 0 ? fileName.slice(lastDotIndex).toLowerCase() : "";
+  return {
+    filePath: fullPath,
+    fileName,
+    fileExtension
+  };
+}
+function getElectronApp() {
+  try {
+    return require("electron").app;
+  } catch {
+    return null;
+  }
+}
+function getAttachmentsBaseDir() {
+  try {
+    const electronApp2 = getElectronApp();
+    if (electronApp2 && typeof electronApp2.getPath === "function") {
+      const userDataPath = electronApp2.getPath("userData");
+      const dir2 = path.join(userDataPath, "attachments");
+      fs.mkdirSync(dir2, { recursive: true });
+      return normalizeCrossPlatformPath(dir2);
+    }
+  } catch {
+  }
+  const dir = path.join(os.tmpdir(), "content_calendar", "attachments");
+  try {
+    fs.mkdirSync(dir, { recursive: true });
+  } catch {
+  }
+  return normalizeCrossPlatformPath(dir);
+}
+function getEventAttachmentDir(eventId, eventDate) {
+  const baseDir = getAttachmentsBaseDir();
+  const yearMonth = eventDate && eventDate.length >= 7 ? eventDate.slice(0, 7) : "general";
+  const eventFolder = `evento_${eventId}`;
+  const fullPath = path.join(baseDir, yearMonth, eventFolder);
+  fs.mkdirSync(fullPath, { recursive: true });
+  return normalizeCrossPlatformPath(fullPath);
+}
+function copyAttachmentForEvent(eventId, eventDate, sourcePath, preferredFileName) {
+  const normalizedSource = normalizeCrossPlatformPath(sourcePath);
+  const targetDir = getEventAttachmentDir(eventId, eventDate);
+  const originalName = preferredFileName || path.basename(normalizedSource);
+  const ext = path.extname(originalName);
+  const baseNameWithoutExt = path.basename(originalName, ext);
+  const normalizedTargetDir = normalizeCrossPlatformPath(targetDir);
+  if (normalizedSource.startsWith(normalizedTargetDir) && fs.existsSync(normalizedSource)) {
+    return {
+      filePath: normalizedSource,
+      fileName: originalName,
+      fileExtension: ext.toLowerCase(),
+      originalFilePath: normalizedSource
+    };
+  }
+  let targetFileName = originalName;
+  let counter = 1;
+  let targetFilePath = path.join(targetDir, targetFileName);
+  while (fs.existsSync(targetFilePath)) {
+    targetFileName = `${baseNameWithoutExt} (${counter})${ext}`;
+    targetFilePath = path.join(targetDir, targetFileName);
+    counter++;
+  }
+  if (fs.existsSync(normalizedSource)) {
+    fs.copyFileSync(normalizedSource, targetFilePath);
+  } else {
+    try {
+      fs.writeFileSync(targetFilePath, "");
+    } catch {
+    }
+  }
+  const normalizedDest = normalizeCrossPlatformPath(targetFilePath);
+  return {
+    filePath: normalizedDest,
+    fileName: targetFileName,
+    fileExtension: ext.toLowerCase(),
+    originalFilePath: normalizedSource
+  };
+}
+function deleteEventAttachmentsDir(eventId, eventDate) {
+  try {
+    const baseDir = getAttachmentsBaseDir();
+    if (eventDate && eventDate.length >= 7) {
+      const yearMonth = eventDate.slice(0, 7);
+      const folder = path.join(baseDir, yearMonth, `evento_${eventId}`);
+      if (fs.existsSync(folder)) {
+        fs.rmSync(folder, { recursive: true, force: true });
+      }
+      const parent = path.join(baseDir, yearMonth);
+      if (fs.existsSync(parent) && fs.readdirSync(parent).length === 0) {
+        fs.rmSync(parent, { recursive: true, force: true });
+      }
+      return;
+    }
+    if (fs.existsSync(baseDir)) {
+      const subdirs = fs.readdirSync(baseDir);
+      for (const sub of subdirs) {
+        const candidate = path.join(baseDir, sub, `evento_${eventId}`);
+        if (fs.existsSync(candidate)) {
+          fs.rmSync(candidate, { recursive: true, force: true });
+          const parent = path.join(baseDir, sub);
+          if (fs.existsSync(parent) && fs.readdirSync(parent).length === 0) {
+            fs.rmSync(parent, { recursive: true, force: true });
+          }
+        }
+      }
+    }
+  } catch (err) {
+    console.warn(`Failed to delete attachments dir for event ${eventId}`, err);
+  }
+}
+function deleteSpecificAttachmentFile(filePath) {
+  try {
+    const normalized = normalizeCrossPlatformPath(filePath);
+    const base = normalizeCrossPlatformPath(getAttachmentsBaseDir());
+    if (normalized.startsWith(base) && fs.existsSync(normalized)) {
+      fs.unlinkSync(normalized);
+      return true;
+    }
+  } catch (err) {
+    console.warn(`Failed to delete attachment file: ${filePath}`, err);
+  }
+  return false;
+}
+async function getAttachmentStorageStats() {
+  const baseDir = getAttachmentsBaseDir();
+  let totalFiles = 0;
+  let totalBytes = 0;
+  function scanDir(dir) {
+    if (!fs.existsSync(dir)) return;
+    const entries = fs.readdirSync(dir, { withFileTypes: true });
+    for (const entry of entries) {
+      const fullPath = path.join(dir, entry.name);
+      if (entry.isDirectory()) {
+        scanDir(fullPath);
+      } else if (entry.isFile()) {
+        totalFiles++;
+        try {
+          totalBytes += fs.statSync(fullPath).size;
+        } catch {
+        }
+      }
+    }
+  }
+  scanDir(baseDir);
+  return {
+    totalFiles,
+    totalBytes,
+    storagePath: baseDir
+  };
+}
+async function getRetentionPolicy() {
+  const db = getDb();
+  const rows = await db.select().from(appSettings).where(
+    drizzleOrm.inArray(appSettings.key, ["retention_days", "retention_only_done"])
+  );
+  const settingsMap = new Map(rows.map((r) => [r.key, r.value]));
+  const rawDays = settingsMap.get("retention_days");
+  const rawOnlyDone = settingsMap.get("retention_only_done");
+  const retentionDays = rawDays && rawDays !== "never" && !isNaN(Number(rawDays)) ? Number(rawDays) : null;
+  const onlyDone = rawOnlyDone !== "false";
+  return {
+    retentionDays,
+    onlyDone
+  };
+}
+async function setRetentionPolicy(policy) {
+  const db = getDb();
+  const daysValue = policy.retentionDays && policy.retentionDays > 0 ? String(policy.retentionDays) : "never";
+  const onlyDoneValue = policy.onlyDone ? "true" : "false";
+  await db.insert(appSettings).values({ key: "retention_days", value: daysValue }).onConflictDoUpdate({
+    target: appSettings.key,
+    set: { value: daysValue }
+  });
+  await db.insert(appSettings).values({ key: "retention_only_done", value: onlyDoneValue }).onConflictDoUpdate({
+    target: appSettings.key,
+    set: { value: onlyDoneValue }
+  });
+  return {
+    retentionDays: policy.retentionDays && policy.retentionDays > 0 ? policy.retentionDays : null,
+    onlyDone: policy.onlyDone
+  };
+}
+async function applyRetentionPolicy(overridePolicy) {
+  const policy = await getRetentionPolicy();
+  if (!policy.retentionDays || policy.retentionDays <= 0) {
+    return { purgedFilesCount: 0, purgedEventsCount: 0, freedBytes: 0 };
+  }
+  const db = getDb();
+  const cutoff = /* @__PURE__ */ new Date();
+  cutoff.setDate(cutoff.getDate() - policy.retentionDays);
+  const cutoffIso = cutoff.toISOString().slice(0, 10);
+  const candidateEvents = await db.select({ id: events.id, date: events.date, isDone: events.isDone }).from(events).where(
+    drizzleOrm.and(
+      drizzleOrm.lte(events.date, cutoffIso),
+      policy.onlyDone ? drizzleOrm.eq(events.isDone, true) : void 0
+    )
+  );
+  if (candidateEvents.length === 0) {
+    return { purgedFilesCount: 0, purgedEventsCount: 0, freedBytes: 0 };
+  }
+  const candidateIds = candidateEvents.map((e) => e.id);
+  const attachmentsToPurge = await db.select().from(eventAttachments).where(drizzleOrm.inArray(eventAttachments.eventId, candidateIds));
+  if (attachmentsToPurge.length === 0) {
+    return { purgedFilesCount: 0, purgedEventsCount: 0, freedBytes: 0 };
+  }
+  let purgedFilesCount = 0;
+  let freedBytes = 0;
+  for (const att of attachmentsToPurge) {
+    try {
+      if (fs.existsSync(att.filePath)) {
+        freedBytes += fs.statSync(att.filePath).size;
+      }
+      deleteSpecificAttachmentFile(att.filePath);
+      purgedFilesCount++;
+    } catch {
+    }
+  }
+  const eventsWithAttachments = new Set(attachmentsToPurge.map((a) => a.eventId));
+  for (const evt of candidateEvents) {
+    if (eventsWithAttachments.has(evt.id)) {
+      deleteEventAttachmentsDir(evt.id, evt.date);
+    }
+  }
+  await db.delete(eventAttachments).where(drizzleOrm.inArray(eventAttachments.eventId, candidateIds));
+  await db.update(events).set({ type: "simple" }).where(drizzleOrm.inArray(events.id, Array.from(eventsWithAttachments)));
+  return {
+    purgedFilesCount,
+    purgedEventsCount: eventsWithAttachments.size,
+    freedBytes
+  };
+}
 async function getEventsByDateRange(startDate, endDate) {
   const db = getDb();
   const eventRecords = await db.select().from(events).where(
@@ -443,6 +705,7 @@ async function getEventsByDateRange(startDate, endDate) {
       filePath: att.filePath,
       fileName: att.fileName,
       fileExtension: att.fileExtension,
+      originalFilePath: att.originalFilePath ?? void 0,
       addedAt: att.addedAt
     });
   }
@@ -472,6 +735,7 @@ async function getEventById(id) {
       filePath: a.filePath,
       fileName: a.fileName,
       fileExtension: a.fileExtension,
+      originalFilePath: a.originalFilePath ?? void 0,
       addedAt: a.addedAt
     }))
   };
@@ -507,21 +771,29 @@ async function createEvent(input) {
   const createdAttachments = [];
   if (input.attachments && input.attachments.length > 0) {
     for (const att of input.attachments) {
+      const copyResult = copyAttachmentForEvent(
+        id,
+        validatedDate,
+        att.filePath,
+        att.fileName
+      );
       const attId = crypto.randomUUID();
       await db.insert(eventAttachments).values({
         id: attId,
         eventId: id,
-        filePath: att.filePath,
-        fileName: att.fileName,
-        fileExtension: att.fileExtension,
+        filePath: copyResult.filePath,
+        fileName: copyResult.fileName,
+        fileExtension: copyResult.fileExtension,
+        originalFilePath: copyResult.originalFilePath,
         addedAt: now
       });
       createdAttachments.push({
         id: attId,
         eventId: id,
-        filePath: att.filePath,
-        fileName: att.fileName,
-        fileExtension: att.fileExtension,
+        filePath: copyResult.filePath,
+        fileName: copyResult.fileName,
+        fileExtension: copyResult.fileExtension,
+        originalFilePath: copyResult.originalFilePath,
         addedAt: now
       });
     }
@@ -576,15 +848,32 @@ async function updateEvent(id, input) {
     }
   }
   if (input.attachments !== void 0) {
+    const existingAtts = await db.select().from(eventAttachments).where(drizzleOrm.eq(eventAttachments.eventId, id));
+    const newPaths = new Set(
+      input.attachments.map((a) => normalizeCrossPlatformPath(a.filePath))
+    );
+    for (const oldAtt of existingAtts) {
+      if (!newPaths.has(normalizeCrossPlatformPath(oldAtt.filePath))) {
+        deleteSpecificAttachmentFile(oldAtt.filePath);
+      }
+    }
     await db.delete(eventAttachments).where(drizzleOrm.eq(eventAttachments.eventId, id));
     const now = (/* @__PURE__ */ new Date()).toISOString();
+    const targetDate = input.date !== void 0 ? validateEventDate(input.date) : current.date;
     for (const att of input.attachments) {
+      const copyResult = copyAttachmentForEvent(
+        id,
+        targetDate,
+        att.filePath,
+        att.fileName
+      );
       await db.insert(eventAttachments).values({
         id: crypto.randomUUID(),
         eventId: id,
-        filePath: att.filePath,
-        fileName: att.fileName,
-        fileExtension: att.fileExtension,
+        filePath: copyResult.filePath,
+        fileName: copyResult.fileName,
+        fileExtension: copyResult.fileExtension,
+        originalFilePath: copyResult.originalFilePath,
         addedAt: now
       });
     }
@@ -596,6 +885,7 @@ async function deleteEvent(id) {
   const db = getDb();
   const current = await getEventById(id);
   if (!current) return false;
+  deleteEventAttachmentsDir(id, current.date);
   await db.delete(events).where(drizzleOrm.eq(events.id, id));
   return true;
 }
@@ -627,22 +917,6 @@ function registerEventIpcHandlers() {
   electron.ipcMain.handle("events:delete", async (_, id) => {
     return await deleteEvent(id);
   });
-}
-function normalizeCrossPlatformPath(inputPath) {
-  if (!inputPath) return "";
-  return inputPath.replace(/\\/g, "/");
-}
-function extractFileMetadata(fullPath) {
-  const normalized = normalizeCrossPlatformPath(fullPath);
-  const segments = normalized.split("/");
-  const fileName = segments[segments.length - 1] || "";
-  const lastDotIndex = fileName.lastIndexOf(".");
-  const fileExtension = lastDotIndex > 0 ? fileName.slice(lastDotIndex).toLowerCase() : "";
-  return {
-    filePath: fullPath,
-    fileName,
-    fileExtension
-  };
 }
 function registerFileIpcHandlers() {
   electron.ipcMain.handle("file:pick-files", async () => {
@@ -685,6 +959,23 @@ function registerFileIpcHandlers() {
     }
   );
 }
+function registerRetentionIpcHandlers() {
+  electron.ipcMain.handle("retention:get-policy", async () => {
+    return await getRetentionPolicy();
+  });
+  electron.ipcMain.handle(
+    "retention:set-policy",
+    async (_, policy) => {
+      return await setRetentionPolicy(policy);
+    }
+  );
+  electron.ipcMain.handle("retention:apply", async () => {
+    return await applyRetentionPolicy();
+  });
+  electron.ipcMain.handle("attachments:get-stats", async () => {
+    return await getAttachmentStorageStats();
+  });
+}
 function registerIpcHandlers() {
   electron.ipcMain.handle("app:ping", async () => {
     return "pong";
@@ -714,6 +1005,7 @@ function registerIpcHandlers() {
   registerTagIpcHandlers();
   registerEventIpcHandlers();
   registerFileIpcHandlers();
+  registerRetentionIpcHandlers();
 }
 let mainWindow = null;
 function createWindow() {
@@ -752,6 +1044,9 @@ electron.app.whenReady().then(async () => {
   });
   await initDatabase();
   registerIpcHandlers();
+  applyRetentionPolicy().catch((err) => {
+    console.warn("Startup retention policy execution failed:", err);
+  });
   createWindow();
   electron.app.on("activate", function() {
     if (electron.BrowserWindow.getAllWindows().length === 0) createWindow();

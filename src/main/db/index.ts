@@ -92,7 +92,13 @@ export async function initDatabase(customPath?: string): Promise<{
       file_path TEXT NOT NULL,
       file_name TEXT NOT NULL,
       file_extension TEXT NOT NULL,
+      original_file_path TEXT,
       added_at TEXT NOT NULL
+    );
+
+    CREATE TABLE IF NOT EXISTS app_settings (
+      key TEXT PRIMARY KEY,
+      value TEXT NOT NULL
     );
   `)
 
@@ -120,6 +126,17 @@ export async function initDatabase(customPath?: string): Promise<{
     }
     if (columnNames.includes('is_all_day')) {
       await client.execute('ALTER TABLE events DROP COLUMN is_all_day;')
+    }
+  }
+
+  // Check event_attachments migration for original_file_path
+  const attInfo = await client.execute("PRAGMA table_info('event_attachments');")
+  const attColumnNames = attInfo.rows.map((r: any) => String(r.name))
+  if (attColumnNames.length > 0 && !attColumnNames.includes('original_file_path')) {
+    try {
+      await client.execute('ALTER TABLE event_attachments ADD COLUMN original_file_path TEXT;')
+    } catch {
+      // ignore
     }
   }
 

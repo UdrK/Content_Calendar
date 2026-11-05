@@ -9307,37 +9307,68 @@ const createLucideIcon = (iconName, iconNode) => {
  * This source code is licensed under the ISC license.
  * See the LICENSE file in the root directory of this source tree.
  */
-const __iconNode$g = [
+const __iconNode$j = [
   ["path", { d: "M8 2v4", key: "1cmpym" }],
   ["path", { d: "M16 2v4", key: "4m81vk" }],
   ["rect", { width: "18", height: "18", x: "3", y: "4", rx: "2", key: "1hopcy" }],
   ["path", { d: "M3 10h18", key: "8toen8" }]
 ];
-const Calendar = createLucideIcon("Calendar", __iconNode$g);
+const Calendar = createLucideIcon("Calendar", __iconNode$j);
 /**
  * @license lucide-react v0.475.0 - ISC
  *
  * This source code is licensed under the ISC license.
  * See the LICENSE file in the root directory of this source tree.
  */
-const __iconNode$f = [["path", { d: "M20 6 9 17l-5-5", key: "1gmf2c" }]];
-const Check = createLucideIcon("Check", __iconNode$f);
+const __iconNode$i = [["path", { d: "M20 6 9 17l-5-5", key: "1gmf2c" }]];
+const Check = createLucideIcon("Check", __iconNode$i);
 /**
  * @license lucide-react v0.475.0 - ISC
  *
  * This source code is licensed under the ISC license.
  * See the LICENSE file in the root directory of this source tree.
  */
-const __iconNode$e = [["path", { d: "m15 18-6-6 6-6", key: "1wnfg3" }]];
-const ChevronLeft = createLucideIcon("ChevronLeft", __iconNode$e);
+const __iconNode$h = [["path", { d: "m15 18-6-6 6-6", key: "1wnfg3" }]];
+const ChevronLeft = createLucideIcon("ChevronLeft", __iconNode$h);
 /**
  * @license lucide-react v0.475.0 - ISC
  *
  * This source code is licensed under the ISC license.
  * See the LICENSE file in the root directory of this source tree.
  */
-const __iconNode$d = [["path", { d: "m9 18 6-6-6-6", key: "mthhwq" }]];
-const ChevronRight = createLucideIcon("ChevronRight", __iconNode$d);
+const __iconNode$g = [["path", { d: "m9 18 6-6-6-6", key: "mthhwq" }]];
+const ChevronRight = createLucideIcon("ChevronRight", __iconNode$g);
+/**
+ * @license lucide-react v0.475.0 - ISC
+ *
+ * This source code is licensed under the ISC license.
+ * See the LICENSE file in the root directory of this source tree.
+ */
+const __iconNode$f = [
+  ["circle", { cx: "12", cy: "12", r: "10", key: "1mglay" }],
+  ["line", { x1: "12", x2: "12", y1: "8", y2: "12", key: "1pkeuh" }],
+  ["line", { x1: "12", x2: "12.01", y1: "16", y2: "16", key: "4dfq90" }]
+];
+const CircleAlert = createLucideIcon("CircleAlert", __iconNode$f);
+/**
+ * @license lucide-react v0.475.0 - ISC
+ *
+ * This source code is licensed under the ISC license.
+ * See the LICENSE file in the root directory of this source tree.
+ */
+const __iconNode$e = [
+  ["circle", { cx: "12", cy: "12", r: "10", key: "1mglay" }],
+  ["path", { d: "m9 12 2 2 4-4", key: "dzmm74" }]
+];
+const CircleCheck = createLucideIcon("CircleCheck", __iconNode$e);
+/**
+ * @license lucide-react v0.475.0 - ISC
+ *
+ * This source code is licensed under the ISC license.
+ * See the LICENSE file in the root directory of this source tree.
+ */
+const __iconNode$d = [["circle", { cx: "12", cy: "12", r: "10", key: "1mglay" }]];
+const Circle = createLucideIcon("Circle", __iconNode$d);
 /**
  * @license lucide-react v0.475.0 - ISC
  *
@@ -9346,10 +9377,9 @@ const ChevronRight = createLucideIcon("ChevronRight", __iconNode$d);
  */
 const __iconNode$c = [
   ["circle", { cx: "12", cy: "12", r: "10", key: "1mglay" }],
-  ["line", { x1: "12", x2: "12", y1: "8", y2: "12", key: "1pkeuh" }],
-  ["line", { x1: "12", x2: "12.01", y1: "16", y2: "16", key: "4dfq90" }]
+  ["polyline", { points: "12 6 12 12 16 14", key: "68esgv" }]
 ];
-const CircleAlert = createLucideIcon("CircleAlert", __iconNode$c);
+const Clock = createLucideIcon("Clock", __iconNode$c);
 /**
  * @license lucide-react v0.475.0 - ISC
  *
@@ -9357,37 +9387,18 @@ const CircleAlert = createLucideIcon("CircleAlert", __iconNode$c);
  * See the LICENSE file in the root directory of this source tree.
  */
 const __iconNode$b = [
-  ["circle", { cx: "12", cy: "12", r: "10", key: "1mglay" }],
-  ["path", { d: "m9 12 2 2 4-4", key: "dzmm74" }]
-];
-const CircleCheck = createLucideIcon("CircleCheck", __iconNode$b);
-/**
- * @license lucide-react v0.475.0 - ISC
- *
- * This source code is licensed under the ISC license.
- * See the LICENSE file in the root directory of this source tree.
- */
-const __iconNode$a = [["circle", { cx: "12", cy: "12", r: "10", key: "1mglay" }]];
-const Circle = createLucideIcon("Circle", __iconNode$a);
-/**
- * @license lucide-react v0.475.0 - ISC
- *
- * This source code is licensed under the ISC license.
- * See the LICENSE file in the root directory of this source tree.
- */
-const __iconNode$9 = [
   ["path", { d: "M13.013 3H2l8 9.46V19l4 2v-8.54l.9-1.055", key: "1fi1da" }],
   ["path", { d: "m22 3-5 5", key: "12jva0" }],
   ["path", { d: "m17 3 5 5", key: "k36vhe" }]
 ];
-const FilterX = createLucideIcon("FilterX", __iconNode$9);
+const FilterX = createLucideIcon("FilterX", __iconNode$b);
 /**
  * @license lucide-react v0.475.0 - ISC
  *
  * This source code is licensed under the ISC license.
  * See the LICENSE file in the root directory of this source tree.
  */
-const __iconNode$8 = [
+const __iconNode$a = [
   [
     "path",
     {
@@ -9396,14 +9407,33 @@ const __iconNode$8 = [
     }
   ]
 ];
-const FolderOpen = createLucideIcon("FolderOpen", __iconNode$8);
+const FolderOpen = createLucideIcon("FolderOpen", __iconNode$a);
 /**
  * @license lucide-react v0.475.0 - ISC
  *
  * This source code is licensed under the ISC license.
  * See the LICENSE file in the root directory of this source tree.
  */
-const __iconNode$7 = [
+const __iconNode$9 = [
+  ["line", { x1: "22", x2: "2", y1: "12", y2: "12", key: "1y58io" }],
+  [
+    "path",
+    {
+      d: "M5.45 5.11 2 12v6a2 2 0 0 0 2 2h16a2 2 0 0 0 2-2v-6l-3.45-6.89A2 2 0 0 0 16.76 4H7.24a2 2 0 0 0-1.79 1.11z",
+      key: "oot6mr"
+    }
+  ],
+  ["line", { x1: "6", x2: "6.01", y1: "16", y2: "16", key: "sgf278" }],
+  ["line", { x1: "10", x2: "10.01", y1: "16", y2: "16", key: "1l4acy" }]
+];
+const HardDrive = createLucideIcon("HardDrive", __iconNode$9);
+/**
+ * @license lucide-react v0.475.0 - ISC
+ *
+ * This source code is licensed under the ISC license.
+ * See the LICENSE file in the root directory of this source tree.
+ */
+const __iconNode$8 = [
   ["path", { d: "M13.234 20.252 21 12.3", key: "1cbrk9" }],
   [
     "path",
@@ -9413,7 +9443,23 @@ const __iconNode$7 = [
     }
   ]
 ];
-const Paperclip = createLucideIcon("Paperclip", __iconNode$7);
+const Paperclip = createLucideIcon("Paperclip", __iconNode$8);
+/**
+ * @license lucide-react v0.475.0 - ISC
+ *
+ * This source code is licensed under the ISC license.
+ * See the LICENSE file in the root directory of this source tree.
+ */
+const __iconNode$7 = [
+  [
+    "path",
+    {
+      d: "M21.174 6.812a1 1 0 0 0-3.986-3.987L3.842 16.174a2 2 0 0 0-.5.83l-1.321 4.352a.5.5 0 0 0 .623.622l4.353-1.32a2 2 0 0 0 .83-.497z",
+      key: "1a8usu"
+    }
+  ]
+];
+const Pen = createLucideIcon("Pen", __iconNode$7);
 /**
  * @license lucide-react v0.475.0 - ISC
  *
@@ -9427,9 +9473,10 @@ const __iconNode$6 = [
       d: "M21.174 6.812a1 1 0 0 0-3.986-3.987L3.842 16.174a2 2 0 0 0-.5.83l-1.321 4.352a.5.5 0 0 0 .623.622l4.353-1.32a2 2 0 0 0 .83-.497z",
       key: "1a8usu"
     }
-  ]
+  ],
+  ["path", { d: "m15 5 4 4", key: "1mk7zo" }]
 ];
-const Pen = createLucideIcon("Pen", __iconNode$6);
+const Pencil = createLucideIcon("Pencil", __iconNode$6);
 /**
  * @license lucide-react v0.475.0 - ISC
  *
@@ -9437,16 +9484,10 @@ const Pen = createLucideIcon("Pen", __iconNode$6);
  * See the LICENSE file in the root directory of this source tree.
  */
 const __iconNode$5 = [
-  [
-    "path",
-    {
-      d: "M21.174 6.812a1 1 0 0 0-3.986-3.987L3.842 16.174a2 2 0 0 0-.5.83l-1.321 4.352a.5.5 0 0 0 .623.622l4.353-1.32a2 2 0 0 0 .83-.497z",
-      key: "1a8usu"
-    }
-  ],
-  ["path", { d: "m15 5 4 4", key: "1mk7zo" }]
+  ["path", { d: "M5 12h14", key: "1ays0h" }],
+  ["path", { d: "M12 5v14", key: "s699le" }]
 ];
-const Pencil = createLucideIcon("Pencil", __iconNode$5);
+const Plus = createLucideIcon("Plus", __iconNode$5);
 /**
  * @license lucide-react v0.475.0 - ISC
  *
@@ -9454,10 +9495,12 @@ const Pencil = createLucideIcon("Pencil", __iconNode$5);
  * See the LICENSE file in the root directory of this source tree.
  */
 const __iconNode$4 = [
-  ["path", { d: "M5 12h14", key: "1ays0h" }],
-  ["path", { d: "M12 5v14", key: "s699le" }]
+  ["path", { d: "M3 12a9 9 0 0 1 9-9 9.75 9.75 0 0 1 6.74 2.74L21 8", key: "v9h5vc" }],
+  ["path", { d: "M21 3v5h-5", key: "1q7to0" }],
+  ["path", { d: "M21 12a9 9 0 0 1-9 9 9.75 9.75 0 0 1-6.74-2.74L3 16", key: "3uifl3" }],
+  ["path", { d: "M8 16H3v5", key: "1cv678" }]
 ];
-const Plus = createLucideIcon("Plus", __iconNode$4);
+const RefreshCw = createLucideIcon("RefreshCw", __iconNode$4);
 /**
  * @license lucide-react v0.475.0 - ISC
  *
@@ -9526,6 +9569,7 @@ const CalendarHeader = ({
   onOpenTagManager,
   tagsCount,
   onRunDiagnostics,
+  onOpenRetention,
   tags,
   activeTagIds,
   onToggleTagFilter,
@@ -9579,6 +9623,19 @@ const CalendarHeader = ({
               /* @__PURE__ */ jsxRuntimeExports.jsx(Tag, { className: "h-3.5 w-3.5 text-blue-600" }),
               /* @__PURE__ */ jsxRuntimeExports.jsx("span", { children: "Tag" }),
               /* @__PURE__ */ jsxRuntimeExports.jsx("span", { className: "ml-0.5 rounded-full bg-slate-100 px-1.5 py-0.2 text-[10px] font-bold text-slate-600", children: tagsCount })
+            ]
+          }
+        ),
+        onOpenRetention && /* @__PURE__ */ jsxRuntimeExports.jsxs(
+          "button",
+          {
+            type: "button",
+            onClick: onOpenRetention,
+            className: "inline-flex items-center gap-1.5 rounded-lg border border-slate-200 bg-white px-2.5 py-1.5 text-xs font-semibold text-slate-700 shadow-2xs transition hover:bg-slate-50 cursor-pointer",
+            title: "Archivio Allegati & Retention",
+            children: [
+              /* @__PURE__ */ jsxRuntimeExports.jsx(HardDrive, { className: "h-3.5 w-3.5 text-slate-500" }),
+              /* @__PURE__ */ jsxRuntimeExports.jsx("span", { children: "Allegati" })
             ]
           }
         ),
@@ -9739,6 +9796,121 @@ const WeekCalendarView = ({
     );
   }) }) });
 };
+const TITLE_PRESETS_STORAGE_KEY = "content_calendar_title_presets_v2";
+const TITLE_PRESETS_INITIALIZED_KEY = "content_calendar_title_presets_initialized_v2";
+const DEFAULT_TITLE_PRESETS = [];
+function extractUniqueTitles(titles) {
+  const result = [];
+  for (const raw of titles) {
+    const trimmed = raw?.trim();
+    if (trimmed && !result.some((existing) => existing.toLowerCase() === trimmed.toLowerCase())) {
+      result.push(trimmed);
+    }
+  }
+  return result;
+}
+function getStoredPresets(storage = typeof window !== "undefined" ? window.localStorage : null) {
+  try {
+    if (storage) {
+      const isInitialized = storage.getItem(TITLE_PRESETS_INITIALIZED_KEY) === "true";
+      if (!isInitialized) {
+        return null;
+      }
+      const saved = storage.getItem(TITLE_PRESETS_STORAGE_KEY);
+      if (saved) {
+        const parsed = JSON.parse(saved);
+        if (Array.isArray(parsed)) {
+          return parsed.filter((p2) => typeof p2 === "string" && p2.trim().length > 0);
+        }
+      }
+      return [];
+    }
+  } catch (err) {
+    console.warn("Failed to read title presets from storage", err);
+  }
+  return null;
+}
+function persistPresets(presets, storage = typeof window !== "undefined" ? window.localStorage : null) {
+  try {
+    if (storage) {
+      storage.setItem(TITLE_PRESETS_STORAGE_KEY, JSON.stringify(presets));
+    }
+  } catch (err) {
+    console.warn("Failed to write title presets to storage", err);
+  }
+}
+function useTitlePresets() {
+  const [presets, setPresets] = reactExports.useState(() => {
+    const fromStorage = getStoredPresets();
+    return fromStorage ?? DEFAULT_TITLE_PRESETS;
+  });
+  reactExports.useEffect(() => {
+    if (typeof window === "undefined") return;
+    const storage = window.localStorage;
+    if (!storage) return;
+    try {
+      storage.removeItem("content_calendar_title_presets");
+    } catch (_) {
+    }
+    const isInitialized = storage.getItem(TITLE_PRESETS_INITIALIZED_KEY) === "true";
+    if (isInitialized) {
+      return;
+    }
+    if (window.api?.events?.getByRange) {
+      window.api.events.getByRange("1970-01-01", "2099-12-31").then((events) => {
+        const seeded = extractUniqueTitles((events || []).map((e) => e.title));
+        setPresets(seeded);
+        persistPresets(seeded, storage);
+        storage.setItem(TITLE_PRESETS_INITIALIZED_KEY, "true");
+      }).catch((err) => {
+        console.warn("Failed to seed presets from existing events", err);
+        setPresets([]);
+        persistPresets([], storage);
+        storage.setItem(TITLE_PRESETS_INITIALIZED_KEY, "true");
+      });
+    } else {
+      setPresets([]);
+      persistPresets([], storage);
+      storage.setItem(TITLE_PRESETS_INITIALIZED_KEY, "true");
+    }
+  }, []);
+  const addPreset = reactExports.useCallback((preset) => {
+    const trimmed = preset.trim();
+    if (!trimmed) return false;
+    setPresets((prev) => {
+      if (prev.some((p2) => p2.toLowerCase() === trimmed.toLowerCase())) {
+        return prev;
+      }
+      const updated = [...prev, trimmed];
+      persistPresets(updated);
+      if (typeof window !== "undefined" && window.localStorage) {
+        window.localStorage.setItem(TITLE_PRESETS_INITIALIZED_KEY, "true");
+      }
+      return updated;
+    });
+    return true;
+  }, []);
+  const removePreset = reactExports.useCallback((presetToRemove) => {
+    setPresets((prev) => {
+      const updated = prev.filter((p2) => p2 !== presetToRemove);
+      persistPresets(updated);
+      if (typeof window !== "undefined" && window.localStorage) {
+        window.localStorage.setItem(TITLE_PRESETS_INITIALIZED_KEY, "true");
+      }
+      return updated;
+    });
+  }, []);
+  const resetToDefaults = reactExports.useCallback(() => {
+    setPresets(DEFAULT_TITLE_PRESETS);
+    persistPresets(DEFAULT_TITLE_PRESETS);
+  }, []);
+  return {
+    presets,
+    addPreset,
+    removePreset,
+    resetToDefaults
+  };
+}
 const DEFAULT_TAG_COLORS = [
   "#3B82F6",
   // Blue
@@ -9776,6 +9948,20 @@ const EventModal = ({
   const [revealStatus, setRevealStatus] = reactExports.useState(null);
   const [confirmDelete, setConfirmDelete] = reactExports.useState(false);
   const titleInputRef = reactExports.useRef(null);
+  const { presets, addPreset, removePreset } = useTitlePresets();
+  const [isAddingPreset, setIsAddingPreset] = reactExports.useState(false);
+  const [newPresetText, setNewPresetText] = reactExports.useState("");
+  const newPresetInputRef = reactExports.useRef(null);
+  const handleAddCustomPreset = () => {
+    const trimmed = newPresetText.trim();
+    if (trimmed) {
+      addPreset(trimmed);
+      setTitle(trimmed);
+      titleInputRef.current?.focus();
+    }
+    setIsAddingPreset(false);
+    setNewPresetText("");
+  };
   reactExports.useEffect(() => {
     if (isOpen) {
       const timer = setTimeout(() => {
@@ -9790,6 +9976,8 @@ const EventModal = ({
       setRevealStatus(null);
       setConfirmDelete(false);
       setTagInput("");
+      setIsAddingPreset(false);
+      setNewPresetText("");
       return;
     }
     if (eventToEdit) {
@@ -9985,6 +10173,117 @@ const EventModal = ({
           className: "w-full text-xl font-bold text-slate-900 placeholder:text-slate-300 focus:outline-none border-none p-0 bg-transparent tracking-tight"
         }
       ) }),
+      /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { className: "flex flex-wrap items-center gap-1.5 -mt-1 pb-1", children: [
+        presets.map((preset) => {
+          const isSelected = title === preset;
+          return /* @__PURE__ */ jsxRuntimeExports.jsxs(
+            "div",
+            {
+              onClick: () => {
+                setTitle(preset);
+                titleInputRef.current?.focus();
+              },
+              className: `group inline-flex items-center gap-1.5 rounded-md px-2.5 py-1 text-xs font-medium transition cursor-pointer select-none border ${isSelected ? "bg-blue-50 text-blue-700 border-blue-200 shadow-2xs font-semibold" : "bg-slate-100/80 text-slate-600 border-slate-200/90 hover:bg-slate-200/70 hover:text-slate-900"}`,
+              title: `Usa "${preset}" come titolo`,
+              children: [
+                /* @__PURE__ */ jsxRuntimeExports.jsx("span", { children: preset }),
+                /* @__PURE__ */ jsxRuntimeExports.jsx(
+                  "button",
+                  {
+                    type: "button",
+                    onClick: (e) => {
+                      e.stopPropagation();
+                      removePreset(preset);
+                    },
+                    className: "opacity-0 group-hover:opacity-100 hover:text-rose-600 rounded p-0.5 transition cursor-pointer",
+                    title: `Rimuovi "${preset}" dai titoli rapidi`,
+                    children: /* @__PURE__ */ jsxRuntimeExports.jsx(X, { className: "h-3 w-3" })
+                  }
+                )
+              ]
+            },
+            preset
+          );
+        }),
+        isAddingPreset ? /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { className: "inline-flex items-center gap-1 rounded-md border border-blue-300 bg-white px-2 py-0.5 shadow-2xs", children: [
+          /* @__PURE__ */ jsxRuntimeExports.jsx(
+            "input",
+            {
+              ref: newPresetInputRef,
+              type: "text",
+              value: newPresetText,
+              onChange: (e) => setNewPresetText(e.target.value),
+              onKeyDown: (e) => {
+                if (e.key === "Enter") {
+                  e.preventDefault();
+                  handleAddCustomPreset();
+                } else if (e.key === "Escape") {
+                  setIsAddingPreset(false);
+                  setNewPresetText("");
+                }
+              },
+              placeholder: "Nome preset...",
+              className: "w-24 text-xs text-slate-800 placeholder:text-slate-400 focus:outline-none bg-transparent",
+              maxLength: 50
+            }
+          ),
+          /* @__PURE__ */ jsxRuntimeExports.jsx(
+            "button",
+            {
+              type: "button",
+              onClick: handleAddCustomPreset,
+              className: "text-xs font-bold text-blue-600 hover:text-blue-800 cursor-pointer",
+              title: "Conferma preset",
+              children: "✓"
+            }
+          ),
+          /* @__PURE__ */ jsxRuntimeExports.jsx(
+            "button",
+            {
+              type: "button",
+              onClick: () => {
+                setIsAddingPreset(false);
+                setNewPresetText("");
+              },
+              className: "text-xs text-slate-400 hover:text-slate-600 cursor-pointer",
+              title: "Annulla",
+              children: "✕"
+            }
+          )
+        ] }) : /* @__PURE__ */ jsxRuntimeExports.jsxs(
+          "button",
+          {
+            type: "button",
+            onClick: () => {
+              setIsAddingPreset(true);
+              setTimeout(() => newPresetInputRef.current?.focus(), 50);
+            },
+            className: "inline-flex items-center gap-1 rounded-md border border-dashed border-slate-300 bg-transparent px-2 py-1 text-xs font-medium text-slate-400 hover:border-slate-400 hover:text-slate-600 transition cursor-pointer select-none",
+            title: "Aggiungi un nuovo titolo ai rapidi",
+            children: [
+              /* @__PURE__ */ jsxRuntimeExports.jsx(Plus, { className: "h-3 w-3" }),
+              /* @__PURE__ */ jsxRuntimeExports.jsx("span", { children: presets.length === 0 ? "Aggiungi titolo rapido" : "Nuovo" })
+            ]
+          }
+        ),
+        title.trim().length > 0 && !presets.some((p2) => p2.toLowerCase() === title.trim().toLowerCase()) && /* @__PURE__ */ jsxRuntimeExports.jsxs(
+          "button",
+          {
+            type: "button",
+            onClick: () => addPreset(title.trim()),
+            className: "inline-flex items-center gap-1 text-[11px] font-medium text-blue-600 hover:text-blue-800 hover:underline transition cursor-pointer ml-1",
+            title: "Salva questo titolo come scorciatoia rapida per i prossimi eventi",
+            children: [
+              /* @__PURE__ */ jsxRuntimeExports.jsx(Plus, { className: "h-3 w-3" }),
+              /* @__PURE__ */ jsxRuntimeExports.jsxs("span", { children: [
+                "Salva “",
+                title.trim().length > 20 ? `${title.trim().slice(0, 20)}...` : title.trim(),
+                "” nei rapidi"
+              ] })
+            ]
+          }
+        )
+      ] }),
       /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { className: "space-y-3 py-3 border-y border-slate-100 text-xs", children: [
         /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { className: "flex items-center gap-3", children: [
           /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { className: "flex items-center gap-1.5 w-20 text-slate-400 font-medium shrink-0", children: [
@@ -10770,10 +11069,235 @@ const TagManagerModal = ({
     ) })
   ] }) });
 };
+function formatBytes(bytes) {
+  if (bytes === 0) return "0 B";
+  const k2 = 1024;
+  const sizes = ["B", "KB", "MB", "GB"];
+  const i = Math.floor(Math.log(bytes) / Math.log(k2));
+  return `${parseFloat((bytes / Math.pow(k2, i)).toFixed(1))} ${sizes[i]}`;
+}
+const RetentionModal = ({ isOpen, onClose }) => {
+  const [loading, setLoading] = reactExports.useState(false);
+  const [applying, setApplying] = reactExports.useState(false);
+  const [stats, setStats] = reactExports.useState(null);
+  const [policy, setPolicy] = reactExports.useState({
+    retentionDays: null,
+    onlyDone: true
+  });
+  const [saveSuccess, setSaveSuccess] = reactExports.useState(false);
+  const [cleanupResult, setCleanupResult] = reactExports.useState(null);
+  const [error, setError] = reactExports.useState(null);
+  reactExports.useEffect(() => {
+    if (!isOpen) return;
+    setSaveSuccess(false);
+    setCleanupResult(null);
+    setError(null);
+    async function loadData() {
+      setLoading(true);
+      try {
+        if (window.api?.retention) {
+          const [loadedPolicy, loadedStats] = await Promise.all([
+            window.api.retention.getPolicy(),
+            window.api.retention.getStats()
+          ]);
+          setPolicy(loadedPolicy);
+          setStats(loadedStats);
+        }
+      } catch (err) {
+        const msg = err instanceof Error ? err.message : String(err);
+        setError(msg);
+      } finally {
+        setLoading(false);
+      }
+    }
+    loadData();
+  }, [isOpen]);
+  const handleSavePolicy = async (newPolicy) => {
+    setPolicy(newPolicy);
+    setSaveSuccess(false);
+    try {
+      if (window.api?.retention) {
+        const saved = await window.api.retention.setPolicy(newPolicy);
+        setPolicy(saved);
+        setSaveSuccess(true);
+        setTimeout(() => setSaveSuccess(false), 2e3);
+      }
+    } catch (err) {
+      const msg = err instanceof Error ? err.message : String(err);
+      setError(msg);
+    }
+  };
+  const handleApplyRetentionNow = async () => {
+    setApplying(true);
+    setCleanupResult(null);
+    setError(null);
+    try {
+      if (window.api?.retention) {
+        const res = await window.api.retention.applyRetention();
+        setCleanupResult(res);
+        const updatedStats = await window.api.retention.getStats();
+        setStats(updatedStats);
+      }
+    } catch (err) {
+      const msg = err instanceof Error ? err.message : String(err);
+      setError(msg);
+    } finally {
+      setApplying(false);
+    }
+  };
+  const handleOpenStorageFolder = async () => {
+    if (stats?.storagePath && window.api?.fileSystem) {
+      await window.api.fileSystem.revealInFolder(stats.storagePath);
+    }
+  };
+  if (!isOpen) return null;
+  return /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: "fixed inset-0 z-50 flex items-center justify-center bg-slate-900/40 backdrop-blur-xs p-4", children: /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { className: "w-full max-w-lg rounded-2xl bg-white shadow-xl border border-slate-200 overflow-hidden flex flex-col", children: [
+    /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { className: "flex items-center justify-between border-b border-slate-100 px-6 py-4 bg-slate-50/60", children: [
+      /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { className: "flex items-center gap-2.5", children: [
+        /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: "flex h-9 w-9 items-center justify-center rounded-xl bg-blue-50 text-blue-600", children: /* @__PURE__ */ jsxRuntimeExports.jsx(HardDrive, { className: "h-5 w-5" }) }),
+        /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { children: [
+          /* @__PURE__ */ jsxRuntimeExports.jsx("h2", { className: "text-sm font-bold text-slate-800", children: "Archivio Allegati & Retention" }),
+          /* @__PURE__ */ jsxRuntimeExports.jsx("p", { className: "text-[11px] text-slate-500", children: "Cartella locale autonoma e regole di conservazione file" })
+        ] })
+      ] }),
+      /* @__PURE__ */ jsxRuntimeExports.jsx(
+        "button",
+        {
+          type: "button",
+          onClick: onClose,
+          className: "rounded-lg p-1.5 text-slate-400 hover:bg-slate-100 hover:text-slate-600 transition cursor-pointer",
+          children: /* @__PURE__ */ jsxRuntimeExports.jsx(X, { className: "h-4 w-4" })
+        }
+      )
+    ] }),
+    /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { className: "p-6 space-y-5 text-xs text-slate-700", children: [
+      error && /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { className: "flex items-center gap-2 rounded-lg bg-rose-50 border border-rose-200 p-3 text-rose-700", children: [
+        /* @__PURE__ */ jsxRuntimeExports.jsx(CircleAlert, { className: "h-4 w-4 shrink-0 text-rose-600" }),
+        /* @__PURE__ */ jsxRuntimeExports.jsx("span", { children: error })
+      ] }),
+      /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { className: "rounded-xl border border-slate-200/90 bg-slate-50/50 p-4 space-y-2.5", children: [
+        /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { className: "flex items-center justify-between", children: [
+          /* @__PURE__ */ jsxRuntimeExports.jsx("span", { className: "font-semibold text-slate-700", children: "Spazio Copie Locali Gestite:" }),
+          /* @__PURE__ */ jsxRuntimeExports.jsx("span", { className: "font-bold text-slate-900 text-sm", children: stats ? `${stats.totalFiles} file (${formatBytes(stats.totalBytes)})` : "Calcolo in corso..." })
+        ] }),
+        stats?.storagePath && /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { className: "flex items-center justify-between gap-2 pt-1 border-t border-slate-200/60 text-[11px] text-slate-500", children: [
+          /* @__PURE__ */ jsxRuntimeExports.jsxs("span", { className: "truncate", title: stats.storagePath, children: [
+            "Percorso: ",
+            stats.storagePath
+          ] }),
+          /* @__PURE__ */ jsxRuntimeExports.jsxs(
+            "button",
+            {
+              type: "button",
+              onClick: handleOpenStorageFolder,
+              className: "inline-flex items-center gap-1 text-blue-600 hover:text-blue-800 hover:underline shrink-0 cursor-pointer font-medium",
+              title: "Apri nel gestore file del sistema",
+              children: [
+                /* @__PURE__ */ jsxRuntimeExports.jsx(FolderOpen, { className: "h-3.5 w-3.5" }),
+                /* @__PURE__ */ jsxRuntimeExports.jsx("span", { children: "Apri cartella" })
+              ]
+            }
+          )
+        ] })
+      ] }),
+      /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { className: "space-y-3", children: [
+        /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { className: "flex items-center gap-2 font-semibold text-slate-800 text-xs", children: [
+          /* @__PURE__ */ jsxRuntimeExports.jsx(Clock, { className: "h-4 w-4 text-blue-600" }),
+          /* @__PURE__ */ jsxRuntimeExports.jsx("span", { children: "Politica di Conservazione Automatica (Retention)" })
+        ] }),
+        /* @__PURE__ */ jsxRuntimeExports.jsx("p", { className: "text-slate-500 text-[11px] leading-relaxed", children: "I file degli eventi che soddisfano la regola vengono ripuliti in automatico all'avvio dell'applicazione o su richiesta, risparmiando spazio su disco." }),
+        /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: "grid grid-cols-2 gap-2 pt-1", children: [
+          { label: "Conserva per sempre", days: null },
+          { label: "Elimina dopo 30 giorni", days: 30 },
+          { label: "Elimina dopo 60 giorni", days: 60 },
+          { label: "Elimina dopo 90 giorni", days: 90 }
+        ].map((opt) => {
+          const isSelected = policy.retentionDays === opt.days;
+          return /* @__PURE__ */ jsxRuntimeExports.jsxs(
+            "button",
+            {
+              type: "button",
+              onClick: () => handleSavePolicy({ ...policy, retentionDays: opt.days }),
+              className: `flex items-center justify-between rounded-lg border p-2.5 text-xs transition cursor-pointer ${isSelected ? "border-blue-500 bg-blue-50/70 text-blue-800 font-semibold shadow-2xs" : "border-slate-200 bg-white text-slate-700 hover:bg-slate-50 hover:border-slate-300"}`,
+              children: [
+                /* @__PURE__ */ jsxRuntimeExports.jsx("span", { children: opt.label }),
+                isSelected && /* @__PURE__ */ jsxRuntimeExports.jsx(CircleCheck, { className: "h-3.5 w-3.5 text-blue-600" })
+              ]
+            },
+            String(opt.days)
+          );
+        }) }),
+        /* @__PURE__ */ jsxRuntimeExports.jsxs("label", { className: "flex items-center gap-2 pt-1.5 cursor-pointer select-none", children: [
+          /* @__PURE__ */ jsxRuntimeExports.jsx(
+            "input",
+            {
+              type: "checkbox",
+              checked: policy.onlyDone,
+              onChange: (e) => handleSavePolicy({ ...policy, onlyDone: e.target.checked }),
+              className: "h-4 w-4 rounded border-slate-300 text-blue-600 focus:ring-blue-500"
+            }
+          ),
+          /* @__PURE__ */ jsxRuntimeExports.jsxs("span", { className: "text-xs text-slate-700", children: [
+            "Applica solo agli eventi contrassegnati come ",
+            /* @__PURE__ */ jsxRuntimeExports.jsx("strong", { children: "“Fatto”" }),
+            " (consigliato)"
+          ] })
+        ] }),
+        saveSuccess && /* @__PURE__ */ jsxRuntimeExports.jsxs("p", { className: "text-[11px] font-semibold text-emerald-600 flex items-center gap-1", children: [
+          /* @__PURE__ */ jsxRuntimeExports.jsx(CircleCheck, { className: "h-3 w-3" }),
+          /* @__PURE__ */ jsxRuntimeExports.jsx("span", { children: "Politica aggiornata e salvata!" })
+        ] })
+      ] }),
+      /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { className: "border-t border-slate-100 pt-4 flex items-center justify-between", children: [
+        /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { children: [
+          /* @__PURE__ */ jsxRuntimeExports.jsx("p", { className: "font-semibold text-slate-800", children: "Esegui pulizia immediata" }),
+          /* @__PURE__ */ jsxRuntimeExports.jsx("p", { className: "text-[11px] text-slate-400", children: "Verifica gli eventi scaduti ed elimina le copie locali corrispondenti" })
+        ] }),
+        /* @__PURE__ */ jsxRuntimeExports.jsxs(
+          "button",
+          {
+            type: "button",
+            disabled: applying || !policy.retentionDays,
+            onClick: handleApplyRetentionNow,
+            className: "inline-flex items-center gap-1.5 rounded-lg border border-slate-200 bg-white px-3 py-1.5 text-xs font-semibold text-slate-700 shadow-2xs hover:bg-slate-50 transition cursor-pointer disabled:opacity-50 disabled:cursor-not-allowed",
+            children: [
+              /* @__PURE__ */ jsxRuntimeExports.jsx(RefreshCw, { className: `h-3.5 w-3.5 text-slate-500 ${applying ? "animate-spin" : ""}` }),
+              /* @__PURE__ */ jsxRuntimeExports.jsx("span", { children: applying ? "Pulizia in corso..." : "Pulisci adesso" })
+            ]
+          }
+        )
+      ] }),
+      cleanupResult && /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { className: "rounded-lg bg-emerald-50 border border-emerald-200 p-3 text-xs text-emerald-800 flex items-center gap-2", children: [
+        /* @__PURE__ */ jsxRuntimeExports.jsx(CircleCheck, { className: "h-4 w-4 text-emerald-600 shrink-0" }),
+        /* @__PURE__ */ jsxRuntimeExports.jsxs("span", { children: [
+          "Pulizia completata: ",
+          cleanupResult.purgedFilesCount,
+          " file rimossi da",
+          " ",
+          cleanupResult.purgedEventsCount,
+          " eventi (liberati",
+          " ",
+          formatBytes(cleanupResult.freedBytes || 0),
+          ")."
+        ] })
+      ] })
+    ] }),
+    /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: "border-t border-slate-100 bg-slate-50/60 px-6 py-3 flex justify-end", children: /* @__PURE__ */ jsxRuntimeExports.jsx(
+      "button",
+      {
+        type: "button",
+        onClick: onClose,
+        className: "rounded-lg bg-slate-800 px-4 py-2 text-xs font-semibold text-white hover:bg-slate-900 transition cursor-pointer",
+        children: "Chiudi"
+      }
+    ) })
+  ] }) });
+};
 function App() {
   const [currentDate, setCurrentDate] = reactExports.useState(/* @__PURE__ */ new Date());
   const [activeTagIds, setActiveTagIds] = reactExports.useState([]);
   const [isTagModalOpen, setIsTagModalOpen] = reactExports.useState(false);
+  const [isRetentionModalOpen, setIsRetentionModalOpen] = reactExports.useState(false);
   const [isEventModalOpen, setIsEventModalOpen] = reactExports.useState(false);
   const [selectedDayDate, setSelectedDayDate] = reactExports.useState(null);
   const [eventToEdit, setEventToEdit] = reactExports.useState(null);
@@ -10922,6 +11446,7 @@ function App() {
         onOpenTagManager: () => setIsTagModalOpen(true),
         tagsCount: tags.length,
         onRunDiagnostics: handleRunDiagnostics,
+        onOpenRetention: () => setIsRetentionModalOpen(true),
         tags,
         activeTagIds,
         onToggleTagFilter: handleToggleTagFilter,
@@ -10992,6 +11517,13 @@ function App() {
         onUpdateTag: handleUpdateTag,
         onDeleteTag: handleDeleteTag,
         onClearError: clearTagError
+      }
+    ),
+    /* @__PURE__ */ jsxRuntimeExports.jsx(
+      RetentionModal,
+      {
+        isOpen: isRetentionModalOpen,
+        onClose: () => setIsRetentionModalOpen(false)
       }
     )
   ] });

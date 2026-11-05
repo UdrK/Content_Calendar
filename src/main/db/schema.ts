@@ -39,5 +39,11 @@ export const eventAttachments = sqliteTable('event_attachments', {
   filePath: text('file_path').notNull(),
   fileName: text('file_name').notNull(),
   fileExtension: text('file_extension').notNull(),
+  originalFilePath: text('original_file_path'),
   addedAt: text('added_at').notNull()
+})
+
+export const appSettings = sqliteTable('app_settings', {
+  key: text('key').primaryKey(),
+  value: text('value').notNull()
 })

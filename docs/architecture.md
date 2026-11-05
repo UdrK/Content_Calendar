@@ -220,13 +220,12 @@ sequenceDiagram
 | `id` | TEXT PRIMARY KEY | UUIDv4 |
 | `type` | TEXT NOT NULL | `'simple'` \| `'attachment'` \| *futuri tipi* |
 | `title` | TEXT NOT NULL | Titolo dell'evento |
-| `description` | TEXT | Testo / Note |
-| `start_date` | TEXT NOT NULL | ISO 8601 string |
-| `end_date` | TEXT | ISO 8601 string |
-| `is_all_day` | INTEGER NOT NULL | 0 = false, 1 = true |
-| `metadata` | TEXT | JSON serializzato per attributi futuri |
-| `created_at` | TEXT NOT NULL | ISO 8601 string |
-| `updated_at` | TEXT NOT NULL | ISO 8601 string |
+| `description` | TEXT | Testo / Note opzionali |
+| `date` | TEXT NOT NULL | Data dell'evento (formato ISO YYYY-MM-DD o ISO string) |
+| `is_done` | INTEGER NOT NULL | Stato completamento (0 = false, 1 = true, default 0) |
+| `metadata` | TEXT | JSON serializzato per attributi ed estensioni future |
+| `created_at` | TEXT NOT NULL | Timestamp creazione (ISO 8601 string) |
+| `updated_at` | TEXT NOT NULL | Timestamp ultimo aggiornamento (ISO 8601 string) |
 
 ### Tabella `tags`
 | Campo | Tipo | Note |
@@ -257,10 +256,53 @@ sequenceDiagram
 ## 6. Considerazioni Cross-Platform e Specifiche macOS
 
 1. **Azione "Mostra nella Cartella" (`shell.showItemInFolder`):**  
-   Su macOS invia il comando nativo Cocoa al Finder (`NSWorkspace activateFileViewerSelectingURLs:`), il quale gestisce la visualizzazione senza richiedere permessi speciali all'applicazione.
+   Su macOS invia il comando nativo Cocoa al Finder (`NSWorkspace activateFileViewerSelectingURLs:`), il quale gestisce la visualizzazione senza richiedere permessi speciali all'applicazione. Su Windows invia la chiamata nativa all'API Explorer (`SHOpenFolderAndSelectItems`).
 2. **Selezione File (`dialog.showOpenDialog`):**  
    La selezione volontaria dell'utente tramite file picker nativo conferisce autorizzazione esplicita (*user intent*).
 3. **Normalizzazione Percorsi:**  
-   Il modulo `src/core/` normalizza sempre i separatori (`/` su macOS e `\` su Windows) prima di qualsiasi persistenza o chiamata di sistema.
+   Il modulo `src/core/filesystem/` normalizza sempre i separatori (`/` su macOS e `\` su Windows) prima di qualsiasi persistenza o chiamata di sistema.
 4. **Scorciatoie da tastiera:**  
    Supporto trasparente a `Cmd` su macOS e `Ctrl` su Windows.
+
+---
+
+## 7. Architettura di Sicurezza & IPC
+
+L'applicazione aderisce rigorosamente alle best practice di sicurezza per Electron:
+
+1. **Isolamento del Contesto (`contextIsolation: true`):**
+   - Il codice in esecuzione nel renderer (React) gira in un contesto JavaScript separato rispetto allo script di preload e al processo Main.
+2. **Disabilitazione Node Integration (`nodeIntegration: false`):**
+   - Nessun'API di basso livello Node.js (`fs`, `child_process`, `net`) è esposta al renderer.
+3. **Canali IPC Tipizzati (`window.api`):**
+   - Tutte le interazioni tra UI e sistema operativo passano esclusivamente attraverso `contextBridge.exposeInMainWorld('api', ...)` definito in `src/preload/index.ts`.
+   - I contratti di scambio sono fortemente tipizzati tramite `src/shared/types.ts` (`TagAPI`, `EventAPI`, `FileSystemAPI`).
+4. **Navigazione Esterna Protetta:**
+   - I collegamenti web esterni intercettati nel `BrowserWindow` vengono gestiti con `setWindowOpenHandler` delegando l'apertura al browser predefinito dell'utente tramite `shell.openExternal(url)`, impedendo qualsiasi navigazione in-app arbitraria.
+
+---
+
+## 8. Pipeline di Build, Tooling & Packaging
+
+1. **Bundler & Tooling (`electron-vite`):**
+   - Utilizza `electron-vite` con HMR rapido per il processo renderer e ricompilazione ottimizzata per main e preload.
+   - Configurazione di `rollupOptions.external` specifica per dipendenze binarie native come `@libsql/client`, impedendone la corruzione da parte del bundler.
+2. **Tipizzazione Dual-Context:**
+   - `tsconfig.node.json` per il codice del main process, preload e configurazioni server/bundler.
+   - `tsconfig.web.json` per il codice dell'applicazione React renderer.
+   - Entrambi verificati contemporaneamente tramite lo script `npm run typecheck`.
+3. **Packaging (`electron-builder`):**
+   - **Windows:** target portable x64 eseguibile senza installazione.
+   - **macOS:** target DMG e ZIP per architetture `arm64` (Apple Silicon M-series) e `x64` (Intel).
+4. **Automazione CI/CD:**
+   - GitHub Actions workflow (`.github/workflows/build-mac.yml`) configurato per build automatica su runner `macos-latest` con installazione forzata dei binari nativi `@libsql/darwin-x64` e upload degli artefatti.
+
+---
+
+## 9. Risoluzione Percorsi & Strategia di Storage
+
+1. **Percorso Database Locale:**
+   - In produzione: memorizzato in `app.getPath('userData')/content_calendar.sqlite` per rispettare gli standard di isolamento dei dati per utente (AppData su Windows, Application Support su macOS).
+   - In ambiente di test / fallback CLI: memorizzato in `./data/content_calendar.sqlite` o in memoria `:memory:` per l'esecuzione dei test unitari senza side effect sul filesystem dell'utente.
+2. **URL Driver LibSQL:**
+   - Conversione automatica dei percorsi file Windows / POSIX nel formato standard `file:...` tramite `formatFileUrl`.

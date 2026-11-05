@@ -27,6 +27,7 @@ import { WeekCalendarView } from './components/calendar/WeekCalendarView'
 import { EventModal } from './components/events/EventModal'
 import { EventDetailsPanel } from './components/events/EventDetailsPanel'
 import { TagManagerModal } from './components/TagManagerModal'
+import { RetentionModal } from './components/settings/RetentionModal'
 
 export default function App(): React.ReactElement {
   // Calendar View State: Weekly view
@@ -35,6 +36,7 @@ export default function App(): React.ReactElement {
 
   // Modal States
   const [isTagModalOpen, setIsTagModalOpen] = useState(false)
+  const [isRetentionModalOpen, setIsRetentionModalOpen] = useState(false)
   const [isEventModalOpen, setIsEventModalOpen] = useState(false)
   const [selectedDayDate, setSelectedDayDate] = useState<Date | null>(null)
   const [eventToEdit, setEventToEdit] = useState<EventWithDetails | null>(null)
@@ -230,6 +232,7 @@ export default function App(): React.ReactElement {
         onOpenTagManager={() => setIsTagModalOpen(true)}
         tagsCount={tags.length}
         onRunDiagnostics={handleRunDiagnostics}
+        onOpenRetention={() => setIsRetentionModalOpen(true)}
         tags={tags}
         activeTagIds={activeTagIds}
         onToggleTagFilter={handleToggleTagFilter}
@@ -298,6 +301,12 @@ export default function App(): React.ReactElement {
         onUpdateTag={handleUpdateTag}
         onDeleteTag={handleDeleteTag}
         onClearError={clearTagError}
+      />
+
+      {/* Attachments & Retention Settings Modal */}
+      <RetentionModal
+        isOpen={isRetentionModalOpen}
+        onClose={() => setIsRetentionModalOpen(false)}
       />
     </div>
   )

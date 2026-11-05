@@ -104,4 +104,40 @@ A seguito del primo ciclo di implementazione dell'MVP, vengono applicate le segu
   - Textarea con sfondo e bordo morbidi, pensata per prendere appunti, inserire scalette o descrizioni in modo naturale.
 - **Allegati Locali intelligenti e leggeri:**
   - **A stato vuoto:** rimosso il grande box grigio e il contatore "0"; sostituito con un pulsante compatto e discreto tratteggiato (*"+ Allega file dal computer"*).
-  - **Con file presenti:** lista pulita dei file con card cliccabile per aprire la cartella di sistema ed evidenziare il file (con gestione del troncamento del nome ed esclusione di overflow) e pulsante di rimozione separato.
+---
+
+## 8. Scorciatoie per i Titoli degli Eventi (Titoli Rapidi / Preset)
+- **Posizionamento (Quick Chips):**
+  - All'interno di [`EventModal.tsx`](file:///C:/Users/costa/Home/Opus/Content_Calendar/src/renderer/src/components/events/EventModal.tsx), subito sotto al campo input del titolo in stile Notion, è posizionata una barra di chip interattivi.
+- **Inizializzazione Intelligente (Zero Presets Casuali):**
+  - Nessun preset fittizio/casuale preimpostato (`DEFAULT_TITLE_PRESETS = []`).
+  - Al primo avvio, l'applicazione controlla gli eventi già presenti nel calendario: se ci sono eventi, estrae automaticamente i titoli unici come preset iniziali; se il calendario è vuoto, parte senza alcun preset (`[]`).
+  - **Nessun limite al numero di titoli:** l'utente può salvare tutti i preset che desidera.
+- **Interazioni e Funzionalità:**
+  - **1-Click Populate:** Cliccando su un chip, il titolo dell'evento viene popolato all'istante mantenendo il focus sull'input per eventuali aggiunte.
+  - **Aggiunta manuale rapida (`+ Nuovo` / `+ Aggiungi titolo rapido`):** È possibile inserire un nuovo titolo direttamente tramite il pulsante inline premendo Invio.
+  - **Salvataggio con 1 clic da testo digitato:** Se l'utente digita un titolo personalizzato non presente nei preset, appare un suggerimento discreto *"Salva '{titolo}' nei rapidi"* per memorizzarlo con un solo clic.
+  - **Eliminazione al passaggio del mouse (`×`):** Passando il mouse su un chip appare un pulsante di eliminazione per rimuoverlo dalla lista.
+  - **Persistenza locale:** Gestito tramite l'hook dedicato [`useTitlePresets.ts`](file:///C:/Users/costa/Home/Opus/Content_Calendar/src/renderer/src/hooks/useTitlePresets.ts) con salvataggio persistente su `localStorage`.
+
+---
+
+## 9. Gestione Copie Locali Autonome degli Allegati & Retention Policy (Step 1 - Proposta A)
+- **Organizzazione cartelle per Data (`attachments/YYYY-MM/evento_<id>/`):**
+  - All'atto del salvataggio di un evento con allegati, i file sorgente vengono copiati in una cartella locale gestita autonomamente dal software:
+    `appData/attachments/YYYY-MM/evento_<id>/nome_file.ext`.
+  - Risoluzione automatica di eventuali collisioni con suffisso numerico progressivo (`(1)`).
+  - Nessuna duplicazione se il file risiede già nella cartella gestita.
+- **Apertura Copia Locale Gestita:**
+  - Cliccando su qualsiasi allegato (dalla modale o dal pannello inferiore), il software apre il file manager di sistema (Explorer/Finder) evidenziando la **copia locale gestita** all'interno della cartella specifica dell'evento.
+- **Sincronizzazione & Pulizia Automatica:**
+  - Se un allegato viene rimosso da un evento, la copia su disco viene eliminata in modo sicuro (soltanto se situata all'interno della directory gestita).
+  - Se un evento viene eliminato, la cartella dell'evento `evento_<id>` e le relative sottocartelle vuote vengono rimosse dal disco.
+- **Motore di Retention Policy:**
+  - Configurazione salvata nel database SQLite (`app_settings`):
+    - Periodo: *Mai (Conserva per sempre)*, *30 giorni*, *60 giorni*, *90 giorni*.
+    - Filtro: *Solo eventi 'Fatti'* (default abilitato).
+  - All'avvio dell'applicazione (o tramite il pulsante manuale *"Pulisci adesso"*), i file degli eventi scaduti vengono rimossi dal disco e i record nel DB vengono aggiornati.
+- **Interfaccia Modalità Retention ([`RetentionModal.tsx`](file:///C:/Users/costa/Home/Opus/Content_Calendar/src/renderer/src/components/settings/RetentionModal.tsx)):**
+  - Accessibile dal pulsante *"Allegati"* nell'header della vista calendario.
+  - Mostra il riepilogo dello spazio disco occupato, il percorso della cartella con pulsante rapido *"Apri cartella"*, la selezione della retention e il pulsante per eseguire la pulizia su richiesta con feedback immediato sui byte e file liberati.

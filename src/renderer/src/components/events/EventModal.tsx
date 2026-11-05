@@ -8,7 +8,8 @@ import {
   Tag as TagIcon,
   AlertCircle,
   CheckCircle2,
-  Circle
+  Circle,
+  Plus
 } from 'lucide-react'
 import {
   EventWithDetails,
@@ -20,6 +21,7 @@ import {
 } from '@shared/types'
 import { format } from 'date-fns'
 import { it } from 'date-fns/locale'
+import { useTitlePresets } from '../../hooks/useTitlePresets'
 
 interface EventModalProps {
   isOpen: boolean
@@ -68,6 +70,23 @@ export const EventModal: React.FC<EventModalProps> = ({
   const [confirmDelete, setConfirmDelete] = useState(false)
   const titleInputRef = useRef<HTMLInputElement>(null)
 
+  // Title Presets (Story: Quick Title Shortcuts)
+  const { presets, addPreset, removePreset } = useTitlePresets()
+  const [isAddingPreset, setIsAddingPreset] = useState(false)
+  const [newPresetText, setNewPresetText] = useState('')
+  const newPresetInputRef = useRef<HTMLInputElement>(null)
+
+  const handleAddCustomPreset = () => {
+    const trimmed = newPresetText.trim()
+    if (trimmed) {
+      addPreset(trimmed)
+      setTitle(trimmed)
+      titleInputRef.current?.focus()
+    }
+    setIsAddingPreset(false)
+    setNewPresetText('')
+  }
+
   // Focus title input on open
   useEffect(() => {
     if (isOpen) {
@@ -85,6 +104,8 @@ export const EventModal: React.FC<EventModalProps> = ({
       setRevealStatus(null)
       setConfirmDelete(false)
       setTagInput('')
+      setIsAddingPreset(false)
+      setNewPresetText('')
       return
     }
 
@@ -318,6 +339,117 @@ export const EventModal: React.FC<EventModalProps> = ({
               required
               className="w-full text-xl font-bold text-slate-900 placeholder:text-slate-300 focus:outline-none border-none p-0 bg-transparent tracking-tight"
             />
+          </div>
+
+          {/* Quick Title Presets */}
+          <div className="flex flex-wrap items-center gap-1.5 -mt-1 pb-1">
+            {presets.map((preset) => {
+              const isSelected = title === preset
+              return (
+                <div
+                  key={preset}
+                  onClick={() => {
+                    setTitle(preset)
+                    titleInputRef.current?.focus()
+                  }}
+                  className={`group inline-flex items-center gap-1.5 rounded-md px-2.5 py-1 text-xs font-medium transition cursor-pointer select-none border ${
+                    isSelected
+                      ? 'bg-blue-50 text-blue-700 border-blue-200 shadow-2xs font-semibold'
+                      : 'bg-slate-100/80 text-slate-600 border-slate-200/90 hover:bg-slate-200/70 hover:text-slate-900'
+                  }`}
+                  title={`Usa "${preset}" come titolo`}
+                >
+                  <span>{preset}</span>
+                  <button
+                    type="button"
+                    onClick={(e) => {
+                      e.stopPropagation()
+                      removePreset(preset)
+                    }}
+                    className="opacity-0 group-hover:opacity-100 hover:text-rose-600 rounded p-0.5 transition cursor-pointer"
+                    title={`Rimuovi "${preset}" dai titoli rapidi`}
+                  >
+                    <X className="h-3 w-3" />
+                  </button>
+                </div>
+              )
+            })}
+
+            {/* Inline Add Preset */}
+            {isAddingPreset ? (
+              <div className="inline-flex items-center gap-1 rounded-md border border-blue-300 bg-white px-2 py-0.5 shadow-2xs">
+                <input
+                  ref={newPresetInputRef}
+                  type="text"
+                  value={newPresetText}
+                  onChange={(e) => setNewPresetText(e.target.value)}
+                  onKeyDown={(e) => {
+                    if (e.key === 'Enter') {
+                      e.preventDefault()
+                      handleAddCustomPreset()
+                    } else if (e.key === 'Escape') {
+                      setIsAddingPreset(false)
+                      setNewPresetText('')
+                    }
+                  }}
+                  placeholder="Nome preset..."
+                  className="w-24 text-xs text-slate-800 placeholder:text-slate-400 focus:outline-none bg-transparent"
+                  maxLength={50}
+                />
+                <button
+                  type="button"
+                  onClick={handleAddCustomPreset}
+                  className="text-xs font-bold text-blue-600 hover:text-blue-800 cursor-pointer"
+                  title="Conferma preset"
+                >
+                  ✓
+                </button>
+                <button
+                  type="button"
+                  onClick={() => {
+                    setIsAddingPreset(false)
+                    setNewPresetText('')
+                  }}
+                  className="text-xs text-slate-400 hover:text-slate-600 cursor-pointer"
+                  title="Annulla"
+                >
+                  ✕
+                </button>
+              </div>
+            ) : (
+              <button
+                type="button"
+                onClick={() => {
+                  setIsAddingPreset(true)
+                  setTimeout(() => newPresetInputRef.current?.focus(), 50)
+                }}
+                className="inline-flex items-center gap-1 rounded-md border border-dashed border-slate-300 bg-transparent px-2 py-1 text-xs font-medium text-slate-400 hover:border-slate-400 hover:text-slate-600 transition cursor-pointer select-none"
+                title="Aggiungi un nuovo titolo ai rapidi"
+              >
+                <Plus className="h-3 w-3" />
+                <span>{presets.length === 0 ? 'Aggiungi titolo rapido' : 'Nuovo'}</span>
+              </button>
+            )}
+
+            {/* Quick 1-click option to save currently typed title as a preset if not already present */}
+            {title.trim().length > 0 &&
+              !presets.some((p) => p.toLowerCase() === title.trim().toLowerCase()) && (
+                <button
+                  type="button"
+                  onClick={() => addPreset(title.trim())}
+                  className="inline-flex items-center gap-1 text-[11px] font-medium text-blue-600 hover:text-blue-800 hover:underline transition cursor-pointer ml-1"
+                  title="Salva questo titolo come scorciatoia rapida per i prossimi eventi"
+                >
+                  <Plus className="h-3 w-3" />
+                  <span>
+                    Salva &ldquo;
+                    {title.trim().length > 20
+                      ? `${title.trim().slice(0, 20)}...`
+                      : title.trim()}
+                    &rdquo; nei rapidi
+                  </span>
+                </button>
+              )}
           </div>
 
           {/* Properties Section (Notion-style Key-Value Table) */}

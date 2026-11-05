@@ -3,6 +3,7 @@ import { join } from 'path'
 import { electronApp, optimizer, is } from '@electron-toolkit/utils'
 import { initDatabase, closeDatabase } from './db'
 import { registerIpcHandlers } from './ipc'
+import { applyRetentionPolicy } from './services/attachment.service'
 
 let mainWindow: BrowserWindow | null = null
 
@@ -51,6 +52,11 @@ app.whenReady().then(async () => {
 
   // Register IPC handlers
   registerIpcHandlers()
+
+  // Apply retention policy in background at startup
+  applyRetentionPolicy().catch((err) => {
+    console.warn('Startup retention policy execution failed:', err)
+  })
 
   createWindow()
 

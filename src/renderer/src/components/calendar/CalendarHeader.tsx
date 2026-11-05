@@ -5,7 +5,8 @@ import {
   Calendar as CalendarIcon,
   Tag as TagIcon,
   SlidersHorizontal,
-  FilterX
+  FilterX,
+  HardDrive
 } from 'lucide-react'
 import { TagRecord } from '@shared/types'
 
@@ -17,6 +18,7 @@ interface CalendarHeaderProps {
   onOpenTagManager: () => void
   tagsCount: number
   onRunDiagnostics: () => void
+  onOpenRetention?: () => void
   tags: TagRecord[]
   activeTagIds: string[]
   onToggleTagFilter: (tagId: string) => void
@@ -31,6 +33,7 @@ export const CalendarHeader: React.FC<CalendarHeaderProps> = ({
   onOpenTagManager,
   tagsCount,
   onRunDiagnostics,
+  onOpenRetention,
   tags,
   activeTagIds,
   onToggleTagFilter,
@@ -89,6 +92,19 @@ export const CalendarHeader: React.FC<CalendarHeaderProps> = ({
               {tagsCount}
             </span>
           </button>
+
+          {/* Storage & Retention Button */}
+          {onOpenRetention && (
+            <button
+              type="button"
+              onClick={onOpenRetention}
+              className="inline-flex items-center gap-1.5 rounded-lg border border-slate-200 bg-white px-2.5 py-1.5 text-xs font-semibold text-slate-700 shadow-2xs transition hover:bg-slate-50 cursor-pointer"
+              title="Archivio Allegati & Retention"
+            >
+              <HardDrive className="h-3.5 w-3.5 text-slate-500" />
+              <span>Allegati</span>
+            </button>
+          )}
 
           {/* Diagnostics toggle */}
           <button

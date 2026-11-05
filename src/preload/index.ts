@@ -9,7 +9,10 @@ import {
   CreateEventInput,
   UpdateEventInput,
   PickedFile,
-  RevealFileResult
+  RevealFileResult,
+  RetentionPolicy,
+  RetentionStats,
+  AttachmentStorageStats
 } from '../shared/types'
 
 const api: ElectronAPI = {
@@ -38,6 +41,13 @@ const api: ElectronAPI = {
     pickFiles: (): Promise<PickedFile[]> => ipcRenderer.invoke('file:pick-files'),
     revealInFolder: (filePath: string): Promise<RevealFileResult> =>
       ipcRenderer.invoke('file:reveal-in-folder', filePath)
+  },
+  retention: {
+    getPolicy: (): Promise<RetentionPolicy> => ipcRenderer.invoke('retention:get-policy'),
+    setPolicy: (policy: RetentionPolicy): Promise<RetentionPolicy> =>
+      ipcRenderer.invoke('retention:set-policy', policy),
+    applyRetention: (): Promise<RetentionStats> => ipcRenderer.invoke('retention:apply'),
+    getStats: (): Promise<AttachmentStorageStats> => ipcRenderer.invoke('attachments:get-stats')
   }
 }
 

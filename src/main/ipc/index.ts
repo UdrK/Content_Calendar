@@ -4,6 +4,7 @@ import { DbHealthCheckResult } from '../../shared/types'
 import { registerTagIpcHandlers } from './tag.ipc'
 import { registerEventIpcHandlers } from './event.ipc'
 import { registerFileIpcHandlers } from './file.ipc'
+import { registerRetentionIpcHandlers } from './retention.ipc'
 
 export function registerIpcHandlers(): void {
   ipcMain.handle('app:ping', async () => {
@@ -38,4 +39,5 @@ export function registerIpcHandlers(): void {
   registerTagIpcHandlers()
   registerEventIpcHandlers()
   registerFileIpcHandlers()
+  registerRetentionIpcHandlers()
 }
